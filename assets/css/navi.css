@@ -1,0 +1,121 @@
+/* =========================================
+
+   >> Navigator
+
+   ========================================= */
+
+/* -------- 排版 -------- */
+#TableOfContents {
+  max-width: none; 
+}
+
+/* 桌面端 */
+@media (min-width: 1024px) {
+  #TableOfContents {
+    max-width: 220px; 
+  }
+}
+
+/* 取消原生样式 */
+#TableOfContents, .radar-toc nav, aside {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+#TableOfContents ul,
+#TableOfContents li {
+  display: block !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 间距 */
+#TableOfContents li {
+  position: relative;
+  margin-top: 0.3rem !important;
+}
+
+/* 子目录缩进 */
+#TableOfContents li li {
+  margin-left: 0.9rem !important;
+}
+
+/* -------- 字体 -------- */
+
+/* 全局 */
+#TableOfContents a {
+  display: inline-block !important; 
+  position: relative;
+  font-family: var(--font-secondary) !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.05em;
+  text-decoration: none !important;
+  color: var(--my-color-black) !important;
+  opacity: 0.4 !important;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* 子目录 */
+#TableOfContents ul ul a {
+  font-size: 12px !important;
+  opacity: 0.2 !important; 
+}
+
+/* -------- 动画 -------- */
+
+/* 指示器 */
+#TableOfContents a::before {
+  content: '';
+  position: absolute;
+  left: -15px;
+  top: 50%;
+  transform: translateY(-50%) scale(0);
+  width: 5px;
+  height: 5px;
+  background-color: var(--my-color-black);
+  opacity: 0.4 !important;
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+#TableOfContents a:hover {
+  opacity: 0.8 !important;
+  transform: translateX(6px);
+}
+
+#TableOfContents ul ul a:hover {
+  opacity: 0.7 !important;
+}
+
+#TableOfContents a:hover::before {
+  transform: translateY(-50%) scale(1);
+}
+
+
+/* -------- 移动端专属 -------- */
+.toc-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.toc-wrapper.is-open {
+  grid-template-rows: 1fr;
+}
+
+.toc-inner {
+  overflow: hidden;
+}
+
+/* 电脑端永远展开 */
+@media (min-width: 1024px) {
+  .toc-wrapper {
+    grid-template-rows: 1fr !important;
+    transition: none;
+  }
+  .toc-inner {
+    overflow: visible;
+  }
+}

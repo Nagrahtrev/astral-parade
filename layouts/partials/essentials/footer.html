@@ -1,0 +1,24 @@
+<footer class="bg-color-gray relative z-40">
+  
+  <div class="pb-12 pt-12 w-full">
+    <div class="w-full max-w-400 mx-auto px-6 flex flex-col items-center text-center">
+      
+      <div class="mb-8 flex flex-col items-center">
+
+        <span class="font-smsans text-[9px] text-color-black/40 uppercase tracking-[0.3em] mb-2 select-none">
+          Contact
+        </span>
+
+        <a href="mailto:{{ site.Params.email }}" class="text-[12px] md:text-[14px] font-mono font-bold tracking-widest text-color-black transition-colors duration-300 ease-out hover:text-color-red">
+          {{ site.Params.email }}
+        </a>
+
+      </div>
+
+      <p class="font-smsans text-[9px] text-color-black/40 tracking-[0.2em] uppercase select-none">
+        &copy; {{ now.Format "2006" }} Astral Parade <span class="mx-3 opacity-30">/</span> All Rights Reserved.
+      </p>
+
+    </div>
+  </div>
+</footer>

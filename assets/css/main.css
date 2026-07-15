@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@import "./custom.css";
+@import "./prose.css";
+@import "./navi.css";
+@import "./filter.css";

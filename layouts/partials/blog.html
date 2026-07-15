@@ -1,0 +1,284 @@
+{{ $paginator := .Paginate .Pages 12 }}
+
+{{ $allCategories := slice }}
+{{ $allYears := slice }}
+
+{{ range where site.RegularPages "Section" "blog" }}
+  {{ $cat := default "Blog" .Params.category }}
+  {{ if not (in $allCategories $cat) }}
+    {{ $allCategories = $allCategories | append $cat }}
+  {{ end }}
+
+  {{ $year := .Date.Format "2006" }}
+  {{ if not (in $allYears $year) }}
+    {{ $allYears = $allYears | append $year }}
+  {{ end }}
+{{ end }}
+
+<section class="min-h-screen relative z-10 pt-20 md:pt-28 pb-32 mb-20 bg-color-white">
+
+  <div class="w-full max-w-375 mx-auto px-4 md:px-8 lg:px-12 flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+
+    {{/*  ------------ 左 ------------  */}}
+    <aside class="w-full lg:w-[28%] xl:w-[25%] shrink-0 lg:sticky lg:top-32 flex flex-col z-20">
+      
+      {{/*  Title  */}}
+      <div class="mb-10 lg:mb-16">
+
+        <h1 class="font-bgsans text-[56px] md:text-[72px] lg:text-[88px] leading-[0.85] font-black uppercase text-color-black mb-6 wrap-break-word select-none">
+            Blog
+        </h1>
+
+        <p class="font-primary text-[13px] md:text-[14px] text-color-black/50 leading-relaxed">
+          {{ if eq .Data.Singular "tag" }}
+            Articles tagged with "{{ .Title }}".
+          {{ else }}
+            A space for production notes, lessons learned, random thoughts, and occasional brain dumps.
+          {{ end }}
+        </p>
+
+      </div>
+
+      {{/*  Filter  */}}
+      <nav class="flex flex-col md:flex-row lg:flex-col gap-8 lg:gap-13 w-full">
+        
+        {{ if eq .Data.Singular "tag" }}
+          
+          {{/*  Tags  */}}
+          <div class="w-full">
+
+            <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/30 mb-4 block">
+              Tags
+            </span>
+            
+            <div class="flex flex-row lg:flex-col gap-2 lg:gap-0 overflow-x-auto lg:overflow-visible no-scrollbar pb-2 lg:pb-0">
+
+              {{ range $name, $taxonomy := site.Taxonomies.tag }}
+                {{ $isActive := eq (lower $.Title) (lower $name) }}
+
+                <a href="{{ .Page.RelPermalink }}" class="filter-item {{ if $isActive }}active{{ end }}">
+
+                  <span>
+                    {{ $name }} 
+                    <span class="font-mono opacity-50 text-[11px] ml-1">
+                      ({{ .Count }})
+                    </span>
+                  </span>
+
+                  <svg class="filter-arrow w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+
+                </a>
+
+              {{ end }}
+
+            </div>
+          </div>
+
+        {{ else }}
+
+          {{/*  Categories  */}}
+          <div class="w-full">
+
+             <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/30 mb-4 block">
+              Category
+            </span>
+
+             <div class="flex flex-row lg:flex-col gap-2 lg:gap-0 overflow-x-auto lg:overflow-visible no-scrollbar pb-2 lg:pb-0">
+              
+                <a href="{{ (site.GetPage "section" "blog").RelPermalink }}" 
+                   class="filter-item {{ if not $.Data.Term }}active{{ end }}">
+
+                  <span>All Categories</span>
+
+                  <svg class="filter-arrow w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+
+                </a>
+
+                {{ range $allCategories }}
+
+                  {{ $catURL := printf "category/%s/" (. | urlize) | relURL }}
+                  <a href="{{ $catURL }}" class="filter-item {{ if eq (lower $.Data.Term) (lower .) }}active{{ end }}">
+
+                    <span>{{ . }}</span>
+
+                    <svg class="filter-arrow w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+
+                  </a>
+
+                {{ end }}
+
+             </div>
+          </div>
+
+          {{/*  Year  */}}
+          <div class="w-full">
+
+             <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/30 mb-4 block">
+              Year
+            </span>
+
+             <div class="flex flex-row lg:flex-col gap-2 lg:gap-0 overflow-x-auto lg:overflow-visible no-scrollbar pb-2 lg:pb-0">
+              
+                <a href="{{ (site.GetPage "section" "blog").RelPermalink }}" 
+                   class="filter-item {{ if not $.Data.Term }}active{{ end }}">
+
+                  <span>All Years</span>
+
+                  <svg class="filter-arrow w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+
+                </a>
+
+                {{ range $allYears }}
+
+                  {{ $yearURL := printf "year/%s/" (. | urlize) | relURL }}
+                  <a href="{{ $yearURL }}" class="filter-item {{ if eq (lower $.Data.Term) (lower .) }}active{{ end }}">
+
+                    <span>{{ . }}</span>
+
+                    <svg class="filter-arrow w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+
+                  </a>
+
+                {{ end }}
+
+             </div>
+          </div>
+        {{ end }}
+      </nav>
+    </aside>
+
+    {{/*  ------------ 右 ------------  */}}
+    <main id="blog-list-start" class="flex-1 w-full min-w-0 relative" style="scroll-margin-top: 120px;">
+      
+      {{/*  瀑布流 Grid  */}}
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-0 items-start" style="grid-auto-rows: 1px;" id="blog-grid">
+        
+        {{ $pageSize := 12 }}
+        {{ $offset := mul (sub $paginator.PageNumber 1) $pageSize }}
+
+        {{ range $index, $page := $paginator.Pages }}
+        
+        {{ $mod := mod $index 4 }}
+        {{ $cutLen := 120 }}
+        {{ if eq $mod 0 }}{{ $cutLen = 60 }}
+        {{ else if eq $mod 1 }}{{ $cutLen = 200 }}
+        {{ else if eq $mod 2 }}{{ $cutLen = 80 }}
+        {{ else }}{{ $cutLen = 140 }}{{ end }}
+
+        {{ $globalIndex := add (add $index 1) $offset }}
+
+        {{/*  文章卡片  */}}
+        <article class="blog-item w-full pb-16 pt-2">
+
+          <a href="{{ .Permalink }}" 
+             class="card-content border-[0.5px] border-color-black/20 bg-color-white p-5 md:p-6 hover:bg-color-black/2 group cursor-pointer relative shadow-[0_5px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.08)] flex flex-col h-full transition-all duration-500 ease-out">
+            
+            <div class="absolute -top-1 -left-1 w-2 h-2 border-t-[0.5px] border-l-[0.5px] border-color-black/40"></div>
+            <div class="absolute -top-1 -right-1 w-2 h-2 border-t-[0.5px] border-r-[0.5px] border-color-black/40"></div>
+
+            <div class="flex justify-between items-start mb-5 pb-3 border-b-[0.5px] border-color-black/10">
+
+              {{/*  Category  */}}
+               <span class="font-primary text-[9px] bg-color-black text-color-white px-2 py-0.5 tracking-widest uppercase shadow-sm">
+                  {{ default "Blog" .Params.category }}
+               </span>
+
+               {{/*  Date  */}}
+               <div class="flex flex-col items-end">
+
+                  <span class="font-mono text-[9px] text-color-black/30 tracking-widest uppercase mb-1">
+                    Date
+                  </span>
+
+                  <span class="font-mono text-[10px] text-color-black/80 tracking-widest">
+                    {{ .Date.Format "2006.01.02" }}
+                  </span>
+
+               </div>
+
+            </div>
+
+            {{/*  插图  */}}
+            {{ if .Params.image }}
+            <div class="w-full aspect-4/3 bg-color-black/5 mb-5 relative overflow-hidden border-[0.5px] border-color-black/10">
+              
+               <img src="{{ .Params.image | relURL }}" class="w-full h-full object-cover filter grayscale contrast-125 brightness-95 group-hover:grayscale-0 transition-all duration-500 ease-out">
+
+               <div class="absolute inset-0 bg-color-black/10 group-hover:bg-transparent transition-colors duration-500 ease-out pointer-events-none"></div>
+
+            </div>
+            {{ end }}
+
+            {{/*  文章标题  */}}
+            <h2 class="font-bgsans text-[22px] md:text-[24px] font-black leading-[1.2] tracking-tight mb-4 text-color-black/95 group-hover:text-color-red transition-colors duration-500 ease-out">
+               {{ .Title }}
+            </h2>
+
+            {{/*  内容预览  */}}
+            <p class="font-primary text-[13px] text-color-black/50 leading-[1.7] mb-8 line-clamp-4">
+               {{ .Content | plainify | truncate $cutLen }}
+            </p>
+
+            <div class="mt-auto pt-4 border-t-[0.5px] border-color-black/10 flex justify-between items-center w-full">
+
+              <span class="font-mono text-[9px] tracking-[0.2em] text-color-black/40 uppercase group-hover:text-color-black transition-colors duration-500 ease-out flex items-center gap-2">
+                Read Article
+
+                <svg class="w-3 h-3 text-color-black/80 overflow-visible -mt-px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square">
+                  <g class="opacity-0 -translate-x-2 transition-all duration-300 delay-0 group-hover:delay-200 ease-out group-hover:opacity-100 group-hover:translate-x-0"><path d="M2 6l6 6-6 6"></path></g>
+                  <g class="opacity-0 -translate-x-2 transition-all duration-300 delay-100 group-hover:delay-100 ease-out group-hover:opacity-100 group-hover:translate-x-0"><path d="M9 6l6 6-6 6"></path></g>
+                  <g class="opacity-0 -translate-x-2 transition-all duration-300 delay-200 group-hover:delay-0 ease-out group-hover:opacity-100 group-hover:translate-x-0"><path d="M16 6l6 6-6 6"></path></g>
+                </svg>
+
+              </span>
+              
+              {{/*  序号  */}}
+              <span class="font-mono text-[9px] tracking-widest text-color-black/20 group-hover:text-color-red transition-colors duration-500 ease-out">
+                #{{ printf "%02d" $globalIndex }}
+              </span>
+
+            </div>
+
+          </a>
+        </article>
+        {{ end }}
+      </div>
+
+      {{/*  移动端加载提示  */}}
+      {{ if $paginator.HasNext }}
+        <div id="mobile-infinite-trigger" data-next="{{ $paginator.Next.URL }}" class="w-full h-10 flex items-center justify-center md:hidden mt-8 opacity-50">
+          <span class="font-mono text-[10px] tracking-widest uppercase animate-pulse">Loading...</span>
+        </div>
+      {{ end }}
+
+      {{/*  分页器  */}}
+      {{ if gt $paginator.TotalPages 1 }}
+        <div id="blog-pagination-controls" class="hidden md:flex justify-center items-center space-x-2 mt-16 mb-8 relative">
+
+          {{ if $paginator.HasPrev }}
+            <a href="{{ $paginator.Prev.URL }}#blog-list-start" class="nav-btn nav-prev font-primary w-24 text-left">&lt; PREV</a>
+          {{ else }}
+            <button class="nav-btn nav-prev font-primary w-24 text-left" disabled>&lt; PREV</button>
+          {{ end }}
+
+          {{ range $paginator.Pagers }}
+            {{ if eq . $paginator }}
+              <span class="page-btn active font-primary" data-page="{{ .PageNumber }}">{{ printf "%02d" .PageNumber }}</span>
+            {{ else }}
+              <a href="{{ .URL }}#blog-list-start" class="page-btn font-primary" data-page="{{ .PageNumber }}">{{ printf "%02d" .PageNumber }}</a>
+            {{ end }}
+          {{ end }}
+
+          {{ if $paginator.HasNext }}
+            <a href="{{ $paginator.Next.URL }}#blog-list-start" class="nav-btn nav-next font-primary w-24 text-right">NEXT &gt;</a>
+          {{ else }}
+            <button class="nav-btn nav-next font-primary w-24 text-right" disabled>NEXT &gt;</button>
+          {{ end }}
+
+          <div class="bracket-cursor font-primary"></div>
+        </div>
+      {{ end }}
+    </main>
+
+  </div>
+</section>

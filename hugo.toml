@@ -1,0 +1,37 @@
+baseURL = "https://www.aspr-works.top/"
+title = "nova+z - Astral Parade"
+languageCode = "en"
+timeZone = "Asia/Shanghai"
+
+[params]
+  email = "novaxz@aspr-works.top"
+
+[build]
+  [build.buildStats]
+    enable = true
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 10
+
+  [[menu.main]]
+    name = "Discography"
+    url = "/discography/"
+    weight = 20
+
+  [[menu.main]]
+    name = "Blog"
+    url = "/blog/"
+    weight = 30
+
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 40
+
+[taxonomies]
+  category = "category"
+  year = "year"
+  tag = "tag"

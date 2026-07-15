@@ -1,0 +1,390 @@
+{{ define "main" }}
+
+{{ $releases := sort (where .Site.RegularPages "Params.category" "Releases") "Date" "asc" }}
+{{ $releaseNo := 0 }}
+{{ range $i, $p := $releases }}
+  {{ if eq $p.File.Path $.File.Path }}
+    {{ $releaseNo = add $i 1 }}
+  {{ end }}
+{{ end }}
+
+{{ $participations := sort (where .Site.RegularPages "Params.category" "Participations") "Date" "asc" }}
+{{ $participationNo := 0 }}
+{{ range $i, $p := $participations }}
+  {{ if eq $p.File.Path $.File.Path }}
+    {{ $participationNo = add $i 1 }}
+  {{ end }}
+{{ end }}
+
+<section class="w-full min-h-screen bg-color-white relative z-10 pt-20 md:pt-28 pb-32">
+
+  <div class="w-full max-w-330 mx-auto px-4 md:px-8 lg:px-12 flex flex-col">
+
+    {{/*  ============================== RELEASES ==============================  */}}
+    {{ if eq .Params.category "Releases" }}
+
+      <div class="w-full border-[0.5px] border-color-black/20 flex flex-col mb-20 bg-color-white shadow-[0_20px_60px_rgba(0,0,0,0.03)]">
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 border-b-[0.5px] border-color-black/20">
+
+          {{/*  ------------ Title ------------  */}}
+          <div class="lg:col-span-8 p-6 md:p-10 lg:p-14 border-b-[0.5px] lg:border-b-0 lg:border-r-[0.5px] border-color-black/20 flex flex-col justify-center bg-color-black/1">
+
+            <div class="flex items-center gap-4 mb-6">
+
+              <div class="w-2 h-2 bg-color-red mb-[1.5px]"></div>
+
+              <span class="font-mono text-[11px] tracking-[0.2em] text-color-black/40 uppercase select-none">
+                Release No.{{ $releaseNo }}
+              </span>
+
+            </div>
+
+            <h1 class="font-bgsans text-[40px] md:text-[64px] lg:text-[72px] font-black text-left tracking-tight leading-[0.9] wrap-break-word text-color-black">
+              {{ .Title }}
+            </h1>
+
+          </div>
+
+          {{/*  元数据  */}}
+          <div class="lg:col-span-4 p-6 md:p-10 lg:p-14 flex flex-col justify-between items-start md:items-end text-left md:text-right relative overflow-hidden">
+
+            {{/*  底纹  */}}
+            <div class="absolute -bottom-[25%] -right-[15%] w-60 h-60 md:w-[315px] md:h-[315px] rounded-full pointer-events-none z-0 opacity-[0.04] animate-[spin_40s_linear_infinite]"
+                 style="background-image: repeating-radial-gradient(circle at center, #000 0, #000 1px, transparent 2px, transparent 6px);">
+              <div class="absolute inset-[30%] rounded-full border- border-color-black/30"></div>
+              <div class="absolute inset-[45%] rounded-full bg-color-black/5 border-[0.5px] border-color-black/20"></div>
+            </div>
+
+            {{/*  日期  */}}
+            <div class="mb-8 md:mb-4 relative z-10">
+
+              <span class="font-mono text-[11px] tracking-[0.2em] text-color-black/40 uppercase block select-none">
+                Release Date
+              </span>
+
+              <span class="font-smsans text-[14px] font-bold tracking-widest text-color-black">
+                {{ .Date.Format "2006.01.02" }}
+              </span>
+
+            </div>
+
+            {{/*  CAT  */}}
+            {{ if .Params.catalog }}
+            <div class="flex flex-col items-start md:items-end relative z-10">
+
+              <span class="font-mono text-[11px] font-bold text-color-black tracking-widest block mb-2.5">
+                CAT. {{ .Params.catalog }}
+              </span>
+
+              {{/*  条形码  */}}
+              <div class="text-[56px] leading-[0.7] text-color-black/80 select-none" style="font-family: 'Libre Barcode 128', sans-serif;">
+                {{ .Params.catalog }}
+              </div>
+
+            </div>
+            {{ end }}
+
+          </div>
+
+        </div>
+
+        {{/*  ------------ Body ------------  */}}
+        <div class="grid grid-cols-1 lg:grid-cols-12">
+
+          <div class="lg:col-span-5 p-6 md:p-10 lg:p-12 border-b-[0.5px] lg:border-b-0 lg:border-r-[0.5px] border-color-black/20 flex flex-col bg-color-black/2">
+
+            {{/*  封面  */}}
+            <div class="w-full aspect-square bg-color-black/5 relative mb-10 shadow-[0_10px_30px_rgba(0,0,0,0.05)] group overflow-hidden">
+
+              <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-full object-cover">
+
+              <div class="absolute inset-0 border-[0.5px] border-color-black/10 pointer-events-none z-10"></div>
+
+            </div>
+
+            {{/*  Links  */}}
+            {{ if .Params.links }}
+            <div class="w-full flex flex-col gap-3">
+
+              <span class="font-mono text-[9px] tracking-[0.3em] uppercase text-color-black/40 mb-1 select-none">
+                Streaming Links
+              </span>
+
+              <div class="flex flex-wrap gap-2">
+                {{ partial "streaming-links.html" .Params.links }}
+              </div>
+
+            </div>
+            {{ end }}
+          </div>
+
+          <div class="lg:col-span-7 flex flex-col bg-color-white">
+
+            {{/*  Tracklist  */}}
+            {{ if .Params.tracklist }}
+            <div class="flex flex-col w-full border-b-[0.5px] border-color-black/20">
+
+              <div class="px-6 py-4 border-b-[0.5px] border-color-black/10 bg-color-black/3 select-none">
+                <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/50">
+                  Tracklist
+                </span>
+              </div>
+
+              <div class="flex flex-col">
+
+                {{ range $index, $track := .Params.tracklist }}
+                  {{ $trackTitle := "" }}
+                  {{ $audioUrl := "" }}
+                  {{ if reflect.IsMap $track }}
+                    {{ $trackTitle = $track.title }}
+                    {{ $audioUrl = $track.audio }}
+                  {{ else }}
+                    {{ $trackTitle = $track }}
+                  {{ end }}
+
+                  <div class="group flex items-center px-6 py-4 border-b-[0.5px] border-color-black/10 hover:bg-color-black/2 transition-colors
+                       {{ if $audioUrl }}
+                         cursor-pointer track-play-btn
+                       {{ end }}"
+                       data-audio="{{ $audioUrl }}" data-title="{{ $trackTitle }}">
+
+                    <div class="w-12 shrink-0 flex items-center justify-start text-color-black/30 group-hover:text-color-red group-[.is-playing]:text-color-red transition-colors duration-100">
+
+                      {{/*  Track Num & Play/Pause Icon  */}}
+                      <div class="relative flex items-center justify-start w-6 h-6">
+
+                        <span class="font-mono text-[11px] absolute left-0 flex -mb-px items-center group-hover:opacity-0 group-[.is-playing]:opacity-0 transition-opacity duration-100">
+                          {{ printf "%02d" (add $index 1) }}
+                        </span>
+
+                        <svg class="w-4 h-4 -ml-[2px] absolute left-0 opacity-0 group-hover:opacity-100 group-[.is-playing]:opacity-0 transition-opacity duration-100" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+
+                        <svg class="w-4 h-4 -ml-[2px] absolute left-0 opacity-0 group-[.is-playing]:opacity-100 transition-opacity duration-100" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                      </div>
+
+                    </div>
+
+                    {{/*  Track Title  */}}
+                    <div class="font-secondary text-[15px] md:text-[16px] font-bold text-color-black/80 transform group-hover:translate-x-2 transition-all duration-300">
+                      {{ $trackTitle }}
+                    </div>
+
+                    {{/*  播放指示  */}}
+                    {{ if $audioUrl }}
+                    <div class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+
+                      <span class="font-mono text-[9px] text-color-red tracking-widest uppercase group-[.is-playing]:hidden">
+                        Play
+                      </span>
+
+                      <span class="font-mono text-[9px] text-color-red tracking-widest uppercase hidden group-[.is-playing]:inline">
+                        Pause
+                      </span>
+
+                    </div>
+                    {{ end }}
+                    
+                  </div>
+                {{ end }}
+              </div>
+            </div>
+            {{ end }}
+
+
+            <div class="flex flex-col xl:flex-row w-full flex-1">
+
+              {{/*  Message  */}}
+              {{ if .Content }}
+              <div class="flex-1 p-6 md:p-10 xl:border-r-[0.5px] border-color-black/20 border-b-[0.5px] xl:border-b-0">
+
+                <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/40 block mb-6 select-none">
+                  Message
+                </span>
+
+                <div class="content prose max-w-none text-left prose-p:leading-[1.8] prose-p:text-color-black/70 prose-p:text-[14px] font-primary wrap-break-word">
+                  {{ .Content }}
+                </div>
+                
+              </div>
+              {{ end }}
+
+              {{/*  Credits  */}}
+              {{ if .Params.credits }}
+              <div class="w-full xl:w-[40%] shrink-0 p-6 md:p-10">
+
+                <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/40 block mb-6 select-none">
+                  Credits
+                </span>
+
+                <div class="flex flex-col gap-5">
+                  {{ range .Params.credits }}
+                    <div class="flex flex-col">
+
+                      <span class="font-mono text-[8px] tracking-[0.05em] text-color-black/30 mb-1">
+                        {{ .role }}
+                      </span>
+                      <span class="font-secondary text-[13px] font-bold tracking-wide text-color-black/80">
+                        {{ .name }}
+                      </span>
+
+                    </div>
+                  {{ end }}
+
+                </div>
+              </div>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    {{/*  ============================== PARTICIPATIONS ==============================  */}}
+    {{ else if eq .Params.category "Participations" }}
+
+      <div class="w-full border-[0.5px] border-color-black/20 flex flex-col lg:flex-row bg-color-white shadow-[0_20px_60px_rgba(0,0,0,0.03)] items-stretch">
+
+        {{/*  ------------ Title ------------  */}}
+        <div class="w-full lg:w-[65%] xl:w-[70%] flex flex-col border-b-[0.5px] lg:border-b-0 lg:border-r-[0.5px] border-color-black/20">
+
+          <div class="flex flex-col md:flex-row p-8 md:p-12 border-b-[0.5px] border-color-black/20 items-center md:items-start gap-8 md:gap-12 bg-color-black/1">
+
+            {{/* 封面 */}}
+            <div class="w-40 md:w-50 shrink-0 relative group">
+
+              <div class="w-full aspect-square bg-color-black/5 relative shadow-[0_10px_30px_rgba(0,0,0,0.05)]">
+                <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-full object-cover">
+
+                <div class="absolute inset-0 border-[0.5px] border-color-black/10 pointer-events-none z-10"></div>
+
+              </div>
+
+              <div class="absolute -top-3 -left-3 w-3 h-3 border-t-[0.5px] border-l-[0.5px] border-color-black/40"></div>
+              <div class="absolute -bottom-3 -right-3 w-3 h-3 border-b-[0.5px] border-r-[0.5px] border-color-black/40"></div>
+
+            </div>
+
+            {{/*  曲目信息  */}}
+            <div class="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
+
+              <span class="font-mono text-[11px] tracking-[0.2em] uppercase text-color-black/50 bg-color-black/4 pl-3 pr-2.5 py-1 mb-6 inline-block select-none">
+                Participation No.{{ $participationNo }}
+              </span>
+
+              <h1 class="font-bgsans text-[32px] md:text-[48px] lg:text-[50px] font-black text-color-black leading-none mb-6 wrap-break-word">
+                {{ .Title }}
+              </h1>
+
+              <div class="flex flex-col items-center md:items-start gap-2">
+
+                <div class="flex items-center">
+
+                  {{ if .Params.track_number }}
+                    <span class="font-mono text-[11px] tracking-normal bg-color-black text-color-white px-1.5 py-0.5 pb-px mr-3 select-none">
+                      TR-{{ .Params.track_number }}
+                    </span>
+                  {{ end }}
+
+                  <span class="font-bold -tracking-[0.02] font-secondary text-[14px] md:text-[16px] text-color-black/80">
+                    From「 {{ .Params.from_album }} 」
+                  </span>
+
+                </div>
+
+                {{ if .Params.label }}
+                  <span class="font-primary text-[14px] text-color-black/50 mt-1">
+                    by {{ .Params.label }}
+                  </span>
+                {{ end }}
+
+                <span class="font-mono text-[9px] tracking-widest text-color-black/30 mt-3">
+                  {{ .Date.Format "2006.01.02" }}
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+          {{/*  ------------ Body ------------  */}}
+
+          {{/*  Message  */}}
+          <div class="p-8 md:p-12 flex-1 bg-color-white">
+            {{ if .Content }}
+
+            <div class="mb-6">
+              <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/40 block select-none">
+                Message
+              </span>
+            </div>
+
+            <div class="content prose max-w-none text-left prose-p:leading-[1.8] prose-p:text-color-black/70 prose-p:text-[14px] font-primary wrap-break-word">
+              {{ .Content }}
+            </div>
+
+            {{ else }}
+
+            <div class="opacity-40">
+              <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/40 block select-none">
+                No Message
+              </span>
+            </div>
+
+            {{ end }}
+          </div>
+
+        </div>
+
+
+        <div class="w-full lg:w-[35%] xl:w-[30%] shrink-0 p-8 md:p-12 flex flex-col gap-12 bg-color-black/[0.02]">
+
+          {{/*  Links  */}}
+          {{ if .Params.links }}
+          <div class="flex flex-col gap-3">
+
+            <span class="font-mono text-[10px] tracking-[0.2em] text-color-black/40 uppercase block mb-1 select-none">
+              Streaming Links
+            </span>
+
+            <div class="flex flex-wrap gap-2 justify-start">
+              {{ partial "streaming-links.html" .Params.links }}
+            </div>
+
+          </div>
+          {{ end }}
+
+          {{/*  Credits  */}}
+          {{ if .Params.credits }}
+          <div class="flex flex-col gap-5">
+
+            <span class="font-mono text-[10px] tracking-[0.2em] text-color-black/40 uppercase block mb-1 select-none">
+              Credits
+            </span>
+
+            {{ range .Params.credits }}
+            <div class="flex flex-col">
+
+              <span class="font-mono text-[8px] tracking-[0.05em] text-color-black/30 mb-1">
+                {{ .role }}
+              </span>
+              <span class="font-secondary text-[13px] font-bold tracking-wide text-color-black/80">
+                {{ .name }}
+              </span>
+
+            </div>
+            {{ end }}
+          </div>
+          {{ end }}
+        </div>
+      </div>
+
+    {{ end }}
+  </div>
+</section>
+
+{{/*  ------------ 播放器 ------------  */}}
+{{ partial "floating-player.html" . }}
+
+{{ $js := resources.Get "js/floating-player.js" | minify }}
+<script src="{{ $js.RelPermalink }}"></script>
+
+{{ end }}

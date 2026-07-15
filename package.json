@@ -1,0 +1,19 @@
+{
+  "name": "astral-parade",
+  "version": "1.0.0",
+  "scripts": {
+    "clean": "node -e \"fs.rmSync('public', { recursive: true, force: true })\"",
+    "prestart": "npm run clean",
+    "prebuild": "npm run clean",
+    "start": "concurrently \"npm run watch\" \"npm run dev\"",
+    "dev": "hugo server -D --bind 0.0.0.0 --baseURL http://192.168.1.6:1313 --disableFastRender --noHTTPCache",
+    "build": "tailwindcss -i ./assets/css/main.css -o ./static/css/tailwind.css --minify && hugo --gc --minify",
+    "watch": "tailwindcss -i ./assets/css/main.css -o ./static/css/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.1",
+    "@tailwindcss/typography": "^0.5.19",
+    "concurrently": "^9.2.1",
+    "tailwindcss": "^4.2.1"
+  }
+}
