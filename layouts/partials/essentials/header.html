@@ -2,7 +2,7 @@
 
 <nav class="w-full max-w-400 mx-auto px-6 md:px-16 flex items-center justify-between h-20 md:h-24">
 
-  <a href="{{ site.Home.RelPermalink }}" class="shrink-0 flex items-center text-color-white font-primary text-[18px] font-bold tracking-wide cursor-pointer no-underline">
+  <a href="{{ site.Home.RelPermalink }}" class="shrink-0 hidden md:flex items-center text-color-white font-primary text-[18px] font-bold tracking-wide cursor-pointer no-underline">
     nova+z's sounds & logs
   </a>
 
@@ -39,14 +39,72 @@
 
 {{ $baseHeaderClasses := "w-full bg-color-black border-b border-color-white/10" }}
 
+
 {{ if not .IsHome }}
 
-<header id="static-header" class="{{ $baseHeaderClasses }} relative z-40">
+<header id="static-header" class="{{ $baseHeaderClasses }} hidden md:block relative z-40">
   {{ template "header-nav-content" . }}
 </header>
 
-<header id="floating-header" class="{{ $baseHeaderClasses }} fixed top-0 left-0 z-50 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] -translate-y-full">
+<header id="floating-header" class="{{ $baseHeaderClasses }} hidden md:block fixed top-0 left-0 z-50 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] -translate-y-full">
   {{ template "header-nav-content" . }}
 </header>
 
 {{ end }}
+
+{{/*  ===================== 手机端 =====================  */}}
+
+{{/*  防误触  */}}
+<div id="mobile-menu-backdrop"
+     class="md:hidden fixed inset-0 z-40
+            bg-color-black/30
+            opacity-0 invisible
+            transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]
+            pointer-events-auto cursor-pointer">
+</div>
+
+
+{{/*  汉堡按钮  */}}
+<button id="mobile-menu-btn"
+        class="md:hidden fixed bottom-6 left-6 z-50 w-10 h-10 flex items-center justify-center
+               bg-color-black/80 backdrop-blur-sm border-[0.5px] border-color-black/10
+               text-color-white/80 hover:text-color-white
+               transition-all duration-300 ease-[cubic-bezier(0.7,0,0.3,1)]
+               cursor-pointer touch-manipulation"
+        aria-label="Menu">
+
+  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square">
+    <path d="M4 6h16M4 12h16M4 18h16"/>
+  </svg>
+
+</button>
+
+{{/*  菜单  */}}
+<div id="mobile-menu-dropdown"
+     class="md:hidden pointer-events-auto fixed top-0 left-0 w-full z-50
+            -translate-y-full opacity-0 invisible
+            transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]
+            bg-color-black/90 backdrop-blur-md
+            drop-shadow-[0_10px_30px_rgba(0,0,0,0.3)]">
+
+  <div class="flex flex-col items-center px-6 pt-5 pb-4">
+    <span class="select-none text-color-white font-primary text-[18px] font-bold tracking-wide text-center">
+      nova+z's sounds & logs
+    </span>
+  </div>
+
+  <nav class="flex flex-col items-center divide-y-[0.5px] divide-color-white/10 px-6">
+    {{ range $i, $item := site.Menus.main }}
+    <a href="{{ $item.URL }}"
+       class="block w-full py-4 text-center text-color-white/70 hover:text-color-white
+              font-smsans text-[13px] font-bold tracking-wider uppercase
+              transition-colors duration-300 ease-[cubic-bezier(0.7,0,0.3,1)]
+              touch-manipulation">
+      {{ $item.Name }}
+    </a>
+    {{ end }}
+  </nav>
+
+  <div class="mx-6 border-b-[0.5px] border-color-white/10"></div>
+
+</div>

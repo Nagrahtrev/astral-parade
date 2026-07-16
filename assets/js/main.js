@@ -251,10 +251,131 @@ function initBackToTop() {
     });
 }
 
+// ------------ 移动端汉堡菜单 ------------
+function initMobileMenu() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const dropdown = document.getElementById('mobile-menu-dropdown');
+    const backdrop = document.getElementById('mobile-menu-backdrop');
+
+    if (!btn || !dropdown || !backdrop) return;
+
+    function openMenu() {
+        document.body.classList.add('overflow-hidden');
+
+        btn.classList.add('is-hidden');
+        dropdown.classList.remove('-translate-y-full', 'opacity-0', 'invisible');
+        dropdown.classList.add('translate-y-0', 'opacity-100', 'visible');
+        backdrop.classList.remove('opacity-0', 'invisible');
+        backdrop.classList.add('opacity-100', 'visible');
+    }
+
+    function closeMenu() {
+        dropdown.classList.remove('translate-y-0', 'opacity-100', 'visible');
+        dropdown.classList.add('-translate-y-full', 'opacity-0', 'invisible');
+        backdrop.classList.remove('opacity-100', 'visible');
+        backdrop.classList.add('opacity-0', 'invisible');
+
+        setTimeout(() => {
+            document.body.classList.remove('overflow-hidden');
+            const shouldShow = window.scrollY <= 100;
+            if (shouldShow) {
+                btn.classList.remove('is-hidden');
+            }
+            btn.dataset.hiddenByScroll = shouldShow ? 'false' : 'true';
+        }, 500);    // 500
+    }
+
+    // 点击背板关闭菜单
+    backdrop.addEventListener('click', () => {
+        closeMenu();
+    });
+
+    // 上滑手势关闭菜单
+    let touchStartY = 0;
+
+    function handleTouchStart(e) {
+        touchStartY = e.touches[0].clientY;
+    }
+
+    function handleTouchMove(e) {
+        e.preventDefault();
+        const deltaY = touchStartY - e.touches[0].clientY;
+        if (deltaY > 50) {
+            closeMenu();
+        }
+    }
+
+    dropdown.addEventListener('touchstart', handleTouchStart, { passive: true });
+    dropdown.addEventListener('touchmove', handleTouchMove, { passive: false });
+    backdrop.addEventListener('touchstart', handleTouchStart, { passive: true });
+    backdrop.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+    // 汉堡按钮状态
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.contains('visible');
+        if (isOpen) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    });
+}
+
+// ------------ 移动端汉堡按钮 ------------
+function initMobileFloatingButton() {
+    const btn = document.getElementById('mobile-menu-btn');
+    if (!btn) return;
+    if (!btn.dataset.hiddenByScroll) {
+        btn.dataset.hiddenByScroll = 'false';
+    }
+
+    let lastScrollY = window.scrollY;
+    const SCROLL_THRESHOLD = 30;
+
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        let isHiddenByScroll = btn.dataset.hiddenByScroll === 'true';
+
+        // 页面在顶部时显示
+        if (currentScrollY <= 0) {
+            if (isHiddenByScroll) {
+                btn.dataset.hiddenByScroll = 'false';
+                btn.classList.remove('is-hidden');
+            }
+            lastScrollY = currentScrollY;
+            return;
+        }
+
+        const delta = currentScrollY - lastScrollY;
+
+        const dropdown = document.getElementById('mobile-menu-dropdown');
+        if (!dropdown) return;
+        const menuOpen = dropdown.classList.contains('visible');
+        if (menuOpen) return;
+
+        if (delta > SCROLL_THRESHOLD && currentScrollY > 100) {
+            if (!isHiddenByScroll) {
+                btn.dataset.hiddenByScroll = 'true';
+                btn.classList.add('is-hidden');
+            }
+        } else if (delta < -SCROLL_THRESHOLD) {
+            if (isHiddenByScroll) {
+                btn.dataset.hiddenByScroll = 'false';
+                btn.classList.remove('is-hidden');
+            }
+        }
+
+        lastScrollY = currentScrollY;
+    }, { passive: true });
+}
+
 // ------------ 执行入口 ------------
 document.addEventListener('DOMContentLoaded', () => {
     initPageTransitions();
     initSmartHeader();
+    initMobileMenu();
+    initMobileFloatingButton();
     initSmartMasonry();
     initInfiniteScroll();
     initBlogPaginationCursor();

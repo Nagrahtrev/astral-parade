@@ -1,15 +1,5 @@
 {{ $page := .page }}
 
-{{/*  隐藏滚动条  */}}
-<style>
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  * {
-    scrollbar-width: none;
-  }
-</style>
-
 <section class="min-h-screen flex flex-col relative">
 
   <div class="w-full flex-1 relative">
@@ -19,7 +9,7 @@
 
       <div class="flex-1 flex items-center">
         <div class="w-full max-w-400 mx-auto px-6 md:px-12">
-          
+
           {{/*  标题  */}}
           <div class="font-smsans text-[20px] md:text-[24px] font-bold -tracking-[0.02] text-color-white pointer-events-auto select-none">
             nova+z
@@ -43,7 +33,7 @@
 
       <div class="w-full bg-color-red">
         <div class="w-full max-w-400 mx-auto px-6 md:px-12 py-4 md:py-5 flex justify-end">
-          <span class="font-mono text-[10px] md:text-[11px] tracking-wide text-color-black/50 select-none">
+          <span class="hidden md:inline font-mono text-[10px] md:text-[11px] tracking-wide text-color-black/50 select-none">
             ////////////////////////////////////////////////// directory ///
           </span>
         </div>
@@ -52,21 +42,21 @@
     </div>
 
     {{/*  ------------ Directory ------------  */}}
-    <div id="hero-container" class="w-full bg-color-red transition-color duration-1000">
+    <div id="hero-container" class="hidden md:block w-full bg-color-red transition-color duration-1000">
 
-      <div class="w-full max-w-400 mx-auto px-6 md:px-12 pt-15 pb-27 flex flex-col">
+      <div class="w-full max-w-400 mx-auto px-6 md:px-12 lg:pt-15 pt-20 pb-20 lg:pb-27 flex flex-col">
 
-        <nav class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-40">
-          
+        <nav class="grid grid-cols-1 lg:grid-cols-3 gap-18 lg:gap-40">
+
           {{/*  Discography  */}}
-          <a href="/discography" class="group block border-t-2 border-color-black/60 pt-6">
+          <a href="/discography" class="group block border-t-2 border-color-black/60 pt-6 mb-3 md:mb-0">
 
-            <div class="flex justify-between items-center mb-6">
-            
+            <div class="flex justify-between items-center mb-2 md:mb-6">
+
               <span class="font-mono text-[10px] text-color-black/70">
                 01
               </span>
-              
+
               {{/*  >>>  */}}
               <svg class="w-4 h-4 text-color-black/80 overflow-visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square">
                 <g class="opacity-0 -translate-x-2 transition-all duration-200 delay-0 group-hover:delay-150 ease-out group-hover:opacity-100 group-hover:translate-x-0"><path d="M2 6l6 6-6 6"></path></g>
@@ -78,20 +68,20 @@
             <div class="font-bgsans text-[32px] md:text-[50px] font-bold uppercase mb-3 text-color-black">
               Discography
             </div>
-            <p class="decode-permanent font-primary text-[15px] text-color-black/70 leading-relaxed pr-4">
+            <p class="font-primary text-[11px] md:text-[15px] text-color-black/70 leading-relaxed pr-4">
               A collection of original releases and guest appearances. <br/>
               More to come & Thanks for listening :)
             </p>
           </a>
 
           {{/*  Blog  */}}
-          <a href="/blog" class="group block border-t-2 border-color-black/60 pt-6">
-            <div class="flex justify-between items-center mb-6">
-            
+          <a href="/blog" class="group block border-t-2 border-color-black/60 pt-6 mb-3 md:mb-0">
+            <div class="flex justify-between items-center mb-2 md:mb-6">
+
               <span class="font-mono text-[10px] text-color-black/70">
                 02
               </span>
-              
+
               {{/*  >>>  */}}
               <svg class="w-4 h-4 text-color-black/80 overflow-visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square">
                 <g class="opacity-0 -translate-x-2 transition-all duration-200 delay-0 group-hover:delay-150 ease-out group-hover:opacity-100 group-hover:translate-x-0"><path d="M2 6l6 6-6 6"></path></g>
@@ -103,19 +93,19 @@
             <div class="font-bgsans text-[32px] md:text-[50px] font-bold uppercase mb-3 text-color-black">
               Blog
             </div>
-            <p class="decode-permanent font-primary text-[15px] text-color-black/70 leading-relaxed pr-4">
+            <p class="font-primary text-[11px] md:text-[15px] text-color-black/70 leading-relaxed pr-4">
               A space for production notes, lessons learned, random thoughts, and occasional brain dumps.
             </p>
           </a>
 
           {{/*  About  */}}
-          <a href="/about" class="group block border-t-2 border-color-black/60 pt-6">
-            <div class="flex justify-between items-center mb-6">
-            
+          <a href="/about" class="group block border-t-2 border-color-black/60 pt-6 mb-3 md:mb-0">
+            <div class="flex justify-between items-center mb-2 md:mb-6">
+
               <span class="font-mono text-[10px] text-color-black/70">
                 03
               </span>
-              
+
               {{/*  >>>  */}}
               <svg class="w-4 h-4 text-color-black/80 overflow-visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square">
                 <g class="opacity-0 -translate-x-2 transition-all duration-200 delay-0 group-hover:delay-150 ease-out group-hover:opacity-100 group-hover:translate-x-0"><path d="M2 6l6 6-6 6"></path></g>
@@ -127,20 +117,22 @@
             <div class="font-bgsans text-[32px] md:text-[50px] font-bold uppercase mb-3 text-color-black">
               About Me
             </div>
-            <p class="decode-permanent font-primary text-[15px] text-color-black/70 leading-relaxed pr-4">
+            <p class="font-primary text-[11px] md:text-[15px] text-color-black/70 leading-relaxed pr-4">
               Everything you need to know about me and my work. <br/>
               (Okay, maybe not *everything*...)
             </p>
           </a>
+
+          <div class="lg:hidden block border-t-2 border-color-black/60"></div>
 
         </nav>
       </div>
 
     </div>
 
-    <div class="w-full bg-color-red">
+    <div class="w-full bg-color-red hidden md:block">
       <div class="w-full max-w-400 mx-auto px-6 md:px-12 py-4 md:py-5 flex justify-start">
-        <span class="font-mono text-[10px] md:text-[11px] tracking-wide text-color-black/50 select-none">
+        <span class="inline font-mono text-[10px] md:text-[11px] tracking-wide text-color-black/50 select-none">
           /// directory //////////////////////////////////////////////////
         </span>
       </div>
@@ -149,14 +141,14 @@
     {{/*  ------------ Release ------------  */}}
     <div class="w-full bg-color-white">
 
-      <div class="w-full max-w-330 mx-auto px-6 md:px-12 pt-32 md:pt-48 pb-24 md:pb-50 flex flex-col relative">
-        
+      <div class="w-full max-w-330 mx-auto px-6 md:px-12 pt-28 md:pt-48 pb-30 md:pb-50 flex flex-col relative">
+
         <div class="flex items-start justify-between mb-16 md:mb-24 select-none">
           <div class="font-bgsans text-[48px] md:text-[80px] uppercase leading-none text-color-black tracking-tighter">
             Recent
           </div>
-          <div class="bg-color-black px-4 py-2 md:px-6 md:py-3 mt-1 md:mt-5">
-            <span class="font-mono text-[14px] md:text-[16px] text-color-white/90 leading-none">
+          <div class="bg-color-black px-4 py-1.5 md:px-6 md:py-3 mt-1.5 md:mt-5">
+            <span class="font-mono text-[13px] md:text-[16px] text-color-white/90 leading-none">
               01
             </span>
           </div>
@@ -164,70 +156,91 @@
 
         {{ range first 1 (where $page.Site.RegularPages "Params.category" "Releases") }}
         <a href="{{ .RelPermalink }}" class="group block w-full">
-          
+
           <div class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-end">
             <div class="md:col-span-5 flex flex-col order-2 md:order-1 pt-12 md:pt-0">
-              
-              <div class="mb-15 flex">
+
+              <div class="mb-15 hidden md:flex">
                  <span class="bg-color-black text-color-white/90 font-mono text-[10px] tracking-widest uppercase px-3 py-1.5">
                    Release
                  </span>
               </div>
 
               {{/*  标题  */}}
-              <div class="font-bgsans font-bold text-[40px] md:text-[60px] leading-[0.9] tracking-tighter text-color-black mb-7">
+              <div class="font-bgsans font-bold text-[40px] md:text-[60px] leading-[0.9] tracking-tighter text-color-black mb-7 text-right md:text-left md:mt-0 -mt-8">
                 {{ .Title }}
               </div>
 
               {{/*  Tracklist  */}}
               <div class="w-full p-6 md:p-8 mb-10 relative bg-color-gray">
-                
+
                 <span class="block font-mono text-[10px] text-color-black/40 uppercase tracking-widest mb-4">
                   Tracklist
                 </span>
 
-                <div class="font-primary text-[13px] md:text-[14px] leading-loose text-color-black/70">
+                <div class="font-primary text-[10px] md:text-[14px] leading-loose text-color-black/70">
                 {{ if .Params.tracklist }}
-                  
+
                   {{ $trackCount := len .Params.tracklist }}
 
                   {{ range $index, $track := .Params.tracklist }}
                     {{ if lt $index 4 }}
-                    
-                    <span class="inline group/track">
+
+                    {{/*  md-2 lg-3 xl-4  */}}
+                    <span class="
+                      {{ if eq $index 2 }}
+                        inline md:hidden lg:inline
+                      {{ else if eq $index 3 }}
+                        inline md:hidden lg:hidden xl:inline
+                      {{ else }}
+                        inline
+                      {{ end }}
+                      group/track">
 
                       <span class="font-mono text-[10px] text-color-black/40 mr-1">
                         {{ printf "%02d" (add $index 1) }}
                       </span>
-                      
-                      <span class="decode-permanent group-hover/track:text-color-black transition-colors duration-200 mr-1.5">
+
+                      <span class="group-hover/track:text-color-black transition-colors duration-200 mr-1.5">
                         {{ $track.title }}
                       </span>
-                      
+
                       {{ if or (lt $index 3) (gt $trackCount 4) }}
                       <span class="font-mono text-[10px] text-color-black/20 mr-1.5">/</span>
                       {{ end }}
                     </span>
-                    
+
                     {{ end }}
                   {{ end }}
-                  
+
                   {{ if gt $trackCount 4 }}
-                    <span class="inline font-mono text-[10px] text-color-black/40 uppercase tracking-widest">
+                    <span class="inline md:hidden lg:hidden xl:inline font-mono text-[10px] text-color-black/40 uppercase tracking-widest">
                       +{{ sub $trackCount 4 }} More
                     </span>
                   {{ end }}
-                  
+
+                  {{ if gt $trackCount 3 }}
+                    <span class="hidden lg:inline xl:hidden font-mono text-[10px] text-color-black/40 uppercase tracking-widest">
+                      +{{ sub $trackCount 3 }} More
+                    </span>
+                  {{ end }}
+
+                  {{ if gt $trackCount 2 }}
+                    <span class="hidden md:inline lg:hidden font-mono text-[10px] text-color-black/40 uppercase tracking-widest">
+                      +{{ sub $trackCount 2 }} More
+                    </span>
+                  {{ end }}
+
                 {{ else }}
                   <span class="font-mono text-[10px] text-color-black/40">No track data available.</span>
                 {{ end }}
                 </div>
-                
+
               </div>
 
               {{/*  >>>  */}}
               <div class="flex items-center gap-2.5 pl-2 pt-px bg-color-black text-color-white/80 group-hover:text-color-white/90 transition-colors duration-300 ease-out">
-                <span class="font-mono text-[30px] tracking-widest uppercase">
+                <span class="font-mono text-[20px] md:text-[24px] lg:text-[30px] tracking-widest uppercase">
                   Explore
                 </span>
                 <svg class="w-[32px] h-[32px] overflow-visible mb-[2px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square">
@@ -240,10 +253,18 @@
             </div>
 
             {{/*  封面  */}}
-            <div class="md:col-start-7 md:col-span-6 order-1 md:order-2">
+            <div class="md:col-start-7 md:col-span-6 order-1 md:order-2 relative">
+
               <div class="w-full aspect-4/5 md:aspect-square border-[0.5px] border-color-black/80 overflow-hidden">
                 <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-full object-cover filter grayscale contrast-125 brightness-95 group-hover:grayscale-0 transition-all duration-300 ease-[cubic-bezier(0.7,0,0.3,1)]">
               </div>
+
+              <div class="md:hidden absolute bottom-0 left-0">
+                <span class="block bg-color-black text-color-white/90 font-mono text-[10px] tracking-widest uppercase px-3 py-1.5">
+                  Release
+                </span>
+              </div>
+
             </div>
 
           </div>
@@ -254,65 +275,70 @@
 
     </div>
 
-    {{/*  ------------ Participation & Blog ------------  */}}
+    {{/*  ------------ Participation ------------  */}}
     <div class="w-full bg-color-gray">
 
-      <div class="w-full max-w-330 mx-auto px-6 md:px-12 pt-16 md:pt-40 pb-24 md:pb-50 relative">
-      
+      <div class="w-full max-w-330 mx-auto px-6 md:px-12 pt-28 md:pt-40 pb-28 md:pb-50 relative">
+
         {{/*  02  */}}
         <div class="flex items-start justify-start mb-15 select-none">
-          <div class="bg-color-black px-4 py-2 md:px-6 md:py-3">
-            <span class="font-mono text-[14px] md:text-[16px] text-color-white/90 leading-none">02</span>
+          <div class="bg-color-black px-4 py-1.5 md:px-6 md:py-3">
+            <span class="font-mono text-[13px] md:text-[16px] text-color-white/90 leading-none">02</span>
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 relative">
-          
+
           <div class="md:col-span-7">
-            
+
             {{ range first 1 (where $page.Site.RegularPages "Params.category" "Participations") }}
             <a href="{{ .RelPermalink }}" class="group block w-full relative">
-              
+
               {{/*  封面  */}}
-              <div class="w-full aspect-5/4 border-[0.5px] border-color-black/80 relative overflow-hidden mb-6 md:mb-8">
+              <div class="w-full aspect-8/7 md:aspect-5/4 border-[0.5px] border-color-black/80 relative overflow-hidden mb-6 md:mb-8">
                 <img src="{{ .Params.image }}" alt="{{ .Title }}" class="absolute inset-0 w-full h-full object-cover filter grayscale contrast-125 brightness-95 group-hover:grayscale-0 transition-all duration-300 ease-[cubic-bezier(0.7,0,0.3,1)]">
-                 
+
                 {{ if .Params.from_album }}
-                <div class="absolute top-0 right-0 bg-color-black px-3 py-1.5 z-20">
-                  <span class="font-mono text-[13px] text-color-white/90 tracking-widest uppercase">
+                <div class="absolute top-0 right-0 bg-color-black px-3 pt-[1px] md:pt-[5px] pb-[4px] z-20">
+                  <span class="font-mono text-[10px] md:text-[13px] text-color-white/90 tracking-widest uppercase ">
                     FROM: {{ .Params.from_album }}
                   </span>
                 </div>
                 {{ end }}
-                
-                <div class="absolute bottom-10 left-0 bg-color-black px-4 pt-2 pb-1 pl-5 transform -translate-x-2 group-hover:translate-x-0 transition-transform duration-350 ease-[cubic-bezier(0.7,0,0.3,1)] z-20 shadow-[8px_8px_0px_0px_rgb(84,18,18)]">
 
-                  <span class="font-mono text-[20px] tracking-widest text-color-white">
+                <div class="hidden md:block absolute bottom-10 left-0 bg-color-black px-4 pt-2 pb-1 pl-5 transform -translate-x-2 group-hover:translate-x-0 transition-transform duration-350 ease-[cubic-bezier(0.7,0,0.3,1)] z-20 shadow-[8px_8px_0px_0px_rgb(84,18,18)]">
+
+                  <span class="font-mono text-[16px] md:text-[20px] tracking-widest text-color-white">
                     {{ .Params.title }}
                   </span>
 
                 </div>
               </div>
-              
+
+              <div class="md:hidden font-bgsans font-bold text-[28px] leading-[0.9] tracking-tighter text-color-black text-left mt-8 flex items-center gap-3">
+                <span class="inline-block w-3 h-3 bg-color-red shrink-0"></span>
+                {{ .Title }}
+              </div>
 
             </a>
             {{ end }}
-            
+
           </div>
 
+          {{/*  ------------ Blog ------------  */}}
           <div class="md:col-start-9 md:col-span-4 flex flex-col justify-end pt-16 md:pt-40">
-            
+
             {{/*  03  */}}
             <div class="flex justify-end mb-10 select-none">
-              <div class="bg-color-black px-4 py-2 md:px-6 md:py-3">
-                <span class="font-mono text-[14px] md:text-[16px] text-color-white/90 leading-none">03</span>
+              <div class="bg-color-black px-4 py-1.5 md:px-6 md:py-3">
+                <span class="font-mono text-[13px] md:text-[16px] text-color-white/90 leading-none">03</span>
               </div>
             </div>
 
             {{ range first 1 (where $page.Site.RegularPages "Section" "blog") }}
 
-            <a href="{{ .RelPermalink }}" class="group block w-full bg-color-black text-color-white p-8 md:p-11 relative shadow-[12px_12px_0px_0px_rgb(84,18,18)] hover:-translate-y-1 transition-transform duration-300 ease-out">
-              
+            <a href="{{ .RelPermalink }}" class="group block w-full bg-color-black text-color-white p-8 md:p-11 relative md:shadow-[12px_12px_0px_0px_rgb(84,18,18)] shadow-[8px_8px_0px_0px_rgb(84,18,18)] hover:-translate-y-1 transition-transform duration-300 ease-out">
+
               <div class="flex justify-between items-end border-b border-color-white/20 pb-4 mb-8">
                  <span class="font-mono text-[10px] text-color-white/40 uppercase">
                   Blog
@@ -323,11 +349,11 @@
               </div>
 
               {{/*  标题  */}}
-              <h3 class="font-bgsans text-[29px] leading-tighter mb-6 text-color-white/90">
+              <h3 class="font-secondary text-[22px] md:text-[29px] leading-tighter mb-6 text-color-white/90">
                 {{ .Title }}
               </h3>
-              
-              <p class="decode-permanent font-primary text-[13px] text-color-white/40 leading-relaxed mb-12 line-clamp-4">
+
+              <p class="font-primary text-[11px] md:text-[13px] text-color-white/40 leading-relaxed mb-12 line-clamp-4">
                  {{ .Content | plainify }}
               </p>
 
@@ -336,7 +362,7 @@
                 <span class="font-mono text-[10px] tracking-widest uppercase">
                   Read Log
                 </span>
-                               
+
                 <svg class="w-3.5 h-3.5 overflow-visible mb-px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square">
                   <g class="opacity-0 -translate-x-2 transition-all duration-200 delay-0 group-hover:delay-150 ease-out group-hover:opacity-90 group-hover:translate-x-0"><path d="M2 6l6 6-6 6"></path></g>
                   <g class="opacity-0 -translate-x-2 transition-all duration-200 delay-75 group-hover:delay-75 ease-out group-hover:opacity-90 group-hover:translate-x-0"><path d="M9 6l6 6-6 6"></path></g>
@@ -354,5 +380,5 @@
     </div>
 
   </div>
-  
+
 </section>

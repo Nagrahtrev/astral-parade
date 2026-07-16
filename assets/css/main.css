@@ -115,6 +115,24 @@
 
 ::-webkit-scrollbar-button:hover { filter: brightness(0.6); }
 
+/* -------- 手机端全局隐藏滚动条 -------- */
+@media (width < 64rem) {
+  ::-webkit-scrollbar { display: none; }
+  * { scrollbar-width: none; }
+}
+
+/* -------- 电脑端仅首页和 about 页隐藏 -------- */
+@media (width >= 64rem) {
+  :root:has(body.page-home)::-webkit-scrollbar,
+  :root:has(body.about-page)::-webkit-scrollbar {
+    display: none;
+  }
+  :root:has(body.page-home),
+  :root:has(body.about-page) {
+    scrollbar-width: none;
+  }
+}
+
 /* =========================================
 
    >> 通用分页器
@@ -226,10 +244,11 @@ body.page-leaving:not(.page-home) main {
 
 /* =========================================
 
-   >> 回到顶部按钮
+   >> 全局浮动按钮
 
    ========================================= */
 
+/* 回到顶部 */
 #back-to-top {
   transform: translateY(10px);
   box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.15);
@@ -246,4 +265,16 @@ body.page-leaving:not(.page-home) main {
     transform: translateY(-3px);
     box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.2);
   }
+}
+
+/* 汉堡按钮 */
+#mobile-menu-btn {
+  transform: translateY(0);
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+#mobile-menu-btn.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
 }
