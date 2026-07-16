@@ -2,29 +2,29 @@
 function initPageTransitions() {
     const mainContent = document.querySelector('main');
     const body = document.body;
-    
+
     if (!mainContent) return;
 
     setTimeout(() => {
         body.classList.add('page-loaded');
-    }, 50); 
+    }, 50);
 
     // 拦截内部链接跳转
     document.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', function(e) {
             if (
-                link.hostname === window.location.hostname && 
-                link.pathname !== window.location.pathname && 
-                !link.hash && 
+                link.hostname === window.location.hostname &&
+                link.pathname !== window.location.pathname &&
+                !link.hash &&
                 link.target !== '_blank' &&
                 !e.ctrlKey && !e.metaKey
             ) {
                 e.preventDefault();
                 const destination = this.href;
-                
+
                 body.classList.remove('page-loaded');
                 body.classList.add('page-leaving');
-                
+
                 setTimeout(() => {
                     window.location.href = destination;
                 }, 300);
@@ -58,7 +58,7 @@ window.customSmoothScroll = function(targetY, duration = 400) {
         if (startTime === null) startTime = currentTime;
         const timeElapsed = currentTime - startTime;
         const progress = Math.min(timeElapsed / duration, 1);
-        
+
         window.scrollTo(0, startY + distance * easeOutQuart(progress));
 
         if (timeElapsed < duration) {
@@ -67,14 +67,14 @@ window.customSmoothScroll = function(targetY, duration = 400) {
             document.documentElement.style.scrollBehavior = originalScrollBehavior;
         }
     }
-    
+
     requestAnimationFrame(animation);
 };
 
 // ------------ Smart Header ------------
 function initSmartHeader() {
     const floatingHeader = document.getElementById('floating-header');
-    if (!floatingHeader) return; 
+    if (!floatingHeader) return;
 
     let lastScrollY = window.scrollY;
 
@@ -86,13 +86,13 @@ function initSmartHeader() {
             floatingHeader.style.transitionDuration = '0ms';
             floatingHeader.classList.remove('translate-y-0');
             floatingHeader.classList.add('-translate-y-full');
-        } 
+        }
         // 向下滚动隐藏
         else if (currentScrollY > lastScrollY) {
             floatingHeader.style.transitionDuration = '200ms';
             floatingHeader.classList.remove('translate-y-0');
             floatingHeader.classList.add('-translate-y-full');
-        } 
+        }
         // 向上滚动出现
         else if (currentScrollY < lastScrollY && currentScrollY > 10) {
             floatingHeader.style.transitionDuration = '200ms';
@@ -115,10 +115,10 @@ function initSmartMasonry() {
         entries.forEach(entry => {
             const content = entry.target;
             const item = content.closest('.blog-item');
-            
+
             if (item) {
-                const contentHeight = entry.contentRect.height; 
-                const rowSpan = Math.ceil(contentHeight + 80); 
+                const contentHeight = entry.contentRect.height;
+                const rowSpan = Math.ceil(contentHeight + 80);
                 item.style.gridRowEnd = `span ${rowSpan}`;
             }
         });
@@ -157,19 +157,19 @@ function initInfiniteScroll() {
             if (!nextUrl) return;
 
             isFetching = true;
-            trigger.style.opacity = '1'; 
+            trigger.style.opacity = '1';
 
             try {
                 const response = await fetch(nextUrl);
                 const htmlText = await response.text();
-                
+
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(htmlText, 'text/html');
-                
+
                 const newItems = doc.querySelectorAll('#blog-grid .blog-item');
-                
+
                 newItems.forEach(item => {
-                    item.style.gridRowEnd = `span 200`; 
+                    item.style.gridRowEnd = `span 200`;
                     grid.appendChild(item);
 
                     const cardContent = item.querySelector('.card-content');
@@ -212,7 +212,7 @@ function initBlogPaginationCursor() {
         cursor.style.transition = 'none';
         cursor.style.width = `${activeBtn.offsetWidth}px`;
         cursor.style.transform = `translateX(${activeBtn.offsetLeft}px)`;
-        
+
         void cursor.offsetWidth;
         cursor.style.transition = '';
 
@@ -226,6 +226,31 @@ function initBlogPaginationCursor() {
     }
 }
 
+// ------------ 全局回到顶部按钮 ------------
+function initBackToTop() {
+    const btn = document.getElementById('back-to-top');
+    if (!btn) return;
+
+    let isVisible = false;
+    const scrollThreshold = 300;
+
+    window.addEventListener('scroll', () => {
+        const shouldShow = window.scrollY > scrollThreshold;
+
+        if (shouldShow && !isVisible) {
+            btn.classList.add('is-visible');
+            isVisible = true;
+        } else if (!shouldShow && isVisible) {
+            btn.classList.remove('is-visible');
+            isVisible = false;
+        }
+    }, { passive: true });
+
+    btn.addEventListener('click', () => {
+        customSmoothScroll(0, 800);
+    });
+}
+
 // ------------ 执行入口 ------------
 document.addEventListener('DOMContentLoaded', () => {
     initPageTransitions();
@@ -233,4 +258,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initSmartMasonry();
     initInfiniteScroll();
     initBlogPaginationCursor();
+    initBackToTop();
 });

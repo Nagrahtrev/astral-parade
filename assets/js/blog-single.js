@@ -14,12 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
             timerElement.innerText = `${displayMinutes}:${displaySeconds}`;
         }, 1000);
     }
-
-    // Top 按钮放到 body 最外层
-    const fab = document.getElementById('mobile-fab');
-    if (fab) {
-        document.body.appendChild(fab);
-    }
 });
 
 // 智能后退
@@ -39,18 +33,18 @@ window.toggleMobileToc = function() {
     const iconV = document.getElementById('toc-icon-v');
     const iconBox = document.getElementById('toc-icon-box');
     const dot = document.getElementById('toc-dot');
-    
+
     if (!wrapper || !iconV || !iconBox || !dot) return;
 
     wrapper.classList.toggle('is-open');
-    
+
     if (wrapper.classList.contains('is-open')) {
         iconV.style.transform = 'translate(-50%, 0) scaleY(0)';
         iconBox.style.borderColor = 'rgba(0,0,0,0.4)';
-        dot.classList.replace('opacity-40', 'opacity-100'); 
+        dot.classList.replace('opacity-40', 'opacity-100');
     } else {
         iconV.style.transform = 'translate(-50%, 0) scaleY(1)';
         iconBox.style.borderColor = 'rgba(0,0,0,0.2)';
-        dot.classList.replace('opacity-100', 'opacity-40'); 
+        dot.classList.replace('opacity-100', 'opacity-40');
     }
 };

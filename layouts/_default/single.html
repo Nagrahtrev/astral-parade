@@ -1,11 +1,13 @@
 {{ define "main" }}
-  <article class="max-w-3xl mx-auto px-4 py-12">
-    
-    <h1 class="text-4xl font-bold mb-8">{{ .Title }}</h1>
-    
-    <div class="prose prose-invert">
+
+  <article class="max-w-3xl mx-auto px-5 py-12">
+
+    <h1 class="text-4xl font-bold mb-10">{{ .Title }}</h1>
+
+    <div class="prose prose-invert text-color-white">
       {{ .Content }}
     </div>
 
   </article>
+
 {{ end }}

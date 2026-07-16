@@ -1,10 +1,12 @@
 {{ $mainJS := resources.Get "js/main.js" }}
 
-{{ if hugo.IsProduction }}
-  {{ $mainJS = $mainJS | minify | fingerprint }}
-{{ end }}
+{{ if $mainJS }}
+  {{ if hugo.IsProduction }}
+    {{ $mainJS = $mainJS | minify | fingerprint }}
+  {{ end }}
 
-<script src="{{ $mainJS.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $mainJS.Data.Integrity }}"{{ end }} defer></script>
+  <script src="{{ $mainJS.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $mainJS.Data.Integrity }}"{{ end }} defer></script>
+{{ end }}
 
 {{/*  Lenis  */}}
 {{ $lenisJS := resources.Get "js/lenis.min.js" }}
@@ -13,12 +15,12 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const lenis = new Lenis({
-      duration: 0.5,       
+      duration: 0.5,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical', 
+      direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
-      mouseMultiplier: 1,  
+      mouseMultiplier: 1,
       smoothTouch: false,
       touchMultiplier: 2,
       infinite: false,

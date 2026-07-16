@@ -1,6 +1,6 @@
 /* =========================================
 
-   >> Blog 正文样式
+   >> 正文样式
 
    ========================================= */
 
@@ -22,12 +22,12 @@
          prose-h2:mt-24 prose-h2:mb-10       /* H2 上下间距 */
          prose-h2:font-normal                /* H2 字重 */
          prose-h2:tracking-normal;           /* H2 字距 */
-  
-  @apply prose-h3:text-[1.4375rem]           /* H3 字号 */ 
+
+  @apply prose-h3:text-[1.4375rem]           /* H3 字号 */
          prose-h3:mt-12 prose-h3:mb-5        /* H3 上下间距 */
          prose-h3:tracking-normal;           /* H3 字距 */
 
-  @apply prose-h4:text-[1.25rem]             /* H4 字号 */ 
+  @apply prose-h4:text-[1.25rem]             /* H4 字号 */
          prose-h4:mt-8 prose-h4:mb-4         /* H4 上下间距 */
          prose-h4:tracking-normal;           /* H4 字距 */
 }
@@ -41,27 +41,27 @@
 
 /* Button */
 .article-content.prose a.btn {
-  background-color: var(--my-color-black) !important; 
+  background-color: var(--my-color-black) !important;
   opacity: 0.9 !important;
-  color: var(--my-color-white) !important; 
-  
-  border-radius: 0 !important; 
-  border: none !important; 
-  
-  padding: 0.875rem 1.6rem !important; 
-  
-  font-size: 0.875rem !important; 
-  font-weight: 500 !important; 
-  letter-spacing: 0.09em !important; 
-  
+  color: var(--my-color-white) !important;
+
+  border-radius: 0 !important;
+  border: none !important;
+
+  padding: 0.875rem 1.6rem !important;
+
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.09em !important;
+
   display: inline-block !important;
   line-height: 1 !important;
-  
+
   transition: background-color 0.4s cubic-bezier(0.25,1,0.5,1) !important;
 }
 
 .article-content.prose a.btn:hover {
-  background-color: var(--my-color-red) !important; 
+  background-color: var(--my-color-red) !important;
 }
 
 .article-content.prose {
@@ -88,7 +88,7 @@
          prose-li:marker:text-color-black/20       /* 索引圆点颜色 */
          prose-li:pl-3                             /* 文字索引间距 */
          prose-li:my-3;                            /* 列表项间距 */
-         
+
   @apply prose-ol:marker:[font-family:var(--font-smsans)]             /* 有序列表索引字体 */
          prose-ol:marker:text-color-black/30;                         /* 有序列表索引颜色 */
 }
@@ -105,7 +105,7 @@
          prose-code:tracking-wider             /* 字距 */
          prose-code:text-color-red/80          /* 文字颜色 */
          prose-code:font-normal                /* 字重 */
-         prose-code:bg-color-black/[0.04]      /* 背景颜色 */
+         prose-code:bg-color-black/4      /* 背景颜色 */
          prose-code:border-[0.5px] prose-code:border-color-black/10 prose-code:rounded-none   /* 边框样式 */
          prose-code:px-1.5 prose-code:py-0.5;  /* 内边距 */
 
@@ -127,10 +127,10 @@
 /* 禁用原生样式 */
 .article-content.prose .highlight pre code,
 .article-content.prose pre code {
-  background-color: transparent !important; 
-  border: none !important;  
+  background-color: transparent !important;
+  border: none !important;
   padding: 0 !important;
-  font-size: 13px !important; 
+  font-size: 13px !important;
 }
 
 .article-content.prose {
@@ -139,23 +139,23 @@
          prose-img:my-5 prose-figure:my-15                       /* 上下间距 */
 
          /* 图注 */
-         prose-figcaption:font-primary prose-figcaption:text-[10px] prose-figcaption:text-center prose-figcaption:text-color-black/30 prose-figcaption:tracking-widest; 
+         prose-figcaption:font-primary prose-figcaption:text-[10px] prose-figcaption:text-center prose-figcaption:text-color-black/30 prose-figcaption:tracking-widest;
 
   /* 分割线 */
-  @apply prose-hr:border-t-[0.5px] prose-hr:border-color-black/10 prose-hr:my-24; 
+  @apply prose-hr:border-t-[0.5px] prose-hr:border-color-black/10 prose-hr:my-24;
 
   /* 数据表格 */
-  @apply prose-table:w-full prose-table:my-5 prose-table:text-[0.875rem] 
-         prose-table:border-collapse 
+  @apply prose-table:w-full prose-table:my-5 prose-table:text-[0.875rem]
+         prose-table:border-collapse
          prose-table:border-[0.5px] prose-table:border-color-black/20;  /* 表格外边框 */
 
   @apply prose-thead:border-b-0;                                        /* 删除原生表头边框 */
 
   @apply prose-th:py-3 prose-th:px-4 prose-th:text-left                 /* 表头间距 */
-         prose-th:font-secondary prose-th:font-bold                       /* 表头字体 */ 
+         prose-th:font-secondary prose-th:font-bold                       /* 表头字体 */
          prose-th:text-color-black/60 prose-th:tracking-wider
 
-         prose-th:bg-color-black/[0.04]                                 /* 表头底色 */
+         prose-th:bg-color-black/4                                 /* 表头底色 */
          prose-th:border-[0.5px] prose-th:border-color-black/20;        /* 表头边框 */
 
   @apply prose-td:py-3 prose-td:px-4                                    /* 单元格间距 */
@@ -175,7 +175,7 @@
   background-color: rgba(15, 14, 14, 0.02) !important;               /* 底色 */
   border: 0.5px solid rgba(15, 14, 14, 0.1) !important;              /* 边框 */
   border-radius: 0 !important;                                         /* 无圆角 */
-  overflow: hidden !important;      
+  overflow: hidden !important;
 }
 
 /* head */
@@ -274,7 +274,7 @@
   flex-wrap: wrap !important;
   justify-content: center !important;
   list-style: none !important;
-  padding: 0 !important; 
+  padding: 0 !important;
   margin: 0 !important;
 
   background-color: rgba(15, 14, 14, 0.06) !important;       /* 背景 */
@@ -373,7 +373,7 @@
   border: none !important;
   border-bottom: 0.5px solid transparent !important;
   cursor: pointer !important;
-  
+
   transition: background-color 0.4s cubic-bezier(0.25,1,0.5,1), color 00.4s cubic-bezier(0.25,1,0.5,1), border-color 0.4s cubic-bezier(0.25,1,0.5,1) !important;
 }
 
@@ -435,14 +435,14 @@
 .article-content.prose .mermaid .node path {
   fill: rgba(15, 14, 14, 0.06) !important;               /* 背景 */
   stroke: rgba(15, 14, 14, 0.2) !important;              /* 边框 */
-  stroke-width: 0.5px !important; 
+  stroke-width: 0.5px !important;
 }
 
 /* 判定 */
 .article-content.prose .mermaid .node polygon {
   fill: rgba(139, 154, 70, 0.5) !important;              /* 背景 */
   stroke: rgba(139, 154, 70, 0.2) !important;              /* 边框 */
-  stroke-width: 0.5px !important; 
+  stroke-width: 0.5px !important;
 }
 
 /* 文字 */
@@ -466,7 +466,7 @@
 .article-content.prose .mermaid .edgePath .path,
 .article-content.prose .mermaid .flowchart-link {
   stroke: rgb(179, 179, 179) !important;
-  stroke-width: 1px !important; 
+  stroke-width: 1px !important;
 }
 
 /* 箭头 */
@@ -481,8 +481,8 @@
 .article-content.prose .mermaid .edgeLabel {
   font-family: var(--font-secondary) !important;
   font-size: 0.75rem !important;
-  color: rgba(15, 14, 14, 0.5) !important; 
-  background-color: transparent !important; 
+  color: rgba(15, 14, 14, 0.5) !important;
+  background-color: transparent !important;
 }
 
 /* -------- 复选框 -------- */

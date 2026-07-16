@@ -2,12 +2,11 @@
 <html lang="{{ site.LanguageCode | default `en` }}">
   <head>
     {{ partial "essentials/head.html" . }}
-    
     {{ partialCached "essentials/style.html" . }}
   </head>
 
   <body class="{{ if .IsHome }}page-home bg-color-black text-color-white{{ end }}{{ if eq .Type "about" }} about-page{{ end }}">
-    
+
     {{ partial "essentials/header.html" . }}
 
     <main>
@@ -15,7 +14,24 @@
     </main>
 
     {{ partial "essentials/footer.html" . }}
-
     {{ partialCached "essentials/script.html" . }}
+
+    {{/*  全局回到顶部按钮  */}}
+    <button id="back-to-top"
+            class="fixed bottom-6 right-6 z-50 w-10 h-10 flex items-center justify-center
+                   border-[0.5px] border-color-black/10
+                   bg-color-white/90
+                   opacity-0 pointer-events-none
+                   active:-translate-y-3
+                   transition-all duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)]
+                   touch-manipulation cursor-pointer"
+            aria-label="BACK TO TOP">
+      <svg class="w-3.5 h-3.5 text-color-black/50"
+           viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 20V4M5 11l7-7 7 7"/>
+      </svg>
+    </button>
+
   </body>
 </html>
