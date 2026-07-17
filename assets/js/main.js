@@ -370,12 +370,39 @@ function initMobileFloatingButton() {
     }, { passive: true });
 }
 
+// ------------ 首页按钮指示器 ------------
+function initMobileMenuHint() {
+    const hint = document.getElementById('mobile-menu-hint');
+    const btn = document.getElementById('mobile-menu-btn');
+    if (!hint || !btn) return;
+
+    if (!document.body.classList.contains('page-home')) return;
+
+    requestAnimationFrame(() => {
+        hint.classList.remove('opacity-0');
+    });
+
+    function hideHint() {
+        hint.classList.add('opacity-0');
+        setTimeout(() => {
+            hint.style.display = 'none';
+        }, 200);
+    }
+
+    // 点击按钮后隐藏
+    btn.addEventListener('click', hideHint);
+
+    // 滑动后隐藏
+    window.addEventListener('scroll', hideHint, { once: true });
+}
+
 // ------------ 执行入口 ------------
 document.addEventListener('DOMContentLoaded', () => {
     initPageTransitions();
     initSmartHeader();
     initMobileMenu();
     initMobileFloatingButton();
+    initMobileMenuHint();
     initSmartMasonry();
     initInfiniteScroll();
     initBlogPaginationCursor();

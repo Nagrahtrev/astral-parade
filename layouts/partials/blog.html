@@ -15,15 +15,15 @@
   {{ end }}
 {{ end }}
 
-<section class="min-h-screen relative z-10 pt-20 md:pt-28 pb-32 mb-20 bg-color-white">
+<section class="min-h-screen relative z-10 pt-12 md:pt-28 pb-32 mb-20 bg-color-white">
 
   <div class="w-full max-w-375 mx-auto px-4 md:px-8 lg:px-12 flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
 
     {{/*  ------------ 左 ------------  */}}
     <aside class="w-full lg:w-[28%] xl:w-[25%] shrink-0 lg:sticky lg:top-32 flex flex-col z-20">
-      
+
       {{/*  Title  */}}
-      <div class="mb-10 lg:mb-16">
+      <div class="hidden md:block mb-10 lg:mb-16">
 
         <h1 class="font-bgsans text-[56px] md:text-[72px] lg:text-[88px] leading-[0.85] font-black uppercase text-color-black mb-6 wrap-break-word select-none">
             Blog
@@ -40,17 +40,17 @@
       </div>
 
       {{/*  Filter  */}}
-      <nav class="flex flex-col md:flex-row lg:flex-col gap-8 lg:gap-13 w-full">
-        
+      <nav class="flex flex-col md:flex-col gap-8 lg:gap-13 w-full">
+
         {{ if eq .Data.Singular "tag" }}
-          
+
           {{/*  Tags  */}}
           <div class="w-full">
 
-            <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/30 mb-4 block">
+            <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/30 mb-3 md:mb-4 block">
               Tags
             </span>
-            
+
             <div class="flex flex-row lg:flex-col gap-2 lg:gap-0 overflow-x-auto lg:overflow-visible no-scrollbar pb-2 lg:pb-0">
 
               {{ range $name, $taxonomy := site.Taxonomies.tag }}
@@ -59,7 +59,7 @@
                 <a href="{{ .Page.RelPermalink }}" class="filter-item {{ if $isActive }}active{{ end }}">
 
                   <span>
-                    {{ $name }} 
+                    {{ $name }}
                     <span class="font-mono opacity-50 text-[11px] ml-1">
                       ({{ .Count }})
                     </span>
@@ -79,13 +79,21 @@
           {{/*  Categories  */}}
           <div class="w-full">
 
-             <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/30 mb-4 block">
+            <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/30 mb-3 md:mb-4 flex items-center justify-between w-full select-none">
               Category
+
+              <span class="filter-slide-hint text-color-black/15 tracking-widest lg:hidden inline-flex items-center gap-1 animate-pulse">
+                SLIDE
+                <svg class="w-2.5 h-2.5 -mt-px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+
             </span>
 
              <div class="flex flex-row lg:flex-col gap-2 lg:gap-0 overflow-x-auto lg:overflow-visible no-scrollbar pb-2 lg:pb-0">
-              
-                <a href="{{ (site.GetPage "section" "blog").RelPermalink }}" 
+
+                <a href="{{ (site.GetPage "section" "blog").RelPermalink }}"
                    class="filter-item {{ if not $.Data.Term }}active{{ end }}">
 
                   <span>All Categories</span>
@@ -113,13 +121,21 @@
           {{/*  Year  */}}
           <div class="w-full">
 
-             <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/30 mb-4 block">
+            <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/30 mb-3 md:mb-4 flex items-center justify-between w-full select-none">
               Year
+
+              <span class="filter-slide-hint tracking-widest text-color-black/15 lg:hidden inline-flex items-center gap-1 animate-pulse">
+                SLIDE
+                <svg class="w-2.5 h-2.5 -mt-px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+
             </span>
 
              <div class="flex flex-row lg:flex-col gap-2 lg:gap-0 overflow-x-auto lg:overflow-visible no-scrollbar pb-2 lg:pb-0">
-              
-                <a href="{{ (site.GetPage "section" "blog").RelPermalink }}" 
+
+                <a href="{{ (site.GetPage "section" "blog").RelPermalink }}"
                    class="filter-item {{ if not $.Data.Term }}active{{ end }}">
 
                   <span>All Years</span>
@@ -149,15 +165,15 @@
 
     {{/*  ------------ 右 ------------  */}}
     <main id="blog-list-start" class="flex-1 w-full min-w-0 relative" style="scroll-margin-top: 120px;">
-      
+
       {{/*  瀑布流 Grid  */}}
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-0 items-start" style="grid-auto-rows: 1px;" id="blog-grid">
-        
+
         {{ $pageSize := 12 }}
         {{ $offset := mul (sub $paginator.PageNumber 1) $pageSize }}
 
         {{ range $index, $page := $paginator.Pages }}
-        
+
         {{ $mod := mod $index 4 }}
         {{ $cutLen := 120 }}
         {{ if eq $mod 0 }}{{ $cutLen = 60 }}
@@ -170,9 +186,9 @@
         {{/*  文章卡片  */}}
         <article class="blog-item w-full pb-16 pt-2">
 
-          <a href="{{ .Permalink }}" 
+          <a href="{{ .Permalink }}"
              class="card-content border-[0.5px] border-color-black/20 bg-color-white p-5 md:p-6 hover:bg-color-black/2 group cursor-pointer relative shadow-[0_5px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.08)] flex flex-col h-full transition-all duration-500 ease-out">
-            
+
             <div class="absolute -top-1 -left-1 w-2 h-2 border-t-[0.5px] border-l-[0.5px] border-color-black/40"></div>
             <div class="absolute -top-1 -right-1 w-2 h-2 border-t-[0.5px] border-r-[0.5px] border-color-black/40"></div>
 
@@ -201,7 +217,7 @@
             {{/*  插图  */}}
             {{ if .Params.image }}
             <div class="w-full aspect-4/3 bg-color-black/5 mb-5 relative overflow-hidden border-[0.5px] border-color-black/10">
-              
+
                <img src="{{ .Params.image | relURL }}" class="w-full h-full object-cover filter grayscale contrast-125 brightness-95 group-hover:grayscale-0 transition-all duration-500 ease-out">
 
                <div class="absolute inset-0 bg-color-black/10 group-hover:bg-transparent transition-colors duration-500 ease-out pointer-events-none"></div>
@@ -231,7 +247,7 @@
                 </svg>
 
               </span>
-              
+
               {{/*  序号  */}}
               <span class="font-mono text-[9px] tracking-widest text-color-black/20 group-hover:text-color-red transition-colors duration-500 ease-out">
                 #{{ printf "%02d" $globalIndex }}
@@ -282,3 +298,8 @@
 
   </div>
 </section>
+
+{{ with resources.Get "js/blog-controller.js" }}
+  {{ $js := . | minify }}
+  <script src="{{ $js.RelPermalink }}"></script>
+{{ end }}

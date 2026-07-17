@@ -79,6 +79,24 @@
 
 </button>
 
+{{/*  首页指示器  */}}
+<div id="mobile-menu-hint"
+     class="page-home-only md:hidden fixed bottom-20 left-7 z-40
+            flex flex-col items-center gap-1.5
+            opacity-0 animate-bounce
+            transition-opacity duration-200 ease-out
+            pointer-events-none select-none">
+
+  <span class="font-smsans text-[9px] tracking-[0.2em] uppercase text-color-white/60">
+    click
+  </span>
+
+  <svg class="w-3 h-3 text-color-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square">
+    <path d="M12 5v14M5 12l7 7 7-7"/>
+  </svg>
+
+</div>
+
 {{/*  菜单  */}}
 <div id="mobile-menu-dropdown"
      class="md:hidden pointer-events-auto fixed top-0 left-0 w-full z-50

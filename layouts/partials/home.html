@@ -256,7 +256,7 @@
             <div class="md:col-start-7 md:col-span-6 order-1 md:order-2 relative">
 
               <div class="w-full aspect-4/5 md:aspect-5/6 lg:aspect-9/10 xl:aspect-square border-[0.5px] border-color-black/80 overflow-hidden">
-                <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-full object-cover filter grayscale contrast-125 brightness-95 group-hover:grayscale-0 transition-all duration-300 ease-[cubic-bezier(0.7,0,0.3,1)]">
+                <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-full object-cover md:filter md:grayscale md:contrast-125 md:brightness-95 md:group-hover:grayscale-0 md:transition-all md:duration-300 md:ease-[cubic-bezier(0.7,0,0.3,1)]">
               </div>
 
               <div class="md:hidden absolute bottom-0 left-0">
@@ -296,10 +296,10 @@
 
               {{/*  封面  */}}
               <div class="w-full aspect-8/7 md:aspect-5/4 border-[0.5px] border-color-black/80 relative overflow-hidden mb-6 md:mb-8">
-                <img src="{{ .Params.image }}" alt="{{ .Title }}" class="absolute inset-0 w-full h-full object-cover filter grayscale contrast-125 brightness-95 group-hover:grayscale-0 transition-all duration-300 ease-[cubic-bezier(0.7,0,0.3,1)]">
+                <img src="{{ .Params.image }}" alt="{{ .Title }}" class="absolute inset-0 w-full h-full object-cover md:filter md:grayscale md:contrast-125 md:brightness-95 md:group-hover:grayscale-0 md:transition-all md:duration-300 md:ease-[cubic-bezier(0.7,0,0.3,1)]">
 
                 {{ if .Params.from_album }}
-                <div class="absolute top-0 right-0 bg-color-black px-3 pt-0 md:pt-[1px] py-[3px] md:py-[5px] z-20">
+                <div class="absolute top-0 right-0 bg-color-black px-3 pt-0 md:pt-px py-[3px] md:py-[5px] z-20">
                   <span class="font-mono text-[10px] md:text-[13px] text-color-white/90 tracking-widest uppercase ">
                     FROM: {{ .Params.from_album }}
                   </span>

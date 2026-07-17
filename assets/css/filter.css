@@ -182,7 +182,7 @@
 }
 
 /* PC端 */
-@media (min-width: 1024px) {
+@media (min-width: 1152px) {
   .filter-item {
     display: flex;
     padding: 12px 0;
