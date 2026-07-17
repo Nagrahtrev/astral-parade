@@ -10,16 +10,16 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 24px 16px;
-  background: transparent;
+  padding: 22px 16px;
+  background: color-mix(in srgb, var(--my-color-black) 3%, transparent);
   border: none;
   border-bottom: 0.5px solid color-mix(in srgb, var(--my-color-black) 20%, transparent);
   cursor: pointer;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .filter-btn:last-child {
-  border-bottom: none; 
+  border-bottom: none;
 }
 
 .filter-btn::before {
@@ -62,10 +62,10 @@
 
 .filter-btn .index {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 8px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--my-color-black) 30%, transparent);
+  color: color-mix(in srgb, var(--my-color-black) 70%, transparent);
   margin-bottom: 8px;
   white-space: nowrap;
   overflow: hidden;
@@ -76,27 +76,48 @@
 
 .filter-btn .title {
   font-family: var(--font-bgsans);
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: color-mix(in srgb, var(--my-color-black) 30%, transparent);
+  color: color-mix(in srgb, var(--my-color-black) 90%, transparent);
   line-height: 1;
 }
 
+@media (min-width: 640px) {
+  .filter-btn { padding: 28px 24px; }
+  .filter-btn .index { font-size: 10px; }
+  .filter-btn .title { font-size: 2rem; }
+}
+
 @media (min-width: 768px) {
-  .filter-btn { padding: 32px 24px; }
-  .filter-btn .index { font-size: 11px; }
+  .filter-btn { padding: 30px 24px; }
+  .filter-btn .title { font-size: 2.1rem; }
+}
+
+@media (min-width: 1024px) {
+  .filter-btn { padding: 31px 24px; background: transparent;}
+  .filter-btn .index { color: color-mix(in srgb, var(--my-color-black) 30%, transparent); }
+  .filter-btn .title { font-size: 2.2rem; color: color-mix(in srgb, var(--my-color-black) 30%, transparent); }
+}
+
+@media (min-width: 1280px) {
+  .filter-btn { padding: 32px 24px; background: transparent; }
+  .filter-btn .title { font-size: 2.4rem; }
+}
+
+@media (min-width: 1536px) {
+  .filter-btn { padding: 33px 24px; background: transparent; }
   .filter-btn .title { font-size: 2.8rem; }
 }
 
-.filter-btn:hover:not(.active) .title {
-  color: var(--my-color-black);
-  transform: translateX(8px); 
-}
 .filter-btn:hover:not(.active) .index {
-  color:color-mix(in srgb, var(--my-color-black) 70%, transparent);
+  color: color-mix(in srgb, var(--my-color-black) 70%, transparent);
   transform: translateX(4px);
+}
+.filter-btn:hover:not(.active) .title {
+  color: color-mix(in srgb, var(--my-color-black) 90%, transparent);
+  transform: translateX(8px);
 }
 
 .filter-btn.active {
@@ -107,7 +128,7 @@
   transform: translateX(8px);
 }
 .filter-btn.active .title {
-  color: var(--my-color-white); 
+  color: var(--my-color-white);
   transform: translateX(8px);
 }
 
@@ -133,7 +154,7 @@
   padding: 6px 14px;
   border: 0.5px solid color-mix(in srgb, var(--my-color-black) 20%, transparent);
   border-radius: 999px;
-  
+
   font-family: var(--font-secondary);
   font-size: 13px;
   color: color-mix(in srgb, var(--my-color-black) 50%, transparent);
@@ -172,7 +193,7 @@
     color: color-mix(in srgb, var(--my-color-black) 50%, transparent);
     letter-spacing: 0.025em;
   }
-  
+
   .filter-item:hover {
     border-color: color-mix(in srgb, var(--my-color-black) 30%, transparent);
     background-color: transparent;
