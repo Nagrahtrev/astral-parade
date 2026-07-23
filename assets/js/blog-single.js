@@ -14,6 +14,20 @@ document.addEventListener('DOMContentLoaded', () => {
             timerElement.innerText = `${displayMinutes}:${displaySeconds}`;
         }, 1000);
     }
+
+    // TOC 平滑滚动
+    var tocLinks = document.querySelectorAll('nav.radar-toc-nav a[href^="#"]');
+    tocLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var id = this.getAttribute('href').slice(1);
+            var target = document.getElementById(id);
+            if (target) {
+                var y = target.getBoundingClientRect().top + window.scrollY - 20;
+                window.customSmoothScroll(y, 500);
+            }
+        });
+    });
 });
 
 // 智能后退
@@ -27,7 +41,7 @@ window.smartBack = function() {
 
 // Navigator 移动端折叠控制
 window.toggleMobileToc = function() {
-    if (window.innerWidth >= 1024) return;
+    if (window.matchMedia('(width >= 64rem)').matches) return;
 
     const wrapper = document.getElementById('toc-wrapper');
     const iconV = document.getElementById('toc-icon-v');
@@ -48,3 +62,11 @@ window.toggleMobileToc = function() {
         dot.classList.replace('opacity-100', 'opacity-40');
     }
 };
+
+window.addEventListener('resize', function() {
+    if (window.matchMedia('(width >= 64rem)').matches) return;
+    const wrapper = document.getElementById('toc-wrapper');
+    if (wrapper && wrapper.classList.contains('is-open')) {
+        wrapper.classList.remove('is-open');
+    }
+});

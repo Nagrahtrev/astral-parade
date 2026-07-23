@@ -5,15 +5,22 @@
     "clean": "node -e \"fs.rmSync('public', { recursive: true, force: true })\"",
     "prestart": "npm run clean",
     "prebuild": "npm run clean",
-    "start": "concurrently \"npm run watch\" \"npm run dev\"",
+    "start": "concurrently \"npm run watch\" \"npm run watch-fallback\" \"npm run dev\"",
     "dev": "node scripts/dev-server.js",
-    "build": "tailwindcss -i ./assets/css/main.css -o ./static/css/tailwind.css --minify && hugo --gc --minify",
-    "watch": "tailwindcss -i ./assets/css/main.css -o ./static/css/tailwind.css --watch"
+    "build": "postcss ./assets/css/main.css -o ./static/css/tailwind-build.css && node scripts/run-color-mix-fallback.js && node scripts/apply-fallback.js && hugo --gc --minify",
+    "watch": "postcss ./assets/css/main.css -o ./static/css/tailwind-build.css --watch",
+    "watch-fallback": "node scripts/watch-fallback.js",
+    "subset": "python scripts/subset-fonts.py"
   },
   "devDependencies": {
+    "@csstools/postcss-color-mix-function": "^4.0.6",
     "@tailwindcss/cli": "^4.2.1",
+    "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/typography": "^0.5.19",
     "concurrently": "^9.2.1",
+    "lightningcss": "^1.33.0",
+    "postcss-cli": "^11.0.1",
+    "postcss-lightningcss": "^1.1.0",
     "tailwindcss": "^4.2.1"
   }
 }

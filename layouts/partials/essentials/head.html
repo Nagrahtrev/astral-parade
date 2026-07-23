@@ -12,5 +12,8 @@
 
 <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}" />
 
-<link rel="icon" type="image/png" href="/images/favicon.png" />
-<link rel="shortcut icon" href="/images/favicon.ico" />
+<link rel="canonical" href="{{ .Permalink }}" />
+
+<link rel="preload" href="{{ "/fonts/Iosevka-Extended.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "/fonts/Play-regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "/fonts/Source-Sans-3-regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>

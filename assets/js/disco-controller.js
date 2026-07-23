@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.filter-btn');
     const items = Array.from(document.querySelectorAll('.disco-item'));
     const paginationContainer = document.getElementById('pagination-ctrls');
-    
+
     const ITEMS_PER_PAGE = 9;    // 9
 
     function getStorage(key, fallback) {
@@ -13,12 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
         try { sessionStorage.setItem(key, val); }
         catch {  }
     }
-    
+
     let currentPage = parseInt(getStorage('discoPage')) || 1;
     let currentFilter = getStorage('discoFilter') || 'Releases';
     let currentTotalPages = 0;
 
-    const isDesktop = () => window.innerWidth >= 768;
+    const isDesktop = () => window.matchMedia('(width >= 48rem)').matches;
 
     buttons.forEach(btn => {
         if (btn.getAttribute('data-filter') === currentFilter) {
@@ -31,10 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // ------------ 封面网格 ------------
     function renderGrid(isResize = false) {
         const filteredItems = items.filter(item => item.getAttribute('data-category') === currentFilter);
-        
+
         const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
         if (currentPage > totalPages) currentPage = Math.max(1, totalPages);
-        
+
         const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
         const endIndex = startIndex + ITEMS_PER_PAGE;
 
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         items.forEach(item => {
             // 切页动画
             item.style.transition = 'opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1)';
-            
+
             const isMatch = item.getAttribute('data-category') === currentFilter;
             const indexInFiltered = filteredItems.indexOf(item);
             const isPageMatch = !isDesktop() || (indexInFiltered >= startIndex && indexInFiltered < endIndex);
@@ -77,12 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 slot.style.transition = 'opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1)';
                 slot.style.opacity = '0';
                 slot.style.transform = 'scale(0.95)';
-                
+
                 slot.innerHTML = `
                     <div class="flex justify-between items-end border-b-[0.5px] border-color-black/20 pb-2 mb-3 md:mb-4 invisible">
                         <span class="font-mono text-[10px] tracking-widest">0000.00.00</span>
                     </div>
-                    
+
                     <div class="w-full aspect-square border-[0.5px] border-color-black/20 flex flex-col items-center justify-center text-color-black/20">
                         <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="0.5" class="mb-2">
                             <path d="M6 0V12M0 6H12" />
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </h3>
                     </div>
                 `;
-                
+
                 grid.appendChild(slot);
 
                 requestAnimationFrame(() => {
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ------------ 分页器 ------------
     function renderPaginationControls(totalPages, isResize = false) {
         if (!paginationContainer) return;
-        
+
         if (totalPages === currentTotalPages && paginationContainer.children.length > 0) {
             updatePaginationState(isResize);
             return;
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         currentTotalPages = totalPages;
         paginationContainer.innerHTML = '';
-        
+
         if (totalPages <= 1 || !isDesktop()) return;
 
         const handlePageChange = (newPage) => {
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.className = `page-btn font-primary`;
             btn.innerText = i < 10 ? `0${i}` : i;
             btn.dataset.page = i;
-            
+
             btn.addEventListener('click', () => handlePageChange(i));
             paginationContainer.appendChild(btn);
         }
@@ -265,10 +265,10 @@ document.addEventListener('DOMContentLoaded', () => {
             triggerTransition(() => {
                 currentFilter = button.getAttribute('data-filter');
                 currentPage = 1;
-                
+
                 setStorage('discoFilter', currentFilter);
                 setStorage('discoPage', 1);
-                
+
                 renderGrid();
                 const grid = document.getElementById('discography-grid');
                 grid.style.height = '';

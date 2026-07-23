@@ -1,0 +1,23 @@
+<div class="mermaid-wrapper">
+  <pre class="mermaid">
+{{- .Inner | safeHTML -}}
+  </pre>
+
+  {{/*  降级层默认隐藏，出错时显示  */}}
+  <div class="mermaid-fallback mermaid-fallback-js" role="alert">
+    <div class="mermaid-fallback-inner">
+      <p class="mermaid-fallback-text">此浏览器无法渲染 Mermaid 图表</p>
+      <pre class="mermaid-fallback-code">{{- .Inner | safeHTML -}}</pre>
+    </div>
+  </div>
+
+  {{/*  禁用 JS 时的降级层  */}}
+  <noscript>
+    <div class="mermaid-fallback" role="alert">
+      <div class="mermaid-fallback-inner">
+        <p class="mermaid-fallback-text">您的浏览器未启用 JavaScript，无法渲染 Mermaid 图表</p>
+        <pre class="mermaid-fallback-code">{{- .Inner | safeHTML -}}</pre>
+      </div>
+    </div>
+  </noscript>
+</div>

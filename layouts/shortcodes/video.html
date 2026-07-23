@@ -1,0 +1,18 @@
+{{ $src := .Get "src" }}
+{{ $width := .Get "width" | default "100%" }}
+{{ $height := .Get "height" | default "auto" }}
+{{ $autoplay := .Get "autoplay" | default "false" }}
+{{ $loop := .Get "loop" | default "false" }}
+{{ $muted := .Get "muted" | default "false" }}
+{{ $controls := .Get "controls" | default "true" }}
+{{ $class := .Get "class" | default "" }}
+<video src="{{ $src }}"
+       width="{{ $width }}"
+       height="{{ $height }}"
+       {{ if eq $autoplay "true" }}autoplay{{ end }}
+       {{ if eq $loop "true" }}loop{{ end }}
+       {{ if eq $muted "true" }}muted{{ end }}
+       {{ if eq $controls "true" }}controls{{ end }}
+       {{ with $class }}class="{{ . }}"{{ end }}>
+  Your browser does not support the video tag.
+</video>

@@ -47,11 +47,20 @@
           {{/*  Tags  */}}
           <div class="w-full">
 
-            <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/30 mb-3 md:mb-4 block">
-              Tags
-            </span>
+            <div class="font-mono text-[10px] tracking-[0.2em] uppercase text-color-black/30 mb-3 md:mb-4 flex items-center justify-between w-full select-none">
+              <span>Tags</span>
 
-            <div class="flex flex-row lg:flex-col gap-2 lg:gap-0 overflow-x-auto lg:overflow-visible no-scrollbar pb-2 lg:pb-0">
+              <a href="{{ (site.GetPage "section" "blog").RelPermalink }}"
+                 class="group inline-flex items-center gap-1.5 no-underline text-color-black/30 hover:text-color-black/60 transition-colors duration-200 ease-out cursor-pointer">
+                <svg class="w-2.5 h-2.5 -mt-px transition-transform duration-200 ease-out group-hover:-translate-x-px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+                  <path d="M19 12H5M12 5l-7 7 7 7"/>
+                </svg>
+                <span class="tracking-[0.15em]">BACK</span>
+              </a>
+
+            </div>
+
+            <div class="flex flex-row flex-wrap lg:flex-col gap-2 lg:gap-0 lg:overflow-visible pb-2 lg:pb-0">
 
               {{ range $name, $taxonomy := site.Taxonomies.tag }}
                 {{ $isActive := eq (lower $.Title) (lower $name) }}
@@ -83,7 +92,7 @@
               Category
 
               <span class="filter-slide-hint text-color-black/15 tracking-widest lg:hidden inline-flex items-center gap-1 animate-pulse">
-                SLIDE
+                DRAG
                 <svg class="w-2.5 h-2.5 -mt-px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
@@ -125,7 +134,7 @@
               Year
 
               <span class="filter-slide-hint tracking-widest text-color-black/15 lg:hidden inline-flex items-center gap-1 animate-pulse">
-                SLIDE
+                DRAG
                 <svg class="w-2.5 h-2.5 -mt-px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
@@ -184,7 +193,7 @@
         {{ $globalIndex := add (add $index 1) $offset }}
 
         {{/*  文章卡片  */}}
-        <article class="blog-item w-full pb-16 pt-2">
+        <article class="blog-item w-full pb-0 md:pb-16 pt-2">
 
           <a href="{{ .Permalink }}"
              class="card-content border-[0.5px] border-color-black/20 bg-color-white p-5 md:p-6 hover:bg-color-black/2 group cursor-pointer relative shadow-[0_5px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.08)] flex flex-col h-full transition-all duration-500 ease-out">
@@ -216,11 +225,9 @@
 
             {{/*  插图  */}}
             {{ if .Params.image }}
-            <div class="w-full aspect-4/3 bg-color-black/5 mb-5 relative overflow-hidden border-[0.5px] border-color-black/10">
+            <div class="w-full aspect-4/3 bg-color-black/4 mb-5 relative overflow-hidden border-[0.5px] border-color-black/10">
 
-               <img src="{{ .Params.image | relURL }}" class="w-full h-full object-cover filter grayscale contrast-125 brightness-95 group-hover:grayscale-0 transition-all duration-500 ease-out">
-
-               <div class="absolute inset-0 bg-color-black/10 group-hover:bg-transparent transition-colors duration-500 ease-out pointer-events-none"></div>
+               <img src="{{ .Params.image | relURL }}" class="w-full h-full object-cover md:filter md:grayscale md:contrast-125 md:brightness-95 md:group-hover:grayscale-0 md:transition-all md:duration-500 md:ease-out">
 
             </div>
             {{ end }}
@@ -262,8 +269,8 @@
 
       {{/*  移动端加载提示  */}}
       {{ if $paginator.HasNext }}
-        <div id="mobile-infinite-trigger" data-next="{{ $paginator.Next.URL }}" class="w-full h-10 flex items-center justify-center md:hidden mt-8 opacity-50">
-          <span class="font-mono text-[10px] tracking-widest uppercase animate-pulse">Loading...</span>
+        <div id="mobile-infinite-trigger" data-next="{{ $paginator.Next.URL }}" class="w-full h-10 flex items-center justify-center md:hidden mt-8">
+          <span class="font-mono text-[10px] text-color-black/30 tracking-widest uppercase animate-pulse">Loading...</span>
         </div>
       {{ end }}
 

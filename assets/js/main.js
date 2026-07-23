@@ -50,6 +50,8 @@ window.customSmoothScroll = function(targetY, duration = 400) {
     const originalScrollBehavior = document.documentElement.style.scrollBehavior;
     document.documentElement.style.scrollBehavior = 'auto';
 
+    window.__isSmoothScrolling = true;
+
     function easeOutQuart(t) {
         return 1 - Math.pow(1 - t, 4);
     }
@@ -65,6 +67,7 @@ window.customSmoothScroll = function(targetY, duration = 400) {
             requestAnimationFrame(animation);
         } else {
             document.documentElement.style.scrollBehavior = originalScrollBehavior;
+            window.__isSmoothScrolling = false;
         }
     }
 
@@ -79,6 +82,9 @@ function initSmartHeader() {
     let lastScrollY = window.scrollY;
 
     window.addEventListener('scroll', () => {
+        // 程序化滚动时跳过
+        if (window.__isSmoothScrolling) return;
+
         const currentScrollY = window.scrollY;
 
         // 触顶隐藏
@@ -152,7 +158,7 @@ function initInfiniteScroll() {
     let isFetching = false;
 
     const observer = new IntersectionObserver(async (entries) => {
-        if (entries[0].isIntersecting && window.innerWidth < 768 && !isFetching) {
+        if (entries[0].isIntersecting && !window.matchMedia('(width >= 48rem)').matches && !isFetching) {
             const nextUrl = trigger.getAttribute('data-next');
             if (!nextUrl) return;
 

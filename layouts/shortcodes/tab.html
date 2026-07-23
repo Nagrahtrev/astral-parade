@@ -1,0 +1,4 @@
+{{- $title := .Get 0 -}}
+<div class="tab-panel" data-title="{{ $title }}">
+  {{ .Inner | markdownify }}
+</div>

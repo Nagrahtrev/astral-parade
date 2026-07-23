@@ -1,7 +1,9 @@
 baseURL = "https://aspr-works.top/"
 title = "nova+z - Astral Parade"
+description = "nova+z's sounds & logs"
 languageCode = "en"
 timeZone = "Asia/Shanghai"
+enableRobotsTXT = true
 
 [params]
   email = "novaxz@aspr-works.top"
@@ -35,3 +37,8 @@ timeZone = "Asia/Shanghai"
   category = "category"
   year = "year"
   tag = "tag"
+
+[markup]
+  [markup.highlight]
+    style = "github"
+    tabWidth = 4

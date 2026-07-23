@@ -1,0 +1,17 @@
+{{ $src := .Get "src" }}
+{{ $alt := .Get "alt" | default "" }}
+{{ $caption := .Get "caption" }}
+{{ $width := .Get "width" | default "" }}
+{{ $height := .Get "height" | default "" }}
+{{ $class := .Get "class" | default "" }}
+<figure{{ with $class }} class="{{ . }}"{{ end }}>
+  <img src="{{ $src | relURL }}"
+       alt="{{ $alt }}"
+       {{ with $width }}width="{{ . }}"{{ end }}
+       {{ with $height }}height="{{ . }}"{{ end }}
+       class="max-w-full h-auto"
+       loading="lazy">
+  {{ with $caption }}
+    <figcaption>{{ . }}</figcaption>
+  {{ end }}
+</figure>

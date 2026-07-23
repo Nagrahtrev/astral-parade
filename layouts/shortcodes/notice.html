@@ -1,5 +1,4 @@
-{{ $type := .Get "type" | default "note" }}
-
+{{ $type := or (.Get "type") (.Get 0) | default "note" }}
 <div class="notice {{ $type }}">
   <div class="notice-head">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

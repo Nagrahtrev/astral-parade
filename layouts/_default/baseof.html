@@ -16,7 +16,7 @@
     {{ partial "essentials/footer.html" . }}
     {{ partialCached "essentials/script.html" . }}
 
-    {{/*  全局回到顶部按钮  */}}
+    {{/*  ---- 回到顶部按钮 ----  */}}
     <button id="back-to-top"
             class="fixed bottom-6 right-6 z-50 w-10 h-10 flex items-center justify-center
                    border-[0.5px] border-color-black/10
@@ -33,5 +33,38 @@
       </svg>
     </button>
 
+    {{/*  ---- 图片灯箱 ----  */}}
+    <div id="image-lightbox"
+         class="fixed inset-0 z-9999 flex items-center justify-center
+                bg-color-black/80 backdrop-blur-sm
+                opacity-0 invisible pointer-events-none
+                transition-opacity duration-200 ease-out cursor-zoom-out"
+         role="dialog" aria-modal="true" aria-label="Image preview">
+
+      {{/*  关闭按钮  */}}
+      <button id="lightbox-close"
+              class="fixed top-5 right-5 z-10000 w-11 h-11 flex items-center justify-center
+                     text-color-white hover:text-color-white
+                     bg-color-black/40 hover:bg-color-black/50 rounded-full
+                     transition-all duration-200 ease-out cursor-pointer touch-manipulation"
+              aria-label="Close preview">
+
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.5" stroke-linecap="square">
+          <path d="M6 6l12 12M18 6l-12 12"/>
+        </svg>
+
+      </button>
+
+      {{/*  图片容器  */}}
+      <div id="lightbox-image-container"
+           class="flex items-center justify-center w-full h-full overflow-hidden select-none">
+        <img id="lightbox-image" src="" alt=""
+             class="max-w-[90vw] max-h-[85vh] w-auto h-auto object-contain
+                    transition-transform duration-200 ease-out pointer-events-none select-none"
+             draggable="false">
+      </div>
+
+    </div>
   </body>
 </html>

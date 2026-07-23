@@ -1,81 +1,70 @@
 {{ define "main" }}
 
-<style>
+<section class="relative w-full h-screen min-h-200 overflow-hidden flex items-center justify-center mt-0">
 
-  body.about-page #static-header {
-    transform: translateY(-100%);
-    transition: transform 0.3s ease;
-  }
-  body.about-page #static-header.header-shown {
-    transform: translateY(0);
-  }
-
-  #question-overlay {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='32' font-family='monospace' font-weight='900' fill='%23541212'%3E?%3C/text%3E%3C/svg%3E");
-  }
-
-</style>
-
-{{/*  ???  */}}
-<div id="question-overlay" class="fixed inset-0 w-full h-full z-100 pointer-events-none opacity-0 transition-opacity duration-100"></div>
-
-<section class="relative w-full h-screen min-h-200 overflow-hidden flex items-center justify-center mt-20">
+  {{/*  手机端背景  */}}
+  <div class="md:hidden absolute inset-0 w-full h-full pointer-events-none z-0 grayscale">
+    <img src="/images/gear-2.webp" alt=""
+         class="w-full h-full object-cover object-[right_center] opacity-50"
+         aria-hidden="true" />
+    <div class="absolute inset-0 w-full h-full bg-color-white/60 backdrop-blur-sm"></div>
+  </div>
 
   {{/*  背景图  */}}
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-640 h-360 pointer-events-none z-0">
+  <div class="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-640 h-360 pointer-events-none z-0">
 
     {{/* 左上 */}}
     <div class="absolute scale-79 top-[10%] left-[6%] w-[40%] aspect-16/10 group pointer-events-auto">
-      <img src="/images/gear-1.png" alt="fragment" class="w-full h-full object-cover object-[100%_100%] opacity-80 transition duration-400 group-hover:opacity-100">
+      <img src="/images/gear-1.webp" alt="fragment" class="w-full h-full object-cover object-[100%_100%] grayscale opacity-80 transition duration-400 group-hover:opacity-100">
     </div>
 
     {{/* 右上 */}}
     <div class="absolute scale-80 top-[17%] right-[2.5%] w-[35%] aspect-14/8 group pointer-events-auto">
       <div class="absolute inset-0 bg-color-red mix-blend-multiply opacity-50 group-hover:opacity-70 transition duration-400 z-10"></div>
-      <img src="/images/profile-2.png" alt="fragment" class="w-full h-full object-cover object-[50%_55%] grayscale opacity-80 group-hover:opacity-100 transition duration-400">
+      <img src="/images/profile-2.webp" alt="fragment" class="w-full h-full object-cover object-[50%_55%] grayscale opacity-80 group-hover:opacity-100 transition duration-400">
     </div>
 
     {{/* 中央 */}}
     <div class="absolute scale-78 top-[25%] left-[45%] w-[18%] aspect-5/8 pointer-events-auto">
-      <img src="/images/profile-1.png" alt="fragment" class="w-full h-full object-cover object-center grayscale opacity-70">
+      <img src="/images/profile-1.webp" alt="fragment" class="w-full h-full object-cover object-center grayscale opacity-70">
     </div>
 
     {{/* 左下 */}}
     <div class="absolute scale-82 bottom-[18.5%] left-[15%] w-[30%] aspect-11/5 group pointer-events-auto">
-      <img src="/images/profile-2.png" alt="fragment" class="w-full h-full object-cover object-[50%_100%] grayscale opacity-80 group-hover:opacity-100 transition duration-400">
+      <img src="/images/profile-2.webp" alt="fragment" class="w-full h-full object-cover object-[50%_100%] grayscale opacity-80 group-hover:opacity-100 transition duration-400">
     </div>
 
     {{/* 右下 */}}
     <div class="absolute scale-80 bottom-[19%] right-[11.5%] w-[25%] aspect-5/4 group pointer-events-auto">
-      <img src="/images/gear-2.png" alt="fragment" class="w-full h-full object-cover object-[50%_55%] grayscale opacity-80 group-hover:opacity-100 transition duration-400">
+      <img src="/images/gear-2.webp" alt="fragment" class="w-full h-full object-cover object-[50%_55%] grayscale opacity-80 group-hover:opacity-100 transition duration-400">
     </div>
 
   </div>
-  
-  <div class="relative z-10 w-full max-w-5xl mx-auto px-6 flex justify-center items-center pointer-events-none">
+
+  <div id="intro-card" class="relative z-10 w-full max-w-5xl mx-auto md:px-6 px-0 flex justify-center items-center pointer-events-none">
 
     {{/*  简介  */}}
-    <div class="pointer-events-auto flex flex-col items-center bg-color-white/60 backdrop-blur-md px-10 py-16 max-w-2xl border-2 border-color-black/80 -mt-23">
-        
-      <h1 class="font-bgsans text-[60px] md:text-8xl font-bold text-left uppercase tracking-tighter leading-none mb-6 text-color-black select-none">
+    <div class="pointer-events-auto flex flex-col items-center bg-transparent md:bg-color-white/60 md:backdrop-blur-md md:px-10 md:py-16 px-4 py-0 w-full max-w-2xl md:border-2 md:border-color-black/80 -mt-10 md:-mt-23">
+
+      <div class="font-bgsans text-[80px] md:text-[105px] font-bold text-left uppercase tracking-tighter leading-none mb-6 text-color-black select-none">
         NOVA<br>
         AT ITS<br>
         ZENITH.
-      </h1>
+      </div>
 
-      <span class="text-[13px] font-mono font-bold text-center tracking-[0.2em] uppercase text-color-red mb-8 select-none">
+      <span class="md:text-[13px] text-[11px] font-mono font-bold text-center tracking-[0.2em] uppercase text-color-red mb-8 select-none">
         Astral Parade // About
       </span>
 
-      <div class="text-[16px] font-ntserif text-center text-color-black/60 tracking-tight leading-[1.63] mb-12 max-w-[90%]">
+      <div class="md:text-[16px] text-[14px] font-ntserif text-center text-color-black/60 tracking-tight leading-[1.63] mb-12 max-w-[90%]">
         {{ .Params.description | safeHTML }}
       </div>
 
-      <a href="mailto:{{ site.Params.email }}" 
-         class="inline-block bg-color-black/90 text-color-white/90 font-mono text-[14px] uppercase px-7 py-4">
+      <a href="mailto:{{ site.Params.email }}"
+         class="inline-block bg-color-black/90 text-color-white/90 font-mono md:text-[14px] text-[12px] uppercase md:px-7 md:py-4 px-5 py-3.5">
         [ Contact Me ]
       </a>
-        
+
     </div>
   </div>
 </section>
@@ -83,10 +72,10 @@
 {{/*  详细介绍  */}}
 <section class="w-full border-t border-color-black py-32 flex justify-center mb-20">
   <div class="max-w-2xl w-full px-6 flex flex-col items-center">
-    
+
     {{/*  头像  */}}
     <div id="avatar-trigger" class="relative group w-48 h-48 md:w-56 md:h-56 aspect-square mb-12 border-[0.5px] border-color-black/20 p-3 bg-color-black/2 cursor-crosshair shadow-[0_10px_30px_rgba(0,0,0,0.03)]">
-      
+
       {{/*  边角  */}}
       <div class="absolute top-2 left-2 w-2 h-2 border-t-[0.5px] border-l-[0.5px] border-color-black/40 z-30"></div>
       <div class="absolute top-2 right-2 w-2 h-2 border-t-[0.5px] border-r-[0.5px] border-color-black/40 z-30"></div>
@@ -95,12 +84,12 @@
 
       {{/*  图片渐变  */}}
       <div class="relative w-full h-full overflow-hidden z-10 border-[0.5px] border-color-black/10">
-        
-        <img src="/images/profile-1.png" alt="Profile"
-             class="absolute inset-0 w-full h-full object-cover transition-opacity delay-2000 duration-500 ease-in-out opacity-100 group-hover:opacity-0 z-10">
 
-        <img src="/images/profile-egg.png" alt="?"
-             class="absolute inset-0 w-full h-full object-cover transition-all delay-2000 duration-500 ease-in-out opacity-0 group-hover:opacity-100 group-hover:scale-105 z-0">
+        <img src="/images/profile-1.webp" alt="Profile"
+             class="absolute inset-0 w-full h-full object-cover transition-opacity delay-1000 duration-500 ease-in-out opacity-100 group-hover:opacity-0 z-10">
+
+        <img src="/images/profile-egg.webp" alt="?"
+             class="absolute inset-0 w-full h-full object-cover transition-all delay-1000 duration-500 ease-in-out opacity-0 group-hover:opacity-100 group-hover:scale-105 z-0">
 
       </div>
 
@@ -113,13 +102,13 @@
         A little about me..
       </h2>
 
-      <span class="text-[14px] font-mono text-color-red tracking-[0.2em] uppercase">
+      <span class="md:text-[14px] text-[11px] font-mono text-color-red tracking-[0.2em] uppercase">
         ////////////
       </span>
 
     </div>
 
-    <div class="w-full font-ntserif text-[16px] text-color-black/70 leading-[2.2] space-y-8">
+    <div class="w-full font-ntserif text-[16px] text-color-black/70 leading-[2.1] md:leading-[2.2] space-y-8">
       {{ .Content }}
     </div>
 

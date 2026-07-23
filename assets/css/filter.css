@@ -84,29 +84,29 @@
   line-height: 1;
 }
 
-@media (min-width: 640px) {
+@media (width >= 40rem) {
   .filter-btn { padding: 28px 24px; }
   .filter-btn .index { font-size: 10px; }
   .filter-btn .title { font-size: 2rem; }
 }
 
-@media (min-width: 768px) {
+@media (width >= 48rem) {
   .filter-btn { padding: 30px 24px; }
   .filter-btn .title { font-size: 2.1rem; }
 }
 
-@media (min-width: 1024px) {
+@media (width >= 64rem) {
   .filter-btn { padding: 31px 24px; background: transparent;}
   .filter-btn .index { color: color-mix(in srgb, var(--my-color-black) 30%, transparent); }
   .filter-btn .title { font-size: 2.2rem; color: color-mix(in srgb, var(--my-color-black) 30%, transparent); }
 }
 
-@media (min-width: 1280px) {
+@media (width >= 80rem) {
   .filter-btn { padding: 32px 24px; background: transparent; }
   .filter-btn .title { font-size: 2.4rem; }
 }
 
-@media (min-width: 1536px) {
+@media (width >= 96rem) {
   .filter-btn { padding: 33px 24px; background: transparent; }
   .filter-btn .title { font-size: 2.8rem; }
 }
@@ -182,7 +182,7 @@
 }
 
 /* PC端 */
-@media (min-width: 1152px) {
+@media (width >= 64rem) {
   .filter-item {
     display: flex;
     padding: 12px 0;

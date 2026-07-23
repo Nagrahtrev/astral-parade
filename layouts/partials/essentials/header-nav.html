@@ -1,0 +1,35 @@
+<nav class="w-full max-w-400 mx-auto px-6 md:px-16 flex items-center justify-between h-20 md:h-24">
+
+  <a href="{{ site.Home.RelPermalink }}" class="shrink-0 hidden md:flex items-center text-color-white font-primary text-[18px] font-bold tracking-wide cursor-pointer no-underline">
+    nova+z's sounds & logs
+  </a>
+
+  <div class="flex items-center justify-end text-[12px] md:text-[13px] font-smsans font-bold tracking-wider uppercase text-color-white">
+
+    {{ $len := len site.Menus.main }}
+
+    {{ range $index, $item := site.Menus.main }}
+
+    <a href="{{ .URL }}" class="relative block overflow-hidden group">
+
+      <span class="block transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-[130%]">
+        {{ .Name }}
+      </span>
+
+      <span class="absolute inset-0 flex items-center text-color-red translate-y-[130%] transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:translate-y-0">
+        {{ .Name }}
+      </span>
+
+    </a>
+
+    {{ if lt (add $index 1) $len }}
+    <span class="text-color-white/20 mx-4 md:mx-6 text-[11px] font-mono pointer-events-none font-light">
+      /
+    </span>
+    {{ end }}
+
+    {{ end }}
+
+  </div>
+
+</nav>

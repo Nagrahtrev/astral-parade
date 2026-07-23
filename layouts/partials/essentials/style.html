@@ -1,8 +1,3 @@
-<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-<link rel="dns-prefetch" href="//fonts.googleapis.com" />
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Asap:wght@400;600&family=Noto+Sans+SC:wght@400;700&family=Noto+Serif+SC:wght@500;700&family=Padauk:wght@400;700&family=Libre+Barcode+128&family=Source+Sans+Pro:wght@400;700&display=swap" />
-
 {{ if hugo.IsProduction }}
   {{ $tailwindCSS := resources.Get "css/main.css" | css.TailwindCSS | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $tailwindCSS.RelPermalink }}" integrity="{{ $tailwindCSS.Data.Integrity }}" />

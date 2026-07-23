@@ -5,19 +5,19 @@
 {{ $enWords := $plain | replaceRE "[一-龥ぁ-んァ-ン가-힣]" " " | countwords }}
 {{ $totalWords := add $cjkChars $enWords }}
 
-<section class="min-h-screen bg-color-white relative z-10 pt-20 md:pt-28 pb-32 flex flex-col">
+<section class="min-h-screen bg-color-white relative z-10 pt-12 md:pt-28 pb-32 flex flex-col">
 
   <div class="w-full max-w-350 mx-auto px-4 md:px-8 lg:px-12 flex flex-col">
 
     {{/*  ------------ Header ------------  */}}
-    <header class="w-full border-[0.5px] border-color-black/20 flex flex-col bg-color-white shadow-[0_10px_40px_rgba(0,0,0,0.02)] mb-12 md:mb-20">
+    <header class="w-full border-[0.5px] border-color-black/20 flex flex-col bg-color-white shadow-[0_10px_40px_rgba(0,0,0,0.02)] mb-10 md:mb-20">
 
        <div class="grid grid-cols-1 lg:grid-cols-12">
 
           {{/*  Title  */}}
           <div class="lg:col-span-8 p-6 md:p-10 lg:p-14 border-b-[0.5px] lg:border-b-0 lg:border-r-[0.5px] border-color-black/20 flex flex-col justify-center bg-color-black/1">
 
-             <div class="flex items-center gap-3 mb-6">
+             <div class="flex items-center gap-3 mb-6 select-none">
 
                 <span class="w-2 h-2 bg-color-black -mt-0.5"></span>
 
@@ -27,7 +27,7 @@
 
              </div>
 
-             <h1 class="font-bgsans text-[40px] md:text-[56px] lg:text-[64px] font-black tracking-tight leading-[1.1] text-color-black m-0 wrap-break-word">
+             <h1 class="font-bgsans text-[30px] md:text-[46px] lg:text-[54px] font-black tracking-tight leading-[1.1] text-color-black m-0 wrap-break-word">
                 {{ .Title }}
              </h1>
 
@@ -37,20 +37,22 @@
           <div class="lg:col-span-4 grid grid-cols-2 grid-rows-2">
 
              {{/*  Category  */}}
-             <div class="p-6 md:p-8 border-b-[0.5px] border-r-[0.5px] border-color-black/20 flex flex-col justify-center">
+             <div class="p-6 md:p-8 border-b-[0.5px] border-r-[0.5px] border-color-black/20 flex flex-col justify-center select-none">
 
                 <span class="font-mono text-[9px] tracking-[0.2em] text-color-black/40 uppercase mb-2">
                   Category
                 </span>
 
-                <span class="font-smsans text-[12px] md:text-[13px] font-bold text-color-black uppercase tracking-wider">
-                  {{ default "Blog" .Params.category }}
-                </span>
+                {{ $cat := default "Blog" .Params.category }}
+                <a href="{{ printf "category/%s/" ($cat | urlize) | relURL }}"
+                   class="font-smsans text-[12px] md:text-[13px] font-bold text-color-black uppercase tracking-wider no-underline cursor-pointer">
+                  {{ $cat }}
+                </a>
 
              </div>
 
              {{/*  Published Date  */}}
-             <div class="p-6 md:p-8 border-b-[0.5px] border-color-black/20 flex flex-col justify-center">
+             <div class="p-6 md:p-8 border-b-[0.5px] border-color-black/20 flex flex-col justify-center select-none">
 
                 <span class="font-mono text-[9px] tracking-[0.2em] text-color-black/40 uppercase mb-2">
                   Published
@@ -63,7 +65,7 @@
              </div>
 
              {{/*  字数统计  */}}
-             <div class="p-6 md:p-8 border-r-[0.5px] border-color-black/20 flex flex-col justify-center">
+             <div class="p-6 md:p-8 border-r-[0.5px] border-color-black/20 flex flex-col justify-center select-none">
 
                 <span class="font-mono text-[9px] tracking-[0.2em] text-color-black/40 uppercase mb-2">
                   Words
@@ -76,7 +78,7 @@
              </div>
 
              {{/*  实时阅读计时器  */}}
-             <div class="p-6 md:p-8 flex flex-col justify-center bg-color-black/1">
+             <div class="p-6 md:p-8 flex flex-col justify-center bg-color-black/1 select-none">
 
                 <span class="font-mono text-[9px] tracking-[0.2em] text-color-black/40 uppercase mb-2">
                   Reading Time
@@ -92,13 +94,13 @@
        </div>
     </header>
 
-    <div class="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start w-full">
+    <div class="flex flex-col lg:grid lg:grid-cols-[15.5rem_1fr] lg:grid-rows-[min-content_1fr] gap-12 lg:gap-20 items-start w-full">
 
       {{/*  ------------ 侧边栏 ------------  */}}
-      <aside class="w-full lg:w-62 shrink-0 lg:sticky lg:top-32 flex flex-col gap-10 z-20">
+      <aside class="w-full lg:w-62 shrink-0 flex flex-col gap-10 z-20 lg:row-start-1 lg:row-end-2 lg:col-start-1 lg:col-end-2">
 
         {{/*  返回按钮  */}}
-        <button onclick="smartBack()" class="group flex items-center gap-4 bg-transparent border-none p-0 cursor-pointer w-fit text-left">
+        <button onclick="smartBack()" class="group hidden sm:flex items-center gap-4 bg-transparent border-none p-0 cursor-pointer w-fit text-left">
 
           <div class="w-8 h-8 border-[0.5px] border-color-black/20 flex items-center justify-center bg-color-white group-hover:bg-color-black/4 transition-colors duration-300 ease-[cubic-bezier(0.7,0,0.3,1)]">
 
@@ -118,7 +120,7 @@
         {{ if .Params.tag }}
         <div class="flex flex-col border-l-[0.5px] border-color-black/20 pl-4 py-1">
 
-          <span class="font-mono text-[9px] tracking-[0.2em] uppercase text-color-black/30 mb-3">
+          <span class="font-mono text-[9px] tracking-[0.2em] uppercase text-color-black/30 mb-3 select-none">
             Tags
           </span>
 
@@ -138,75 +140,77 @@
         </div>
         {{ end }}
 
-        {{/*  文章导航  */}}
-        <div class="flex flex-col w-full border-t-[0.5px] border-color-black/10 pt-8 lg:mt-4">
-
-          {{/*  移动端折叠触发器  */}}
-          <button onclick="toggleMobileToc()" class="flex items-center justify-between w-full lg:cursor-default lg:pointer-events-none group bg-transparent border-none p-0 text-left mb-6">
-            <div class="flex items-center gap-3">
-
-              <div id="toc-dot" class="w-1.5 h-1.5 -mt-px bg-color-red/40"></div>
-
-              <span class="font-mono text-[9px] tracking-[0.2em] uppercase text-color-black/40">
-                Navigator
-              </span>
-
-            </div>
-
-            <div id="toc-icon-box" class="lg:hidden w-6 h-6 border-[0.5px] border-color-black/20 flex items-center justify-center transition-colors duration-500">
-              <div class="relative w-2 h-2">
-
-                <div class="absolute top-1/2 left-0 w-full h-[0.5px] bg-color-black/40 -translate-y-1/2"></div>
-
-                <div id="toc-icon-v" class="absolute top-0 left-1/2 w-[0.5px] h-full bg-color-black/40 -translate-x-1/2 transition-transform duration-500"></div>
-
-              </div>
-
-            </div>
-          </button>
-
-          {{/*  目录正文  */}}
-          <div id="toc-wrapper" class="toc-wrapper hidden lg:block overflow-hidden transition-all duration-500">
-            <div class="toc-inner">
-
-              <nav class="radar-toc pb-2 lg:pb-0 font-secondary text-[13px] text-color-black/60">
-                {{ .TableOfContents }}
-              </nav>
-
-            </div>
-          </div>
-
-          {{/*  移动端目录样式辅助  */}}
-          <style>
-            .toc-wrapper { display: none; }
-            .toc-wrapper.is-open { display: block; }
-            @media (min-width: 1024px) { .toc-wrapper { display: block !important; } }
-          </style>
-
-        </div>
       </aside>
 
-      {{/*  ------------ Content 区域 ------------  */}}
-      <div class="flex-1 w-full min-w-0">
+      {{/*  ------------ Navigator ------------  */}}
+      <div class="flex flex-col w-full border-t-[0.5px] border-color-black/10 pt-8 lg:mt-4 lg:border-t-0 lg:pt-0 lg:row-start-2 lg:row-end-3 lg:col-start-1 lg:col-end-2 lg:sticky lg:top-32 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
+
+        {{/*  移动端折叠触发器  */}}
+        <button onclick="toggleMobileToc()" class="flex items-center justify-between w-full lg:select-none lg:pointer-events-none cursor-pointer group bg-transparent border-none p-0 text-left mb-6">
+          <div class="flex items-center gap-3">
+
+            <div id="toc-dot" class="w-1.5 h-1.5 -mt-px bg-color-red/40"></div>
+
+            <span class="font-mono text-[9px] tracking-[0.2em] uppercase text-color-black/40">
+              Navigator
+            </span>
+
+          </div>
+
+          <div id="toc-icon-box" class="lg:hidden w-6 h-6 border-[0.5px] border-color-black/20 flex items-center justify-center transition-colors duration-250 ease-out">
+            <div class="relative w-2 h-2">
+
+              <div class="absolute top-1/2 left-0 w-full h-[0.5px] bg-color-black/40 -translate-y-1/2"></div>
+
+              <div id="toc-icon-v" class="absolute top-0 left-1/2 w-[0.5px] h-full bg-color-black/40 -translate-x-1/2 transition-transform duration-100 ease-out"></div>
+
+            </div>
+
+          </div>
+        </button>
+
+        {{/*  目录正文  */}}
+        <div id="toc-wrapper" class="toc-wrapper hidden lg:block overflow-hidden transition-all duration-500">
+          <div class="toc-inner">
+
+            <nav class="radar-toc-nav radar-toc pb-2 lg:pb-0 font-secondary text-[13px] text-color-black/60">
+              {{ .TableOfContents }}
+            </nav>
+
+          </div>
+        </div>
+
+      </div>
+
+      {{/*  ------------ 内容区 ------------  */}}
+      <div class="flex-1 w-full min-w-0 lg:row-start-1 lg:row-end-3 lg:col-start-2 lg:col-end-3">
 
         <div class="w-full max-w-200">
 
           {{/*  正文  */}}
-          <div class="article-content prose max-w-none prose-p:leading-[1.9] prose-p:text-color-black/80 prose-p:text-[15px] md:prose-p:text-[16px] font-primary wrap-break-word">
+          <div class="article-content prose max-w-none font-primary wrap-break-word">
             {{ .Content }}
           </div>
 
           {{/*  Article Footer  */}}
-          <footer class="w-full mt-24 md:mt-32 pt-8 border-t-[0.5px] border-color-black/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          <footer class="w-full mt-24 md:mt-32 pt-4 md:pt-8 md:border-t-[0.5px] md:border-color-black/20 flex flex-col md:flex-row items-center justify-between gap-8">
 
-            <div class="flex items-center gap-4 w-full md:w-auto">
+            <div class="hidden md:flex items-center gap-4 w-full md:w-auto select-none">
               <span class="w-6 h-[0.5px] bg-color-black/20 -mt-px"></span>
               <span class="font-mono text-[9px] tracking-[0.2em] uppercase text-color-black/30">
                 End of Article
               </span>
             </div>
 
-            <div class="flex items-center gap-8">
+            <div class="md:hidden flex items-center gap-4 w-full md:w-auto justify-center select-none">
+              <span class="w-6 h-[0.5px] bg-color-black/20 -mt-px"></span>
+              <span class="font-mono text-[9px] tracking-[0.2em] uppercase text-color-black/30">
+                End
+              </span>
+              <span class="w-6 h-[0.5px] bg-color-black/20 -mt-px"></span>
+            </div>
+
+            <div class="hidden md:flex items-center gap-8">
 
               {{/*  交互  */}}
                <button onclick="smartBack()" class="font-mono text-[9px] tracking-[0.2em] uppercase text-color-black/40 hover:text-color-black transition-colors border-none p-0 cursor-pointer duration-300 ease-[cubic-bezier(0.7,0,0.3,1)]">
@@ -234,6 +238,9 @@
 
 
 {{ $js := resources.Get "js/blog-single.js" | minify }}
+<script src="{{ $js.RelPermalink }}"></script>
+
+{{ $js := resources.Get "js/prose-controller.js" | minify }}
 <script src="{{ $js.RelPermalink }}"></script>
 
 {{ end }}

@@ -36,3 +36,57 @@
     requestAnimationFrame(raf);
   });
 </script>
+
+{{/*  Mermaid  */}}
+<script>
+  // 测试开关
+  var MERMAID_FALLBACK_TEST = false;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var mermaidElements = document.querySelectorAll('.mermaid');
+
+    if (mermaidElements.length > 0) {
+      var wrapperRefs = [];
+      mermaidElements.forEach(function(el) {
+        var w = el.closest('.mermaid-wrapper');
+        if (w) wrapperRefs.push(w);
+      });
+
+      // TEST (/?mfallback=true/false/)
+      if (MERMAID_FALLBACK_TEST) {
+        var mf = (location.search.match(/[?&]mfallback=(true|false)\b/) || [])[1];
+        if (mf === 'true') { fallbackNow(wrapperRefs); return; }
+        if (mf === 'false') { return; }
+      }
+
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
+
+      script.onload = async function() {
+        try {
+          mermaid.initialize({ startOnLoad: false, theme: 'default' });
+          await mermaid.run({ nodes: mermaidElements });
+        } catch (e) {
+          fallbackNow(wrapperRefs);
+        }
+      };
+
+      script.onerror = function() {
+        fallbackNow(wrapperRefs);
+      };
+
+      document.body.appendChild(script);
+    }
+  });
+
+  function fallbackNow(wrappers) {
+    wrappers.forEach(function(wrapper) {
+      var fb = wrapper.querySelector('.mermaid-fallback-js');
+      if (fb) {
+        wrapper.innerHTML = fb.outerHTML;
+        var el = wrapper.firstElementChild;
+        if (el) el.classList.remove('mermaid-fallback-js');
+      }
+    });
+  }
+</script>

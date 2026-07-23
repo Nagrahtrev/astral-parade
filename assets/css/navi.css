@@ -6,13 +6,13 @@
 
 /* -------- 排版 -------- */
 #TableOfContents {
-  max-width: none; 
+  max-width: none;
 }
 
 /* 桌面端 */
-@media (min-width: 1024px) {
+@media (width >= 64rem) {
   #TableOfContents {
-    max-width: 220px; 
+    max-width: 220px;
   }
 }
 
@@ -46,7 +46,7 @@
 
 /* 全局 */
 #TableOfContents a {
-  display: inline-block !important; 
+  display: inline-block !important;
   position: relative;
   font-family: var(--font-secondary) !important;
   font-size: 12px !important;
@@ -61,7 +61,7 @@
 /* 子目录 */
 #TableOfContents ul ul a {
   font-size: 12px !important;
-  opacity: 0.2 !important; 
+  opacity: 0.2 !important;
 }
 
 /* -------- 动画 -------- */
@@ -75,7 +75,7 @@
   transform: translateY(-50%) scale(0);
   width: 5px;
   height: 5px;
-  background-color: var(--my-color-black);
+  background-color: var(--my-color-red);
   opacity: 0.4 !important;
   transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
@@ -110,7 +110,7 @@
 }
 
 /* 电脑端永远展开 */
-@media (min-width: 1024px) {
+@media (width >= 64rem) {
   .toc-wrapper {
     grid-template-rows: 1fr !important;
     transition: none;
