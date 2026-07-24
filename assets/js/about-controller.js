@@ -1,3 +1,8 @@
+// 禁用浏览器滚动位置恢复
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // 简介框初始定位
     if (!document.body.classList.contains('about-page')) return;

@@ -2911,8 +2911,8 @@
     padding-block: calc(var(--spacing) * 12);
   }
 
-  .py-32 {
-    padding-block: calc(var(--spacing) * 32);
+  .py-42 {
+    padding-block: calc(var(--spacing) * 42);
   }
 
   .py-\[3px\] {
@@ -4299,6 +4299,10 @@
       height: 315px;
     }
 
+    .md\:min-h-250 {
+      min-height: calc(var(--spacing) * 250);
+    }
+
     .md\:w-2 {
       width: calc(var(--spacing) * 2);
     }
@@ -4907,10 +4911,6 @@
       gap: calc(var(--spacing) * 24);
     }
 
-    .lg\:gap-40 {
-      gap: calc(var(--spacing) * 40);
-    }
-
     .lg\:overflow-visible {
       overflow: visible;
     }
@@ -5073,6 +5073,10 @@
 
     .xl\:gap-12 {
       gap: calc(var(--spacing) * 12);
+    }
+
+    .xl\:gap-40 {
+      gap: calc(var(--spacing) * 40);
     }
 
     .xl\:border-r-\[0\.5px\] {

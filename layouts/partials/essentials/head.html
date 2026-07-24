@@ -4,7 +4,7 @@
 
 <title>
   {{ if .Title }}
-    {{ .Title }} | {{ site.Title }}
+    {{ .Title }} - {{ site.Title }}
   {{ else }}
     {{ site.Title }}
   {{ end }}
@@ -13,6 +13,27 @@
 <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}" />
 
 <link rel="canonical" href="{{ .Permalink }}" />
+
+{{/*  ---- Favicon ----  */}}
+<link rel="icon" type="image/png" href="/images/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/images/favicon/favicon.svg" />
+<link rel="shortcut icon" href="/images/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="nova+z" />
+<link rel="manifest" href="/images/favicon/site.webmanifest" />
+
+{{/*  ---- Open Graph ----  */}}
+<meta property="og:title" content="{{ if .Title }}{{ .Title }} - {{ site.Title }}{{ else }}{{ site.Title }}{{ end }}" />
+<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="og:type" content="{{ if eq .Type "blog" }}article{{ else }}website{{ end }}" />
+<meta property="og:site_name" content="{{ site.Title }}" />
+<meta property="og:locale" content="zh_CN" />
+
+{{/*  ---- Twitter Card ----  */}}
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="{{ if .Title }}{{ .Title }} - {{ site.Title }}{{ else }}{{ site.Title }}{{ end }}" />
+<meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}" />
 
 <link rel="preload" href="{{ "/fonts/Iosevka-Extended.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ "/fonts/Play-regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>

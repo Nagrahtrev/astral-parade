@@ -1,9 +1,8 @@
 baseURL = "https://aspr-works.top/"
-title = "nova+z - Astral Parade"
-description = "nova+z's sounds & logs"
-languageCode = "en"
+title = "nova+z's sounds & logs"
+description = "nova+z Official Website — home of the independent project Astral Parade, featuring music and blog posts."
+languageCode = "zh-CN"
 timeZone = "Asia/Shanghai"
-enableRobotsTXT = true
 
 [params]
   email = "novaxz@aspr-works.top"

@@ -12,6 +12,8 @@ function initPageTransitions() {
     // 拦截内部链接跳转
     document.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', function(e) {
+            if (link.closest('.filter-item')) return;
+
             if (
                 link.hostname === window.location.hostname &&
                 link.pathname !== window.location.pathname &&
@@ -42,21 +44,59 @@ function initPageTransitions() {
 }
 
 // ------------ 平滑滚动控制 ------------
+
+// 允许打断
 window.customSmoothScroll = function(targetY, duration = 400) {
+    if (typeof window.__smoothScrollCancel === 'function') {
+        window.__smoothScrollCancel();
+    }
+
     const startY = window.scrollY;
     const distance = targetY - startY;
     let startTime = null;
+    let cancelled = false;
+    let rafId = null;
 
     const originalScrollBehavior = document.documentElement.style.scrollBehavior;
     document.documentElement.style.scrollBehavior = 'auto';
 
     window.__isSmoothScrolling = true;
 
+    function cleanup() {
+        document.removeEventListener('wheel', onInterrupt);
+        document.removeEventListener('touchmove', onInterrupt);
+        window.__smoothScrollCancel = null;
+    }
+
+    function onInterrupt(e) {
+        // 过滤惯性滚动
+        if (e.type === 'wheel' && Math.abs(e.deltaY) < 8) return;
+        if (cancelled) return;
+        cancelled = true;
+        window.__isSmoothScrolling = false;
+        document.documentElement.style.scrollBehavior = originalScrollBehavior;
+        if (rafId) cancelAnimationFrame(rafId);
+        cleanup();
+    }
+
+    document.addEventListener('wheel', onInterrupt, { passive: true });
+    document.addEventListener('touchmove', onInterrupt, { passive: true });
+
+    window.__smoothScrollCancel = function() {
+        if (cancelled) return;
+        cancelled = true;
+        window.__isSmoothScrolling = false;
+        document.documentElement.style.scrollBehavior = originalScrollBehavior;
+        if (rafId) cancelAnimationFrame(rafId);
+        cleanup();
+    };
+
     function easeOutQuart(t) {
         return 1 - Math.pow(1 - t, 4);
     }
 
     function animation(currentTime) {
+        if (cancelled) return;
         if (startTime === null) startTime = currentTime;
         const timeElapsed = currentTime - startTime;
         const progress = Math.min(timeElapsed / duration, 1);
@@ -64,14 +104,15 @@ window.customSmoothScroll = function(targetY, duration = 400) {
         window.scrollTo(0, startY + distance * easeOutQuart(progress));
 
         if (timeElapsed < duration) {
-            requestAnimationFrame(animation);
+            rafId = requestAnimationFrame(animation);
         } else {
             document.documentElement.style.scrollBehavior = originalScrollBehavior;
             window.__isSmoothScrolling = false;
+            cleanup();
         }
     }
 
-    requestAnimationFrame(animation);
+    rafId = requestAnimationFrame(animation);
 };
 
 // ------------ Smart Header ------------

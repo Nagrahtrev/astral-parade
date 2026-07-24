@@ -4,8 +4,3 @@ resources/
 public/
 .hugo_build.lock
 Thumbs.db
-
-static/fonts/Noto-Sans-SC-regular.woff2
-static/fonts/Noto-Sans-SC-700.woff2
-static/fonts/Noto-Serif-SC-500.woff2
-static/fonts/Noto-Serif-SC-700.woff2

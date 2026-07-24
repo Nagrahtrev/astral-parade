@@ -1,4 +1,4 @@
-// ------------ 移动端 Filter 位置恢复 ------------
+// ------------ Filter 位置恢复 ------------
 const FILTER_SCROLL_KEY = 'blog_filter_scroll';
 
 document.addEventListener('click', (e) => {
@@ -8,6 +8,11 @@ document.addEventListener('click', (e) => {
     const data = {};
 
     data.pageY = window.scrollY;
+
+    if (window.matchMedia('(width >= 64rem)').matches) {
+        const aside = document.querySelector('aside');
+        if (aside) data.asideViewportTop = aside.getBoundingClientRect().top;
+    }
 
     const containers = document.querySelectorAll('.overflow-x-auto');
     data.containers = {};
@@ -28,7 +33,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = JSON.parse(saved);
 
         if (typeof data.pageY === 'number') {
-            window.scrollTo(0, data.pageY);
+            let targetY = data.pageY;
+
+            if (data.pageY > 0 && window.matchMedia('(width >= 64rem)').matches && typeof data.asideViewportTop === 'number') {
+                const aside = document.querySelector('aside');
+                if (aside) {
+                    const newNaturalTop = aside.getBoundingClientRect().top;
+                    targetY = Math.round(newNaturalTop - data.asideViewportTop);
+                    targetY = Math.max(0, Math.min(targetY, document.documentElement.scrollHeight - window.innerHeight));
+                }
+            }
+
+            if (targetY > 0) {
+                window.scrollTo(0, targetY);
+            }
+
+            // 桌面端回到顶部
+            if (targetY > 0 && window.matchMedia('(width >= 64rem)').matches) {
+                setTimeout(() => {
+                    if (Math.abs(window.scrollY - targetY) > 5) return;
+                    if (typeof window.customSmoothScroll === 'function') {
+                        window.customSmoothScroll(0, 600);
+                    }
+                }, 600);
+            }
         }
 
         if (data.containers) {
