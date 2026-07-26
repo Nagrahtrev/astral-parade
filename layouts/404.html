@@ -1,0 +1,28 @@
+{{ define "main" }}
+<style>
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  body > main {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+</style>
+<section class="page-404-section flex-1 flex flex-col bg-color-white relative">
+
+  <div class="text-404-wrap flex-1 flex items-center justify-center select-none z-20 md:mb-60 mb-10">
+    <span class="font-bgsans md:text-[90px] uppercase text-[40px] font-black text-color-black/10 tracking-tight">
+      404 not found
+    </span>
+  </div>
+
+  <div class="img-404-container absolute bottom-0 left-0 right-0 z-10" style="box-shadow: 0 1px 0 0 var(--my-color-gray);">
+    <img src="/images/404.webp" alt="" class="w-full h-auto block select-none" draggable="false" oncontextmenu="return false;" />
+  </div>
+
+</section>
+{{ end }}

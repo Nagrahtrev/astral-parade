@@ -95,7 +95,7 @@
           <div class="lg:col-span-5 p-6 md:p-10 lg:p-12 border-b-[0.5px] lg:border-b-0 lg:border-r-[0.5px] border-color-black/20 flex flex-col bg-color-black/2">
 
             {{/*  封面  */}}
-            <div class="w-full aspect-square bg-color-black/5 relative mb-5 md:mb-10 shadow-[0_10px_30px_rgba(0,0,0,0.05)] group overflow-hidden">
+            <div class="w-full aspect-square bg-color-black/5 relative mb-5 md:mb-10 shadow-[0_10px_20px_rgba(0,0,0,0.05)] group overflow-hidden">
 
               <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-full object-cover">
 
@@ -172,7 +172,7 @@
 
                     {{/*  播放指示  */}}
                     {{ if $audioUrl }}
-                    <div class="hidden sm:block ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div class="hidden sm:block ml-auto mb-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
 
                       <span class="font-mono text-[9px] text-color-red tracking-widest uppercase group-[.is-playing]:hidden">
                         Play

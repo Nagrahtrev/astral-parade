@@ -10,7 +10,7 @@
 
 {{/*  Lenis  */}}
 {{ $lenisJS := resources.Get "js/lenis.min.js" }}
-<script src="{{ $lenisJS.RelPermalink }}"></script>
+<script src="{{ $lenisJS.RelPermalink }}" defer></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {

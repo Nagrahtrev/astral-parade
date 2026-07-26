@@ -2,7 +2,13 @@
 {{ $baseHeaderClasses := "w-full bg-color-black border-b border-color-white/10" }}
 
 
-{{ if not .IsHome }}
+{{ if eq .Kind "404" }}
+
+<header class="{{ $baseHeaderClasses }} relative z-40 hidden md:block">
+  {{ partial "essentials/header-nav.html" . }}
+</header>
+
+{{ else if not .IsHome }}
 
 <header id="static-header" class="{{ $baseHeaderClasses }} hidden md:block relative z-40">
   {{ partial "essentials/header-nav.html" . }}
@@ -18,7 +24,7 @@
 
 {{/*  防误触  */}}
 <div id="mobile-menu-backdrop"
-     class="md:hidden fixed inset-0 z-40
+     class="md:hidden fixed inset-0 z-50
             bg-color-black/30
             opacity-0 invisible
             transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]
@@ -28,7 +34,7 @@
 
 {{/*  汉堡按钮  */}}
 <button id="mobile-menu-btn"
-        class="md:hidden fixed bottom-6 left-6 z-50 w-10 h-10 flex items-center justify-center
+        class="md:hidden fixed bottom-6 left-6 z-999 w-10 h-10 flex items-center justify-center
                bg-color-black/80 backdrop-blur-sm border-[0.5px] border-color-black/10
                text-color-white/80 hover:text-color-white
                transition-all duration-300 ease-[cubic-bezier(0.7,0,0.3,1)]
@@ -61,7 +67,7 @@
 
 {{/*  菜单  */}}
 <div id="mobile-menu-dropdown"
-     class="md:hidden pointer-events-auto fixed top-0 left-0 w-full z-50
+     class="md:hidden pointer-events-auto fixed top-0 left-0 w-full z-60
             -translate-y-full opacity-0 invisible
             transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]
             bg-color-black/90 backdrop-blur-md
