@@ -46,7 +46,7 @@ def main():
             continue
 
         result = subprocess.run([
-            sys.executable, '-m', 'fonttools', 'subset', src,
+            sys.executable, '-m', 'fontTools', 'subset', src,
             f'--text-file={tmp}',
             '--flavor=woff2',
             f'--output-file={dst}',

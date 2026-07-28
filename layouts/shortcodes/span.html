@@ -1,0 +1,10 @@
+{{/* 
+
+  用法: {{< span style="font-size: 100px; color: red;" >}}文字{{< /span >}} 
+
+*/}}
+
+{{- $style := .Get "style" -}}
+{{- printf `<span style=%q>` $style | safeHTML -}}
+{{- .Inner | markdownify -}}
+</span>

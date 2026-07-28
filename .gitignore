@@ -4,3 +4,5 @@ resources/
 public/
 .hugo_build.lock
 Thumbs.db
+
+/_test/

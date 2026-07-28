@@ -18,7 +18,7 @@
          prose-headings:font-light           /* 全局标题字重 */
          prose-headings:text-color-black;    /* 全局标题颜色 */
 
-  @apply prose-h2:text-[28px]                /* H2 字号 */
+  @apply prose-h2:text-[30px]                /* H2 字号 */
          prose-h2:mt-24 prose-h2:mb-10       /* H2 上下间距 */
          prose-h2:font-normal                /* H2 字重 */
          prose-h2:tracking-normal;           /* H2 字距 */
@@ -79,6 +79,12 @@
          prose-blockquote:pl-5                     /* 文字指示线间距 */
          prose-blockquote:my-14                    /* 引用块上下间距 */
          prose-blockquote:not-italic;              /* 禁用原生斜体 */
+}
+
+/* 禁用引号 */
+.article-content.prose blockquote p:first-of-type::before,
+.article-content.prose blockquote p:last-of-type::after {
+  content: none !important;
 }
 
 /* 列表 */
@@ -205,6 +211,8 @@
   @apply prose-td:py-3 prose-td:px-4                                    /* 单元格间距 */
          prose-td:border-[0.5px] prose-td:border-color-black/20         /* 单元格边框 */
          prose-td:text-color-black/70 prose-td:tracking-wide;           /* 单元格字体 */
+
+  @apply prose-th:empty:hidden;                                         /* 隐藏空表头 */
 
   /* 视频容器 */
   @apply prose-video:w-full prose-video:my-5                            /* 上下间距 */
@@ -403,7 +411,7 @@
   border-radius: 0 !important;                                      /* 无圆角 */
   background-color: transparent !important;
   overflow: hidden !important;
-  margin-bottom: 1.5rem !important;                                 /* 面板间距 */
+  margin: 1.5rem 0 !important;                                      /* 上下间距 */
 }
 
 /* 标题 */

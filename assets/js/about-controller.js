@@ -3,29 +3,41 @@ if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
 }
 
+// 开关
+const ABOUT_INTRO_SCROLL_DESKTOP = true;
+const ABOUT_INTRO_SCROLL_MOBILE  = false;
+
 document.addEventListener('DOMContentLoaded', () => {
-    // 简介框初始定位
     if (!document.body.classList.contains('about-page')) return;
     const introCard = document.getElementById('intro-card');
     if (!introCard) return;
 
-    const cardRect = introCard.getBoundingClientRect();
-    const cardHeight = cardRect.height;
-    const viewportHeight = window.innerHeight;
+    const isDesktop = window.matchMedia('(min-width: 48rem)').matches;
 
-    let scrollTarget;
+    const scrollEnabled = isDesktop
+        ? ABOUT_INTRO_SCROLL_DESKTOP
+        : ABOUT_INTRO_SCROLL_MOBILE;
 
-    if (cardHeight > viewportHeight) {
-        scrollTarget = window.scrollY + cardRect.top - 20;
-    } else {
-        const cardCenter = cardRect.top + cardHeight / 2;
-        scrollTarget = window.scrollY + cardCenter - viewportHeight * 0.55;
+    // 简介框初始定位
+    if (scrollEnabled) {
+        const cardRect = introCard.getBoundingClientRect();
+        const cardHeight = cardRect.height;
+        const viewportHeight = window.innerHeight;
+
+        let scrollTarget;
+
+        if (cardHeight > viewportHeight) {
+            scrollTarget = window.scrollY + cardRect.top - 20;
+        } else {
+            const cardCenter = cardRect.top + cardHeight / 2;
+            scrollTarget = window.scrollY + cardCenter - viewportHeight * 0.55;
+        }
+
+        window.scrollTo(0, scrollTarget);
     }
 
-    window.scrollTo(0, scrollTarget);
-
-    // 电脑端初始隐藏静态 Header
-    if (window.matchMedia('(min-width: 48rem)').matches) {
+    if (isDesktop && scrollEnabled) {
+        // 静态 Header 隐藏
         const staticHeader = document.getElementById('static-header');
         if (!staticHeader) return;
 
@@ -40,5 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             lastScrollY = currentScrollY;
         }, { passive: true });
+    } else if (isDesktop) {
+        // 静态 Header 显示
+        const staticHeader = document.getElementById('static-header');
+        if (staticHeader) {
+            staticHeader.classList.add('header-shown');
+        }
     }
 });
