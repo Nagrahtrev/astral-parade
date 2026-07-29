@@ -7150,16 +7150,20 @@
 }
 
 body:not(.page-home) main {
+  opacity: 1;
+}
+
+body.page-loading:not(.page-home) main {
   opacity: 0;
   will-change: transform, opacity;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  transition: opacity .4s cubic-bezier(.1, 1, .2, 1), transform .4s cubic-bezier(.1, 1, .2, 1);
   transform: translateY(10px);
 }
 
 body.page-loaded:not(.page-home) main {
   opacity: 1;
-  transition: opacity .4s cubic-bezier(.1, 1, .2, 1), transform .4s cubic-bezier(.1, 1, .2, 1);
   transform: translateY(0);
 }
 

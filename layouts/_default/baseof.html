@@ -5,7 +5,7 @@
     {{ partialCached "essentials/style.html" . }}
   </head>
 
-  <body class="{{ if .IsHome }}page-home bg-color-black text-color-white{{ end }}{{ if eq .Type "about" }} about-page{{ end }}">
+  <body class="{{ if .IsHome }}page-home bg-color-black text-color-white{{ end }}{{ if eq .Type "about" }} about-page{{ end }}{{ if not .IsHome }} page-loading{{ end }}">
 
     {{ partial "essentials/header.html" . }}
 

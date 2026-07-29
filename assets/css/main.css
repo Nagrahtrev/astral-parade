@@ -226,7 +226,7 @@
   * { scrollbar-width: none; }
 }
 
-/* -------- 电脑端仅首页和 about 页隐藏 -------- */
+/* -------- 电脑端仅首页和 About 隐藏 -------- */
 @media (width >= 64rem) {
   :root:has(body.page-home)::-webkit-scrollbar,
   :root:has(body.about-page)::-webkit-scrollbar {
@@ -323,19 +323,24 @@
 
 /* 初始状态 */
 body:not(.page-home) main {
+  opacity: 1;
+}
+
+/* 加载中 */
+body.page-loading:not(.page-home) main {
   opacity: 0;
   transform: translateY(10px);
   will-change: transform, opacity;
   backface-visibility: hidden;
+  transition:
+    opacity 0.4s cubic-bezier(0.1, 1, 0.2, 1),
+    transform 0.4s cubic-bezier(0.1, 1, 0.2, 1);
 }
 
 /* 加载完成 */
 body.page-loaded:not(.page-home) main {
   opacity: 1;
   transform: translateY(0);
-  transition:
-    opacity 0.4s cubic-bezier(0.1, 1, 0.2, 1),
-    transform 0.4s cubic-bezier(0.1, 1, 0.2, 1);
 }
 
 /* 离开页面 */

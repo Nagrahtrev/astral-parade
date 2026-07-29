@@ -5,9 +5,16 @@ function initPageTransitions() {
 
     if (!mainContent) return;
 
-    setTimeout(() => {
+    // 确保首帧已绘制
+    const triggerLoad = () => {
         body.classList.add('page-loaded');
-    }, 50);
+    };
+
+    requestAnimationFrame(() => {
+        requestAnimationFrame(triggerLoad);
+    });
+
+    setTimeout(triggerLoad, 200);
 
     // 拦截内部链接跳转
     document.querySelectorAll('a').forEach(link => {
@@ -39,14 +46,6 @@ function initPageTransitions() {
         if (event.persisted) {
             document.body.classList.remove('page-leaving');
             document.body.classList.add('page-loaded');
-
-            const main = document.querySelector('main');
-            if (main) {
-                void main.offsetHeight;
-                main.style.willChange = 'auto';
-                void main.offsetHeight;
-                main.style.willChange = '';
-            }
         }
     });
 }
