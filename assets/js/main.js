@@ -37,6 +37,17 @@ function initPageTransitions() {
     // BFCache
     window.addEventListener('pageshow', function (event) {
         if (event.persisted) {
+            const main = document.querySelector('main');
+            if (main) {
+                main.style.transition = 'none';
+                main.style.opacity = '1';
+                main.style.transform = 'translateY(0)';
+                requestAnimationFrame(() => {
+                    main.style.transition = '';
+                    main.style.transform = '';
+                    main.style.opacity = '';
+                });
+            }
             document.body.classList.remove('page-leaving');
             document.body.classList.add('page-loaded');
         }
