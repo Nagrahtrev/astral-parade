@@ -150,7 +150,6 @@
     --leading-relaxed: 1.625;
     --leading-loose: 2;
     --radius-xs: .125rem;
-    --radius-lg: .5rem;
     --ease-out: cubic-bezier(0, 0, .2, 1);
     --ease-in-out: cubic-bezier(.4, 0, .2, 1);
     --animate-pulse: pulse 2s cubic-bezier(.4, 0, .6, 1) infinite;
@@ -180,8 +179,8 @@
   background-color: rgba(2, 2, 3, 0.02);
 }
 
-.hover\:text-color-black\/60:hover {
-  color: rgba(2, 2, 3, 0.6);
+.hover\:text-color-black\/35:hover {
+  color: rgba(2, 2, 3, 0.35);
 }
 
 .article-content.prose .highlight pre, .article-content.prose pre {
@@ -1740,6 +1739,10 @@
     margin-right: calc(var(--spacing) * 4);
   }
 
+  .-mb-6 {
+    margin-bottom: calc(var(--spacing) * -6);
+  }
+
   .-mb-px {
     margin-bottom: -1px;
   }
@@ -1868,10 +1871,6 @@
 
   .inline-flex {
     display: inline-flex;
-  }
-
-  .table {
-    display: table;
   }
 
   .aspect-4\/3 {
@@ -2457,6 +2456,10 @@
     row-gap: 0;
   }
 
+  .gap-y-3 {
+    row-gap: calc(var(--spacing) * 3);
+  }
+
   .gap-y-12 {
     row-gap: calc(var(--spacing) * 12);
   }
@@ -2499,10 +2502,6 @@
 
   .rounded-full {
     border-radius: 3.40282e38px;
-  }
-
-  .rounded-lg {
-    border-radius: var(--radius-lg);
   }
 
   .rounded-xs {
@@ -3000,6 +2999,10 @@
     padding-top: calc(var(--spacing) * 8);
   }
 
+  .pt-11 {
+    padding-top: calc(var(--spacing) * 11);
+  }
+
   .pt-12 {
     padding-top: calc(var(--spacing) * 12);
   }
@@ -3070,10 +3073,6 @@
 
   .pb-8 {
     padding-bottom: calc(var(--spacing) * 8);
-  }
-
-  .pb-12 {
-    padding-bottom: calc(var(--spacing) * 12);
   }
 
   .pb-20 {
@@ -3515,6 +3514,10 @@
     .text-color-black\/95 {
       color: color-mix(in oklab, var(--color-color-black) 95%, transparent);
     }
+  }
+
+  .text-color-dgray {
+    color: var(--color-color-dgray);
   }
 
   .text-color-red {
@@ -4176,8 +4179,18 @@
       color: #f96027;
     }
 
-    .hover\:text-color-black:hover, .hover\:text-color-black\/60:hover {
+    .hover\:text-color-black:hover, .hover\:text-color-black\/35:hover {
       color: var(--color-color-black);
+    }
+
+    @supports (color: color-mix(in lab, red, red)) {
+      .hover\:text-color-black\/35:hover {
+        color: color-mix(in oklab, var(--color-color-black) 35%, transparent);
+      }
+    }
+
+    .hover\:text-color-black\/60:hover {
+      color: rgba(2, 2, 3, 0.6);
     }
 
     @supports (color: color-mix(in lab, red, red)) {
@@ -4263,6 +4276,10 @@
 
     .md\:-mt-23 {
       margin-top: calc(var(--spacing) * -23);
+    }
+
+    .md\:-mt-\[2px\] {
+      margin-top: -2px;
     }
 
     .md\:mt-0 {
@@ -4425,12 +4442,20 @@
       flex-direction: row;
     }
 
+    .md\:items-baseline {
+      align-items: baseline;
+    }
+
     .md\:items-end {
       align-items: flex-end;
     }
 
     .md\:items-start {
       align-items: flex-start;
+    }
+
+    .md\:justify-between {
+      justify-content: space-between;
     }
 
     .md\:gap-0 {
@@ -4530,10 +4555,6 @@
       padding-inline: calc(var(--spacing) * 6);
     }
 
-    .md\:px-7 {
-      padding-inline: calc(var(--spacing) * 7);
-    }
-
     .md\:px-8 {
       padding-inline: calc(var(--spacing) * 8);
     }
@@ -4552,10 +4573,6 @@
 
     .md\:py-3 {
       padding-block: calc(var(--spacing) * 3);
-    }
-
-    .md\:py-4 {
-      padding-block: calc(var(--spacing) * 4);
     }
 
     .md\:py-5 {
@@ -4601,6 +4618,10 @@
 
     .md\:pb-2 {
       padding-bottom: calc(var(--spacing) * 2);
+    }
+
+    .md\:pb-13 {
+      padding-bottom: calc(var(--spacing) * 13);
     }
 
     .md\:pb-16 {
@@ -4691,6 +4712,10 @@
       font-size: 50px;
     }
 
+    .md\:text-\[52px\] {
+      font-size: 52px;
+    }
+
     .md\:text-\[64px\] {
       font-size: 64px;
     }
@@ -4705,10 +4730,6 @@
 
     .md\:text-\[90px\] {
       font-size: 90px;
-    }
-
-    .md\:text-\[105px\] {
-      font-size: 105px;
     }
 
     .md\:tracking-\[0\.2em\] {
@@ -5043,6 +5064,10 @@
       padding-bottom: calc(var(--spacing) * 27);
     }
 
+    .lg\:text-\[12px\] {
+      font-size: 12px;
+    }
+
     .lg\:text-\[13px\] {
       font-size: 13px;
     }
@@ -5081,6 +5106,10 @@
 
     .lg\:text-\[88px\] {
       font-size: 88px;
+    }
+
+    .lg\:text-\[90px\] {
+      font-size: 90px;
     }
 
     .lg\:shadow-\[8px_8px_0px_0px_rgb\(84\,18\,18\)\] {
@@ -5184,6 +5213,10 @@
       font-size: 10px;
     }
 
+    .xl\:text-\[13px\] {
+      font-size: 13px;
+    }
+
     .xl\:text-\[19px\] {
       font-size: 19px;
     }
@@ -5202,6 +5235,10 @@
 
     .xl\:text-\[50px\] {
       font-size: 50px;
+    }
+
+    .xl\:text-\[105px\] {
+      font-size: 105px;
     }
 
     .xl\:tracking-\[0\.03em\] {
@@ -5237,6 +5274,25 @@
     .prose-p\:text-color-black\/70 :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
       color: color-mix(in oklab, var(--color-color-black) 70%, transparent);
     }
+  }
+
+  .\[\&_a\]\:underline a {
+    -webkit-text-decoration-line: underline;
+    text-decoration-line: underline;
+  }
+
+  .\[\&_a\]\:decoration-color-red a {
+    -webkit-text-decoration-color: var(--color-color-red);
+    text-decoration-color: var(--color-color-red);
+  }
+
+  .\[\&_a\]\:decoration-dashed a {
+    -webkit-text-decoration-style: dashed;
+    text-decoration-style: dashed;
+  }
+
+  .\[\&_a\]\:underline-offset-4 a {
+    text-underline-offset: 4px;
   }
 }
 
@@ -5339,7 +5395,7 @@
 }
 
 .article-content.prose :where(em):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-style: italic;
 }
 
@@ -5358,7 +5414,7 @@
 
 .article-content.prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   padding-left: calc(var(--spacing) * 5);
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   --tw-leading: var(--leading-relaxed);
   line-height: var(--leading-relaxed);
   --tw-font-weight: var(--font-weight-normal);
@@ -5718,11 +5774,11 @@
   padding-inline: calc(var(--spacing) * 4);
   padding-block: calc(var(--spacing) * 3);
   text-align: left;
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   --tw-font-weight: var(--font-weight-bold);
   font-weight: var(--font-weight-bold);
-  --tw-tracking: var(--tracking-wider);
-  letter-spacing: var(--tracking-wider);
+  --tw-tracking: var(--tracking-wide);
+  letter-spacing: var(--tracking-wide);
   color: rgba(2, 2, 3, 0.6);
 }
 
@@ -5936,7 +5992,7 @@
 }
 
 .article-content.prose .tab-nav-item {
-  font-family: var(--font-secondary) !important;
+  font-family: var(--font-primary) !important;
   letter-spacing: .08em !important;
   color: rgba(2, 2, 3, 0.5) !important;
   margin: 0 !important;
@@ -6014,7 +6070,19 @@
 }
 
 .article-content.prose .tab-panel {
+  color: rgba(2, 2, 3, 0.7) !important;
+  font-size: 16px !important;
   display: none !important;
+}
+
+@supports (color: color-mix(in lab, red, red)) {
+  .article-content.prose .tab-panel {
+    color: color-mix(in srgb, var(--my-color-black) 70%, transparent) !important;
+  }
+}
+
+.article-content.prose .tab-panel {
+  line-height: 1.8 !important;
 }
 
 .article-content.prose .tab-panel.active {
@@ -6023,19 +6091,7 @@
 }
 
 .article-content.prose .tab-panel p {
-  color: rgba(2, 2, 3, 0.7) !important;
-  font-size: 16px !important;
-}
-
-@supports (color: color-mix(in lab, red, red)) {
-  .article-content.prose .tab-panel p {
-    color: color-mix(in srgb, var(--my-color-black) 70%, transparent) !important;
-  }
-}
-
-.article-content.prose .tab-panel p {
   margin-top: 1.2rem !important;
-  line-height: 1.8 !important;
 }
 
 .article-content.prose .tab-panel > :first-child {
@@ -6076,7 +6132,7 @@
 }
 
 .article-content.prose .accordion-header {
-  font-family: var(--font-secondary) !important;
+  font-family: var(--font-primary) !important;
   letter-spacing: .08em !important;
   color: rgba(2, 2, 3, 0.6) !important;
   font-size: 15px !important;
@@ -6166,22 +6222,19 @@
 }
 
 .article-content.prose .accordion-content {
+  color: rgba(2, 2, 3, 0.7) !important;
   background-color: #0000 !important;
   padding: 1.25rem !important;
-}
-
-.article-content.prose .accordion-content p, .article-content.prose .accordion-content ul, .article-content.prose .accordion-content li {
-  color: rgba(2, 2, 3, 0.7) !important;
   font-size: 16px !important;
 }
 
 @supports (color: color-mix(in lab, red, red)) {
-  .article-content.prose .accordion-content p, .article-content.prose .accordion-content ul, .article-content.prose .accordion-content li {
+  .article-content.prose .accordion-content {
     color: color-mix(in srgb, var(--my-color-black) 70%, transparent) !important;
   }
 }
 
-.article-content.prose .accordion-content p, .article-content.prose .accordion-content ul, .article-content.prose .accordion-content li {
+.article-content.prose .accordion-content {
   line-height: 1.8 !important;
 }
 

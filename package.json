@@ -1,6 +1,9 @@
 {
   "name": "astral-parade",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "clean": "node -e \"fs.rmSync('public', { recursive: true, force: true })\"",
     "prestart": "npm run clean",

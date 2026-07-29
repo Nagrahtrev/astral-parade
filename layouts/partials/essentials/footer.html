@@ -1,6 +1,6 @@
 <footer class="bg-color-gray relative z-40">
   
-  <div class="pb-12 pt-12 w-full">
+  <div class="pb-20 md:pb-13 pt-11 w-full">
     <div class="w-full max-w-400 mx-auto px-6 flex flex-col items-center text-center">
       
       <div class="mb-8 flex flex-col items-center">
@@ -16,7 +16,8 @@
       </div>
 
       <p class="font-smsans text-[9px] text-color-black/40 tracking-[0.2em] uppercase select-none">
-        &copy; {{ now.Format "2006" }} Astral Parade <span class="mx-3 opacity-30">/</span> All Rights Reserved.
+        &copy; {{ now.Format "2006" }} Astral Parade <span class="mx-3 opacity-30">/</span>
+        <a href="{{ "privacy/" | relURL }}" class="hover:text-color-red transition-colors duration-300 ease-out">Privacy Policy</a>
       </p>
 
     </div>

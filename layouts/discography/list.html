@@ -140,7 +140,10 @@
   </div>
 </section>
 
-{{ $js := resources.Get "js/disco-controller.js" | minify }}
-<script src="{{ $js.RelPermalink }}"></script>
+{{ $js := resources.Get "js/disco-controller.js" }}
+{{ if hugo.IsProduction }}
+  {{ $js = $js | minify | fingerprint }}
+{{ end }}
+<script src="{{ $js.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $js.Data.Integrity }}"{{ end }}></script>
 
 {{ end }}

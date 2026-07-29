@@ -384,10 +384,16 @@
 {{/*  ------------ 播放器 ------------  */}}
 {{ partial "floating-player.html" . }}
 
-{{ $js := resources.Get "js/floating-player.js" | minify }}
-<script src="{{ $js.RelPermalink }}"></script>
+{{ $js := resources.Get "js/floating-player.js" }}
+{{ if hugo.IsProduction }}
+  {{ $js = $js | minify | fingerprint }}
+{{ end }}
+<script src="{{ $js.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $js.Data.Integrity }}"{{ end }}></script>
 
-{{ $js := resources.Get "js/disco-single.js" | minify }}
-<script src="{{ $js.RelPermalink }}"></script>
+{{ $js := resources.Get "js/disco-single.js" }}
+{{ if hugo.IsProduction }}
+  {{ $js = $js | minify | fingerprint }}
+{{ end }}
+<script src="{{ $js.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $js.Data.Integrity }}"{{ end }}></script>
 
 {{ end }}

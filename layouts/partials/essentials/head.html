@@ -35,6 +35,12 @@
 <meta name="twitter:title" content="{{ if .Title }}{{ .Title }} - {{ site.Title }}{{ else }}{{ site.Title }}{{ end }}" />
 <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}" />
 
+{{/*  ---- Preload ----  */}}
 <link rel="preload" href="{{ "/fonts/Iosevka-Extended.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ "/fonts/Play-regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="{{ "/fonts/Source-Sans-3-regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "/fonts/Source-Sans-3-700.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+
+{{/*  ---- JSON-LD Structured Data ----  */}}
+{{ partial "essentials/jsonld.html" . }}
+
+</head>

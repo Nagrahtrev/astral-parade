@@ -2,8 +2,13 @@
 title: "About"
 layout: "about"
 description: |
-  我是 nova+z，a.k.a Zsul Pavon，来自中国的电子音乐制作人。<br><br>偏好 Hard / Industrial / Oldschool 的声音，喜欢挑战各种不同的风格。<br>我从 2022 年开始在网络上发布音乐作品，现为中国同人音乐社团 Thoughost 的成员。<br><br>目前仅凭个人兴趣创作，因此不承接任何付费委托与商单，感谢理解。<br><br>如果您有其他疑问，可以通过邮箱来联系我。
+  我是 nova+z，a.k.a. Zsul Pavon，来自中国的电子音乐制作人。<br><br>偏好 Hard / Industrial / Oldschool 的声音，喜欢尝试各种不同的风格。<br>我从 2022 年开始在网络上发布音乐作品，现为中国同人音乐社团 Thoughost 的成员。<br><br>目前仅凭个人兴趣创作，因此不承接任何付费委托与商单，感谢理解。<br><br>如果您有其他疑问，可以通过邮箱来<a href="mailto:novaxz@aspr-works.top">联系我</a>。
+description_en: |
+  I'm nova+z, a.k.a. Zsul Pavon, an electronic music producer from China.<br><br>I lean toward Hard / Industrial / Oldschool sounds and enjoy experimenting with various styles. I've been releasing music online since 2022 and am currently a member of the Chinese doujin circle Thoughost.<br><br>I produce strictly for fun, so I don't accept paid commissions or commercial work. Thanks for understanding.<br><br>If you have any questions, feel free to <a href="mailto:novaxz@aspr-works.top">contact me</a> via email.
 ---
+
+你好，我是 nova+z。  
+不是 nova-z，也不是 nova*z，更不是 nova/z，而是 nova+z。
 
 ## 关于我的名字
 
@@ -87,6 +92,6 @@ Astral Parade 是专为自主发行而创建的个人社团。
 
 感谢您看到这里，我也很高兴您能找到这里。
 
-好像也没什么好说的，祝您今天过得开心。开心不起来的话，如果皮肤没什么问题，可以出去晒晒太阳，很管用的。
+好像也没什么好说的，祝您今天过得开心。开心不起来的话，如果皮肤没什么毛病，可以出去晒晒太阳，很管用的。
 
 ~~点右下角的按钮可以回到顶部~~

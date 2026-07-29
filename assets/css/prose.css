@@ -1,6 +1,6 @@
 /* =========================================
 
-   >> 正文样式（老模板来的，没出问题就不改了...）
+   >> 正文样式
 
    ========================================= */
 
@@ -67,10 +67,10 @@
 .article-content.prose {
   /* 强调 */
   @apply prose-strong:font-bold prose-strong:text-color-black;    /* 粗体 */
-  @apply prose-em:font-secondary prose-em:italic;                 /* 斜体 */
+  @apply prose-em:font-primary prose-em:italic;                   /* 斜体 */
 
   /* 引用块 */
-  @apply prose-blockquote:font-secondary           /* 引用字体 */
+  @apply prose-blockquote:font-primary             /* 引用字体 */
          prose-blockquote:font-normal              /* 引用字重 */
          prose-blockquote:leading-relaxed          /* 行高 */
          prose-blockquote:text-color-black/50      /* 文字颜色 */
@@ -202,8 +202,8 @@
   @apply prose-thead:border-b-0;                                        /* 删除原生表头边框 */
 
   @apply prose-th:py-3 prose-th:px-4 prose-th:text-left                 /* 表头间距 */
-         prose-th:font-secondary prose-th:font-bold                     /* 表头字体 */
-         prose-th:text-color-black/60 prose-th:tracking-wider
+         prose-th:font-primary prose-th:font-bold                       /* 表头字体 */
+         prose-th:text-color-black/60 prose-th:tracking-wide
 
          prose-th:bg-color-black/4                                      /* 表头底色 */
          prose-th:border-[0.5px] prose-th:border-color-black/20;        /* 表头边框 */
@@ -337,7 +337,7 @@
 /* 标签按钮 */
 .article-content.prose .tab-nav-item {
   position: relative !important;
-  font-family: var(--font-secondary) !important;               /* 字体 */
+  font-family: var(--font-primary) !important;                 /* 字体 */
   font-size: 14px !important;                                  /* 字号 */
   font-weight: 500 !important;                                 /* 字重 */
   letter-spacing: 0.08em !important;                           /* 字距 */
@@ -373,6 +373,9 @@
 
 .article-content.prose .tab-panel {
   display: none !important;
+  font-size: 16px !important;                                                                    /* 字号 */
+  color: color-mix(in srgb, var(--my-color-black) 70%, transparent) !important;                  /* 字色 */
+  line-height: 1.8 !important;
 }
 
 .article-content.prose .tab-panel.active {
@@ -382,9 +385,6 @@
 
 /* 内容区文本 */
 .article-content.prose .tab-panel p {
-  font-size: 16px !important;                                                               /* 字号 */
-  color: color-mix(in srgb, var(--my-color-black) 70%, transparent) !important;                  /* 字色 */
-  line-height: 1.8 !important;
   margin-top: 1.2rem !important;
 }
 
@@ -416,7 +416,7 @@
 
 /* 标题 */
 .article-content.prose .accordion-header {
-  font-family: var(--font-secondary) !important;                    /* 字体 */
+  font-family: var(--font-primary) !important;                      /* 字体 */
   font-size: 15px !important;                                       /* 字号 */
   font-weight: 500 !important;                                      /* 字重 */
   letter-spacing: 0.08em !important;                                /* 字距 */
@@ -469,12 +469,6 @@
 .article-content.prose .accordion-content {
   background-color: transparent !important;
   padding: 1.25rem 1.25rem 1.25rem !important;                  /* 内容区内边距 */
-}
-
-/* 内容区排版 */
-.article-content.prose .accordion-content p,
-.article-content.prose .accordion-content ul,
-.article-content.prose .accordion-content li {
   font-size: 16px !important;                                                          /* 字号 */
   color: color-mix(in srgb, var(--my-color-black) 70%, transparent) !important;        /* 字色 */
   line-height: 1.8 !important;                                                         /* 行高 */

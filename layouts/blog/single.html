@@ -237,10 +237,16 @@
 </section>
 
 
-{{ $js := resources.Get "js/blog-single.js" | minify }}
-<script src="{{ $js.RelPermalink }}"></script>
+{{ $js := resources.Get "js/blog-single.js" }}
+{{ if hugo.IsProduction }}
+  {{ $js = $js | minify | fingerprint }}
+{{ end }}
+<script src="{{ $js.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $js.Data.Integrity }}"{{ end }}></script>
 
-{{ $js := resources.Get "js/prose-controller.js" | minify }}
-<script src="{{ $js.RelPermalink }}"></script>
+{{ $js := resources.Get "js/prose-controller.js" }}
+{{ if hugo.IsProduction }}
+  {{ $js = $js | minify | fingerprint }}
+{{ end }}
+<script src="{{ $js.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $js.Data.Integrity }}"{{ end }}></script>
 
 {{ end }}

@@ -52,7 +52,7 @@
 
               <a href="{{ (site.GetPage "section" "blog").RelPermalink }}"
                  class="group inline-flex items-center gap-1.5 no-underline text-color-black/30 hover:text-color-black/60 transition-colors duration-200 ease-out cursor-pointer">
-                <svg class="w-2.5 h-2.5 -mt-px transition-transform duration-200 ease-out group-hover:-translate-x-px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+                <svg class="w-2.5 h-2.5 md:-mt-[2px] -mt-px transition-transform duration-200 ease-out group-hover:-translate-x-px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
                   <path d="M19 12H5M12 5l-7 7 7 7"/>
                 </svg>
                 <span class="tracking-[0.15em]">BACK</span>
@@ -68,7 +68,7 @@
                 <a href="{{ .Page.RelPermalink }}" class="filter-item {{ if $isActive }}active{{ end }}">
 
                   <span>
-                    {{ $name }}
+                    {{ .Page.Title }}
                     <span class="font-mono opacity-50 text-[11px] ml-1">
                       ({{ .Count }})
                     </span>
@@ -307,6 +307,9 @@
 </section>
 
 {{ with resources.Get "js/blog-controller.js" }}
-  {{ $js := . | minify }}
-  <script src="{{ $js.RelPermalink }}"></script>
+  {{ $js := . }}
+  {{ if hugo.IsProduction }}
+    {{ $js = $js | minify | fingerprint }}
+  {{ end }}
+  <script src="{{ $js.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $js.Data.Integrity }}"{{ end }}></script>
 {{ end }}

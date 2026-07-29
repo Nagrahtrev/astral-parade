@@ -3,9 +3,18 @@ title = "nova+z's sounds & logs"
 description = "nova+z Official Website — home of the independent project Astral Parade, featuring music and blog posts."
 languageCode = "zh-CN"
 timeZone = "Asia/Shanghai"
+enableRobotsTXT = true
 
 [params]
   email = "novaxz@aspr-works.top"
+  social = [
+    "https://x.com/novaxz_nobasu",
+    "https://soundcloud.com/novaxz_aspr",
+    "https://novaxz.bandcamp.com/",
+    "https://www.youtube.com/@novaxz_aspr",
+    "https://space.bilibili.com/31785876",
+    "https://music.163.com/#/artist?id=52170515",
+  ]
 
 [build]
   [build.buildStats]

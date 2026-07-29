@@ -1,0 +1,33 @@
+<section class="min-h-screen bg-color-white relative z-10 pt-12 md:pt-28 pb-32 flex flex-col">
+
+  <div class="w-full max-w-2xl mx-auto px-6">
+
+    <header class="-mb-6 md:mb-16">
+      <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-y-3">
+
+        <h1 class="font-bgsans text-[42px] md:text-[52px] font-bold uppercase tracking-tight leading-none text-color-black pb-2">
+          {{ .Title }}
+        </h1>
+
+        <div class="font-smsans text-[13px] tracking-widest uppercase whitespace-nowrap select-none px-1">
+          {{ if eq .Params.locale "zh" }}
+            <a href="{{ "privacy/" | relURL }}" class="text-color-black/20 hover:text-color-black/35 transition-colors ease-out duration-200">EN</a>
+            <span class="text-color-black/20">/</span>
+            <span class="text-color-red">ZH</span>
+          {{ else }}
+            <span class="text-color-red">EN</span>
+            <span class="text-color-black/20">/</span>
+            <a href="{{ "privacy/zh/" | relURL }}" class="text-color-black/20 hover:text-color-black/35 transition-colors ease-out duration-200">ZH</a>
+          {{ end }}
+        </div>
+        
+      </div>
+    </header>
+
+    <div class="article-content prose max-w-none w-full">
+      {{ .Content }}
+    </div>
+
+  </div>
+
+</section>

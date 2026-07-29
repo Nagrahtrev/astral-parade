@@ -60,3 +60,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+// 简介切换语言
+function switchAboutLang(lang) {
+  const zh = document.getElementById('desc-zh');
+  const en = document.getElementById('desc-en');
+  const zhSpan = document.getElementById('lang-zh');
+  const enSpan = document.getElementById('lang-en');
+  if (!zh || !en || !zhSpan || !enSpan) return;
+
+  if (lang === 'en') {
+    zh.style.display = 'none';
+    en.style.display = 'block';
+    zhSpan.className = 'text-color-black/20 hover:text-color-black/35 transition-colors ease-out duration-200';
+    zhSpan.style.cursor = 'pointer';
+    enSpan.className = 'text-color-black/60';
+    enSpan.style.cursor = 'default';
+  } else {
+    zh.style.display = 'block';
+    en.style.display = 'none';
+    zhSpan.className = 'text-color-black/60';
+    zhSpan.style.cursor = 'default';
+    enSpan.className = 'text-color-black/20 hover:text-color-black/35 transition-colors ease-out duration-200';
+    enSpan.style.cursor = 'pointer';
+  }
+}

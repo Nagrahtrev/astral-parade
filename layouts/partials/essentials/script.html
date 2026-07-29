@@ -10,7 +10,10 @@
 
 {{/*  Lenis  */}}
 {{ $lenisJS := resources.Get "js/lenis.min.js" }}
-<script src="{{ $lenisJS.RelPermalink }}" defer></script>
+{{ if hugo.IsProduction }}
+  {{ $lenisJS = $lenisJS | fingerprint }}
+{{ end }}
+<script src="{{ $lenisJS.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $lenisJS.Data.Integrity }}"{{ end }} defer></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {

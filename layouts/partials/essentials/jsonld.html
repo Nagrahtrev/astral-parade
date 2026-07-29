@@ -1,0 +1,133 @@
+{{/*  ========== JSON-LD Structured Data ==========  */}}
+
+{{/*  "byArtist" Helper  */}}
+{{- define "byArtist" -}}
+  {{- $name := . -}}
+  {{- if reflect.IsSlice $name -}}
+    "byArtist": [
+    {{- range $i, $n := $name }}
+      {"@type": "Person", "name": {{ $n | jsonify }}}{{ if lt (add $i 1) (len $name) }},{{ end }}
+    {{- end }}
+    ]
+  {{- else -}}
+    "byArtist": {"@type": "Person", "name": {{ $name | jsonify }}}
+  {{- end -}}
+{{- end -}}
+
+
+{{/*  ---- WebSite ----  */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": {{ site.Title | jsonify }},
+  "url": {{ site.Home.Permalink | jsonify }},
+  "description": {{ default site.Params.description "nova+z Official Website — home of the independent project Astral Parade, featuring music and blog posts." | jsonify }},
+  "author": {
+    "@type": "Person",
+    "name": {{ "nova+z" | jsonify }},
+    "email": {{ site.Params.email | jsonify }},
+    "url": {{ "about/" | absURL | jsonify }}
+  },
+  "inLanguage": {{ site.LanguageCode | jsonify }}
+}
+</script>
+
+
+{{/*  ---- Person (About Page) ----  */}}
+{{- if eq .Type "about" -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": {{ "nova+z" | jsonify }},
+  "alternateName": [{{ "Zsul Pavon" | jsonify }}, {{ "novaxz" | jsonify }}],
+  "description": {{ .Description | plainify | jsonify }},
+  "email": {{ site.Params.email | jsonify }},
+  "url": {{ .Permalink | jsonify }}
+  {{- with site.Params.social }},
+  "sameAs": {{ . | jsonify }}
+  {{- end -}}
+}
+</script>
+{{- end -}}
+
+
+{{/*  ---- BlogPosting (Blog Single) ----  */}}
+{{- if and (eq .Type "blog") .IsPage -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ .Title | jsonify }},
+  "datePublished": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+  "dateModified": {{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+  "author": {
+    "@type": "Person",
+    "name": {{ "nova+z" | jsonify }}
+  }
+  {{- if .Params.tag }},
+  "keywords": {{ .Params.tag | jsonify }}
+  {{- end }}
+  {{- if .Description }},
+  "description": {{ .Description | jsonify }}
+  {{- else }},
+  "description": {{ default site.Params.description "nova+z Official Website — home of the independent project Astral Parade, featuring music and blog posts." | jsonify }}
+  {{- end }}
+  {{- if .Content }},
+  "articleBody": {{ .Content | plainify | jsonify }}
+  {{- end }}
+}
+</script>
+{{- end -}}
+
+
+{{/*  ---- MusicAlbum (Disco Release) ----  */}}
+{{- if and (eq .Type "discography") (eq .Params.category "Releases") -}}
+{{- $tracks := .Params.tracklist -}}
+{{- $trackCount := len $tracks -}}
+{{- $artist := default "nova+z" .Params.artist -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MusicAlbum",
+  "name": {{ .Title | jsonify }},
+  "datePublished": {{ .Date.Format "2006-01-02" | jsonify }},
+  "image": {{ .Params.image | absURL | jsonify }}
+  {{- if .Params.catalog }},
+  "catalogNumber": {{ .Params.catalog | jsonify }}
+  {{- end }},
+  {{- template "byArtist" $artist }},
+  "track": [
+    {{- range $i, $t := $tracks }}
+    {
+      "@type": "MusicRecording",
+      "position": {{ add $i 1 }},
+      "name": {{ $t.title | jsonify }}
+    }{{- if lt (add $i 1) $trackCount }},{{ end }}
+    {{- end }}
+  ],
+  "numTracks": {{ $trackCount }}
+}
+</script>
+{{- end -}}
+
+
+{{/*  ---- MusicRecording (Disco Participation) ----  */}}
+{{- if and (eq .Type "discography") (eq .Params.category "Participations") -}}
+{{- $artist := default "nova+z" .Params.artist -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MusicRecording",
+  "name": {{ .Title | jsonify }},
+  "datePublished": {{ .Date.Format "2006-01-02" | jsonify }},
+  "image": {{ .Params.image | absURL | jsonify }},
+  {{- template "byArtist" $artist }},
+  "inAlbum": {
+    "@type": "MusicAlbum",
+    "name": {{ .Params.from_album | jsonify }}
+  }
+}
+</script>
+{{- end -}}

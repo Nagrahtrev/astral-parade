@@ -46,24 +46,27 @@
     {{/*  简介  */}}
     <div class="pointer-events-auto flex flex-col items-center bg-transparent md:bg-color-white/60 md:backdrop-blur-md md:px-10 md:py-16 px-4 py-0 w-full max-w-2xl md:border-2 md:border-color-black/80 -mt-10 md:-mt-23">
 
-      <div class="font-bgsans text-[80px] md:text-[105px] font-bold text-left uppercase tracking-tighter leading-none mb-6 text-color-black select-none">
+      <div class="font-bgsans text-[80px] lg:text-[90px] xl:text-[105px] font-bold text-left uppercase tracking-tighter leading-none mb-6 text-color-black select-none">
         NOVA<br>
         AT ITS<br>
         ZENITH.
       </div>
 
-      <span class="md:text-[13px] text-[11px] font-mono font-bold text-center tracking-[0.2em] uppercase text-color-red mb-8 select-none">
+      <span class="xl:text-[13px] lg:text-[12px] text-[11px] font-mono font-bold text-center tracking-[0.2em] uppercase text-color-red mb-8 select-none">
         Astral Parade // About
       </span>
 
-      <div class="md:text-[16px] text-[14px] font-ntserif text-center text-color-black/60 tracking-tight leading-[1.63] mb-12 max-w-[90%]">
-        {{ .Params.description | safeHTML }}
+      <div class="md:text-[16px] text-[14px] font-ntserif text-center text-color-dgray tracking-tight leading-[1.63] mb-12 max-w-[90%] [&_a]:underline [&_a]:decoration-dashed [&_a]:decoration-color-red [&_a]:underline-offset-4">
+        <div id="desc-zh">{{ .Params.description | safeHTML }}</div>
+        <div id="desc-en" style="display:none">{{ .Params.description_en | safeHTML }}</div>
       </div>
-
-      <a href="mailto:{{ site.Params.email }}"
-         class="inline-block bg-color-black/90 text-color-white/90 font-mono md:text-[14px] text-[12px] uppercase md:px-7 md:py-4 px-5 py-3.5">
-        [ Contact Me ]
-      </a>
+      
+      {{/*  切换语言  */}}
+      <div class="font-smsans text-[13px] tracking-widest uppercase whitespace-nowrap select-none mb-2">
+        <span id="lang-zh" class="text-color-black/60" style="cursor:default" onclick="switchAboutLang('zh')">ZH</span>
+        <span class="text-color-black/20">/</span>
+        <span id="lang-en" class="text-color-black/20 hover:text-color-black/35 transition-colors ease-out duration-200" style="cursor:pointer" onclick="switchAboutLang('en')">EN</span>
+      </div>
 
     </div>
   </div>
@@ -96,10 +99,10 @@
     </div>
 
     {{/*  文本部分  */}}
-    <div class="w-full border-b border-color-black/20 pb-8 mb-12 flex flex-col items-center text-center select-none">
+    <div class="w-full pb-8 mb-15 flex flex-col items-center text-center select-none">
 
       <h2 class="font-bgsans text-[24px] md:text-[30px] font-black uppercase tracking-wider text-color-black mb-4">
-        A little about me..
+        A Few Things About Me
       </h2>
 
       <span class="md:text-[14px] text-[11px] font-mono text-color-red tracking-[0.2em] uppercase">
@@ -115,7 +118,10 @@
   </div>
 </section>
 
-{{ $js := resources.Get "js/about-controller.js" | minify }}
-<script src="{{ $js.RelPermalink }}"></script>
+{{ $js := resources.Get "js/about-controller.js" }}
+{{ if hugo.IsProduction }}
+  {{ $js = $js | minify | fingerprint }}
+{{ end }}
+<script src="{{ $js.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $js.Data.Integrity }}"{{ end }}></script>
 
 {{ end }}
