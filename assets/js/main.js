@@ -109,12 +109,39 @@ function initPageTransitions() {
         });
     });
 
-    // BFCache
-    window.addEventListener('pageshow', function (event) {
-        if (event.persisted) {
-            window.__debugLog('🔄 bfcache RESTORE');
+    // BFCache 恢复
+    function restorePage() {
+        if (document.body.classList.contains('page-leaving')) {
+            window.__debugLog('🔄 restorePage: clearing page-leaving');
             document.body.classList.remove('page-leaving');
             document.body.classList.add('page-loaded');
+        }
+    }
+
+    // 标准路径：pageshow 事件
+    window.addEventListener('pageshow', function (event) {
+        window.__debugLog('📥 pageshow persisted='+event.persisted);
+        if (event.persisted) {
+            restorePage();
+        }
+    });
+
+    // 降级路径：Via/国产浏览器不触发 pageshow，仅触发 visibilitychange
+    // 从 hidden→visible 时检查 page-leaving 残留并清除
+    var wasHidden = false;
+    window.addEventListener('pagehide', function () {
+        wasHidden = true;
+    });
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'hidden') {
+            wasHidden = true;
+        } else if (document.visibilityState === 'visible' && wasHidden) {
+            wasHidden = false;
+            window.__debugLog('🔄 visibilitychange fallback restore');
+            // 延迟一帧确保 DOM 完全恢复
+            requestAnimationFrame(function () {
+                restorePage();
+            });
         }
     });
 }
