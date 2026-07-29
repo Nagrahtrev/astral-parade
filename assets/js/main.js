@@ -5,13 +5,80 @@ function initPageTransitions() {
 
     if (!mainContent) return;
 
+    // ===== DEBUG 日志面板 =====
+    (function initDebugPanel() {
+        if (document.getElementById('__bfcache_debug')) return;
+        var panel = document.createElement('div');
+        panel.id = '__bfcache_debug';
+        panel.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;max-height:30vh;overflow-y:auto;background:rgba(0,0,0,0.9);color:#0f0;font:9px/1.4 monospace;padding:6px 8px;border-bottom:2px solid #0f0;pointer-events:auto;-webkit-text-size-adjust:none;word-break:break-all;';
+
+        var btnBar = document.createElement('div');
+        btnBar.style.cssText = 'display:flex;gap:6px;margin-bottom:4px;';
+        var copyBtn = document.createElement('button');
+        copyBtn.textContent = '📋 复制';
+        copyBtn.style.cssText = 'background:#0f0;color:#000;border:none;padding:2px 8px;font:bold 10px monospace;border-radius:3px;';
+        copyBtn.addEventListener('click', function(e){
+            e.stopPropagation();
+            navigator.clipboard.writeText(panel._entries.join('\n')).catch(function(){
+                var ta = document.createElement('textarea');
+                ta.value = panel._entries.join('\n');
+                ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+            });
+            copyBtn.textContent = '✅ 已复制';
+            setTimeout(function(){ copyBtn.textContent = '📋 复制'; }, 1500);
+        });
+
+        var toggleBtn = document.createElement('button');
+        toggleBtn.textContent = '🔽 展开';
+        toggleBtn.style.cssText = 'background:#333;color:#0f0;border:1px solid #0f0;padding:2px 8px;font:bold 10px monospace;border-radius:3px;';
+        toggleBtn.addEventListener('click', function(e){
+            e.stopPropagation();
+            panel.style.maxHeight = panel.style.maxHeight === '80vh' ? '30vh' : '80vh';
+            toggleBtn.textContent = panel.style.maxHeight === '80vh' ? '🔼 收起' : '🔽 展开';
+        });
+
+        btnBar.appendChild(copyBtn);
+        btnBar.appendChild(toggleBtn);
+        panel.appendChild(btnBar);
+
+        var logEl = document.createElement('div');
+        logEl.id = '__bfcache_log';
+        panel.appendChild(logEl);
+        document.body.appendChild(panel);
+
+        panel._entries = [];
+        window.__debugLog = function (msg) {
+            var t = Date.now() % 100000;
+            var m = document.querySelector('main');
+            var ms = m ? getComputedStyle(m) : null;
+            var line = '['+t+'] '+msg;
+            if (ms) line += ' | op:'+ms.opacity+' tY:'+ms.transform+' vis:'+ms.visibility+' disp:'+ms.display;
+            line += ' | cls:'+document.body.className;
+            panel._entries.push(line);
+            if (panel._entries.length > 50) panel._entries.shift();
+            logEl.textContent = panel._entries.join('\n');
+        };
+
+        window.addEventListener('pageshow', function(e){ window.__debugLog('📥 pageshow persisted='+e.persisted+' '+location.pathname); });
+        window.addEventListener('pagehide', function(e){ window.__debugLog('📤 pagehide persisted='+e.persisted+' '+location.pathname); });
+        window.addEventListener('visibilitychange', function(){ window.__debugLog('👁 vis='+document.visibilityState); });
+
+        window.__debugLog('🔧 Panel init '+location.pathname);
+    })();
+
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
+            window.__debugLog('✅ rAF→rAF add page-loaded');
             body.classList.add('page-loaded');
         });
     });
 
     setTimeout(() => {
+        window.__debugLog('⏰ setTimeout 200ms fallback add page-loaded');
         body.classList.add('page-loaded');
     }, 200);
 
@@ -29,11 +96,13 @@ function initPageTransitions() {
             ) {
                 e.preventDefault();
                 const destination = this.href;
+                window.__debugLog('🔗 click → '+destination);
 
                 body.classList.remove('page-loaded');
                 body.classList.add('page-leaving');
 
                 setTimeout(() => {
+                    window.__debugLog('🚀 navigate → '+destination);
                     window.location.href = destination;
                 }, 300);
             }
@@ -43,6 +112,7 @@ function initPageTransitions() {
     // BFCache
     window.addEventListener('pageshow', function (event) {
         if (event.persisted) {
+            window.__debugLog('🔄 bfcache RESTORE');
             document.body.classList.remove('page-leaving');
             document.body.classList.add('page-loaded');
         }
