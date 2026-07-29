@@ -328,28 +328,36 @@ body:not(.page-home) main {
 
 /* 加载中 */
 body.page-loading:not(.page-home) main {
-  opacity: 0;
-  transform: translateY(10px);
+  animation: page-enter 0.4s cubic-bezier(0.1, 1, 0.2, 1) both;
+  animation-play-state: paused;
   will-change: transform, opacity;
   backface-visibility: hidden;
-  transition:
-    opacity 0.4s cubic-bezier(0.1, 1, 0.2, 1),
-    transform 0.4s cubic-bezier(0.1, 1, 0.2, 1);
 }
 
 /* 加载完成 */
 body.page-loaded:not(.page-home) main {
-  opacity: 1;
-  transform: translateY(0);
+  animation-play-state: running;
 }
 
 /* 离开页面 */
 body.page-leaving:not(.page-home) main {
+  animation: none;
   opacity: 0;
   transform: translateY(10px);
   transition:
     opacity 0.15s cubic-bezier(0.7, 0, 1, 1),
     transform 0.15s cubic-bezier(0.7, 0, 1, 1);
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* =========================================

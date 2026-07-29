@@ -5,16 +5,15 @@ function initPageTransitions() {
 
     if (!mainContent) return;
 
-    // 确保首帧已绘制
-    const triggerLoad = () => {
-        body.classList.add('page-loaded');
-    };
-
     requestAnimationFrame(() => {
-        requestAnimationFrame(triggerLoad);
+        requestAnimationFrame(() => {
+            body.classList.add('page-loaded');
+        });
     });
 
-    setTimeout(triggerLoad, 200);
+    setTimeout(() => {
+        body.classList.add('page-loaded');
+    }, 200);
 
     // 拦截内部链接跳转
     document.querySelectorAll('a').forEach(link => {
