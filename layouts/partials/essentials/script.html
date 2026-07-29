@@ -93,3 +93,8 @@
     });
   }
 </script>
+
+{{/*  Vercel Analytics  */}}
+{{ if hugo.IsProduction }}
+  <script defer src="/_vercel/insights/script.js"></script>
+{{ end }}
