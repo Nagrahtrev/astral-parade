@@ -7,7 +7,7 @@
 /* 全局 */
 .article-content.prose {
   @apply text-[17px]                 /* 基础字号 */
-         text-color-black/80;        /* 文字颜色 */
+         text-[#323232];           /* 文字颜色 - text-color-black/80 */
   @apply prose-p:leading-[1.9]       /* 行高 */
          prose-p:mb-7;               /* 段落间距 */
 }
@@ -18,13 +18,13 @@
          prose-headings:font-light           /* 全局标题字重 */
          prose-headings:text-color-black;    /* 全局标题颜色 */
 
-  @apply prose-h2:text-[30px]                /* H2 字号 */
-         prose-h2:mt-24 prose-h2:mb-10       /* H2 上下间距 */
+  @apply prose-h2:text-[32px]                /* H2 字号 */
+         prose-h2:mt-30 prose-h2:mb-15       /* H2 上下间距 */
          prose-h2:font-normal                /* H2 字重 */
          prose-h2:tracking-normal;           /* H2 字距 */
 
-  @apply prose-h3:text-[25px]                /* H3 字号 */
-         prose-h3:mt-12 prose-h3:mb-5        /* H3 上下间距 */
+  @apply prose-h3:text-[26px]                /* H3 字号 */
+         prose-h3:mt-20 prose-h3:mb-10       /* H3 上下间距 */
          prose-h3:tracking-normal;           /* H3 字距 */
 
   @apply prose-h4:text-[21px]                /* H4 字号 */
@@ -36,7 +36,7 @@
 .article-content.prose {
   @apply prose-a:text-color-red              /* 超链接颜色 */
          prose-a:font-normal                 /* 超链接字重 */
-         prose-a:no-underline prose-a:border-b-[0.5px] prose-a:border-color-red/40     /* 下划线 */
+         prose-a:no-underline prose-a:border-b-[0.5px] prose-a:border-color-red/40         /* 下划线 */
 }
 
 /* Button */
@@ -111,7 +111,7 @@
          prose-code:text-color-red/80          /* 文字颜色 */
          prose-code:font-normal                /* 字重 */
          prose-code:bg-color-black/4           /* 背景颜色 */
-         prose-code:border-[0.5px] prose-code:border-color-black/10 prose-code:rounded-none   /* 边框样式 */
+         prose-code:border-[0.5px] prose-code:border-color-black/10 prose-code:rounded-none               /* 边框样式 */
          prose-code:px-1.5 prose-code:py-0.5;  /* 内边距 */
 
          @apply prose-code:wrap-break-word;    /* 自动换行 */
@@ -276,7 +276,7 @@
   margin-top: 1.2rem !important;                    /* 段落间距 */
 }
 
-/* 修复段落间距...:( */
+/* 修复段落间距 */
 .article-content.prose .notice-body p:first-child,
 .article-content.prose .notice-body p:first-of-type {
   margin-top: 0 !important;
@@ -291,10 +291,7 @@
 }
 
 /* 常规级别 */
-.article-content.prose .notice.note,
-.article-content.prose .notice.tip,
-.article-content.prose .notice.info,
-.article-content.prose .notice.quote {
+.article-content.prose .notice:not(.warning) {
   border-left: 3px solid color-mix(in srgb, var(--my-color-black) 15%, transparent) !important;    /* 左侧指示线 */
 }
 
@@ -317,7 +314,7 @@
 .article-content.prose .tab {
   border: 0.5px solid color-mix(in srgb, var(--my-color-black) 10%, transparent) !important;      /* 边框 */
   border-radius: 0 !important;                                                                    /* 无圆角 */
-  overflow: hidden !important;
+  overflow: visible !important;
   background-color: transparent !important;
 }
 
@@ -353,15 +350,21 @@
   line-height: 1 !important;
 }
 
+@media (max-width: 40rem) {
+  .article-content.prose .tab-nav-item {
+    padding: 0.8rem 1.5rem !important;                           /* 内边距 */
+  }
+}
+
 /* 标签悬停 */
 .article-content.prose .tab-nav-item:hover:not(.active) {
-  color: color-mix(in srgb, var(--my-color-black) 80%, transparent) !important;
+  color: color-mix(in srgb, var(--my-color-black) 70%, transparent) !important;
   background-color: color-mix(in srgb, var(--my-color-black) 3%, transparent) !important;
 }
 
 /* 标签激活 */
 .article-content.prose .tab-nav-item.active {
-  color: color-mix(in srgb, var(--my-color-black) 90%, transparent) !important;
+  color: color-mix(in srgb, var(--my-color-black) 70%, transparent) !important;
   background: linear-gradient(color-mix(in srgb, var(--my-color-black) 2%, transparent), color-mix(in srgb, var(--my-color-black) 2%, transparent)), var(--my-color-white) !important;
 }
 
@@ -632,4 +635,83 @@
   white-space: pre-wrap;
   word-break: break-all;
   overflow-x: auto;
+}
+
+/* -------- Tooltip -------- */
+
+.article-content.prose .tooltip {
+  position: relative !important;
+  display: inline !important;
+}
+
+/* 桥接伪元素 */
+.article-content.prose .tooltip::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 10px !important; 
+  z-index: 49 !important;
+  display: none !important; 
+}
+
+.article-content.prose .tooltip:hover::before {
+  display: block !important;
+}
+
+/* 虚线 */
+.article-content.prose .tooltip-trigger {
+  border-bottom: 1px dashed var(--my-color-black) !important; 
+  padding-bottom: 1px !important;
+  transition: background-color 0.2s ease !important;
+}
+
+/* 补充信息框 */
+.article-content.prose .tooltip-box {
+  position: absolute !important;
+  top: calc(100% + 10px) !important;                                   /* 位置 */
+  left: 0;
+  z-index: 50 !important;
+  max-width: min(280px, calc(100vw - 1rem)) !important;
+  width: max-content !important;
+  overflow-wrap: break-word !important;
+  font-family: var(--font-primary) !important;                         /* 字体 */
+  font-size: 13px !important;                                          /* 字号 */
+  font-weight: normal !important;                                      /* 字重 */
+  line-height: 1.7 !important;                                         /* 行高 */
+  color: color-mix(in srgb, var(--my-color-black) 70%, transparent) !important;
+  opacity: 0.85 !important;
+
+  background-color: rgb(231, 231, 231) !important;                   /* 背景 */
+  border: 0.5px solid rgba(2, 2, 3, 0.15) !important;                /* 边框 */
+  box-shadow: 0 3px 10px rgba(2, 2, 3, 0.06) !important;             /* 阴影 */
+  padding: 0.5rem 0.9rem !important;                                   /* 内边距 */
+
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.18s ease, visibility 0.18s ease !important;
+}
+
+.article-content.prose .tooltip-box p {
+  margin: 0 !important;
+}
+.article-content.prose .tooltip-box p + p {
+  margin-top: 0.5rem !important;
+}
+
+.article-content.prose .tooltip:hover .tooltip-box {
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* 手机端回退 */
+@media (max-width: 40rem) {
+  .article-content.prose .tooltip-box {
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: min(280px, calc(100vw - 3rem)) !important;
+  }
 }

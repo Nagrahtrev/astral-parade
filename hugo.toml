@@ -47,6 +47,9 @@ enableRobotsTXT = true
   tag = "tag"
 
 [markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
   [markup.highlight]
     style = "github"
     tabWidth = 4

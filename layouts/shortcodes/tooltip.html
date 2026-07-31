@@ -1,0 +1,5 @@
+{{- $tip := .Get 0 | default "" -}}
+<span class="tooltip">
+  <span class="tooltip-trigger">{{ .Inner }}</span>
+  <span class="tooltip-box">{{ $tip | markdownify }}</span>
+</span>

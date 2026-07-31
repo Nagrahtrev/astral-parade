@@ -1,3 +1,61 @@
+// ------------ Tooltip ------------
+function initTooltips() {
+    const SPACING = 8;
+
+    function positionBox(tooltip) {
+        const box = tooltip.querySelector('.tooltip-box');
+        if (!box) return;
+
+        const trigger = tooltip.querySelector('.tooltip-trigger') || tooltip;
+
+        const triggerRects = trigger.getClientRects();
+        const tooltipRects = tooltip.getClientRects();
+        if (!triggerRects.length || !tooltipRects.length) return;
+
+        const triggerRect = triggerRects[0]; 
+        const tooltipRect = tooltipRects[0]; 
+
+        const boxWidth = box.getBoundingClientRect().width || box.offsetWidth;
+        const vw = document.documentElement.clientWidth || window.innerWidth;
+
+        let leftTarget = triggerRect.left + triggerRect.width / 2 - boxWidth / 2;
+        leftTarget = Math.max(SPACING, Math.min(vw - boxWidth - SPACING, leftTarget));
+
+        box.style.left = (leftTarget - tooltipRect.left) + 'px';
+        box.style.transform = 'none';
+
+        if (window.location.search.indexOf('tooltip-debug=1') !== -1) {
+            console.log('[tooltip]', {
+                triggerFirstLineLeft: triggerRect.left,
+                triggerWidth: triggerRect.width,
+                tooltipFirstLineLeft: tooltipRect.left,
+                boxWidth: boxWidth,
+                vw: vw,
+                leftTarget: leftTarget,
+                boxLeft: box.style.left,
+            });
+        }
+    }
+
+    function repositionAll() {
+        document.querySelectorAll('.article-content.prose .tooltip').forEach(tooltip => {
+            if (tooltip.querySelector('.tooltip-box')) positionBox(tooltip);
+        });
+    }
+
+    repositionAll();
+
+    document.querySelectorAll('.article-content.prose .tooltip').forEach(tooltip => {
+        if (!tooltip.querySelector('.tooltip-box')) return;
+        tooltip.addEventListener('mouseenter', () => positionBox(tooltip));
+        tooltip.addEventListener('focusin', () => positionBox(tooltip));
+    });
+
+    window.addEventListener('resize', repositionAll);
+
+    window.__initTooltipsReposition = repositionAll;
+}
+
 // ------------ Tabs ------------
 function initTabs() {
     document.querySelectorAll('.tab').forEach(tab => {
@@ -284,8 +342,27 @@ function initImageLightbox() {
     }, { passive: true });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function onReady(fn) {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fn);
+    } else {
+        fn();
+    }
+}
+
+onReady(() => {
+    initTooltips();
     initTabs();
     initAccordions();
     initImageLightbox();
+
+    // 字体加载完成后重定位 Tooltip
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+            const tooltips = document.querySelectorAll('.article-content.prose .tooltip');
+            if (tooltips.length && window.__initTooltipsReposition) {
+                window.__initTooltipsReposition();
+            }
+        });
+    }
 });
