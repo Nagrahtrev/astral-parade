@@ -662,7 +662,7 @@
 
 /* 虚线 */
 .article-content.prose .tooltip-trigger {
-  border-bottom: 1px dashed var(--my-color-black) !important; 
+  border-bottom: 1px dashed currentColor !important;
   padding-bottom: 1px !important;
   transition: background-color 0.2s ease !important;
 }

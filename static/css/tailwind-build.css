@@ -6591,7 +6591,7 @@
 }
 
 .article-content.prose .tooltip-trigger {
-  border-bottom: 1px dashed var(--my-color-black) !important;
+  border-bottom: 1px dashed !important;
   padding-bottom: 1px !important;
   transition: background-color .2s !important;
 }
