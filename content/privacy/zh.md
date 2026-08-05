@@ -2,7 +2,7 @@
 title: "隐私声明"
 layout: "privacy"
 locale: "zh"
-date: 2026-07-29
+date: 2026-08-05
 ---
 
 ## 信息收集

@@ -81,7 +81,7 @@ Astral Parade 是专为自主发行而创建的个人社团。
 | **Audio Interface** | Black Lion Audio Revolution 2x2 |
 | **MIDI Controller** | AKAI MPD218 |
 |  | KORG microKEY |
-|  | KORG D1 |
+| **keyboard** | KORG D1 |
 | **Microphone** | sE Electronics X1 A |
 | **Recorder** | ZOOM H1essential |
 | **DJ Controller** | Hercules Inpulse 500 |
