@@ -16,28 +16,63 @@
 <script src="{{ $lenisJS.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $lenisJS.Data.Integrity }}"{{ end }} defer></script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const lenis = new Lenis({
-      duration: 0.5,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
+  // 禁用 Lenis: /?nolenis=1
+  var _nolenis = (location.search.match(/[?&]nolenis=1\b/) || [])[0];
+
+  if (!_nolenis) {
+    var _lenisInternals = null;
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var lenis = new Lenis({
+        duration: 0.5,
+        easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+        infinite: false,
+      });
+
+      window.lenis = lenis;
+
+      _lenisInternals = { t: window.t, i: window.i, e: window.e, s: window.s };
+
+      var _wrapGlobals = function (fn) {
+        return function () {
+          var _sT = window.t, _sI = window.i, _sE = window.e, _sS = window.s;
+          window.t = _lenisInternals.t; window.i = _lenisInternals.i;
+          window.e = _lenisInternals.e; window.s = _lenisInternals.s;
+          try { return fn.apply(this, arguments); }
+          finally { window.t = _sT; window.i = _sI; window.e = _sE; window.s = _sS; }
+        };
+      };
+
+      if (lenis.virtualScroll && lenis.virtualScroll.emitter && lenis.virtualScroll.emitter.events) {
+        var scrollCbs = lenis.virtualScroll.emitter.events['scroll'];
+        if (scrollCbs && scrollCbs.length > 0) scrollCbs[0] = _wrapGlobals(scrollCbs[0]);
+      }
+
+      var _rafId = null;
+      function raf(time) {
+        if (window.lenis === lenis) {
+          var _sT = window.t, _sI = window.i, _sE = window.e, _sS = window.s;
+          window.t = _lenisInternals.t; window.i = _lenisInternals.i;
+          window.e = _lenisInternals.e; window.s = _lenisInternals.s;
+
+          lenis.raf(time);
+
+          window.t = _sT; window.i = _sI; window.e = _sE; window.s = _sS;
+          _rafId = requestAnimationFrame(raf);
+        }
+      }
+      _rafId = requestAnimationFrame(raf);
     });
-
-    window.lenis = lenis;
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-  });
+  } else {
+    console.log('[Lenis] 已通过 ?nolenis=1 禁用，使用原生滚动');
+  }
+  
 </script>
 
 {{/*  Mermaid  */}}
@@ -94,7 +129,10 @@
   }
 </script>
 
-{{/*  Vercel Analytics  */}}
 {{ if hugo.IsProduction }}
+  {{/*  Vercel Analytics  */}}
   <script defer src="/_vercel/insights/script.js"></script>
+  
+  {{/*  Vercel Speed Insights  */}}
+  <script defer src="/_vercel/speed-insights/script.js"></script>
 {{ end }}

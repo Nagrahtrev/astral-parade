@@ -1,0 +1,251 @@
+{{/*  
+  在文章 frontmatter 设置 comments: false 禁用评论区
+*/}}
+
+{{ $twikoo := site.Params.twikoo }}
+{{ $enabled := $twikoo.enable | default false }}
+{{ $pageEnabled := ne .Params.comments false }}
+
+{{ if and $enabled $pageEnabled }}
+
+  {{ $envId := $twikoo.envId | default "" }}
+  {{ $region := $twikoo.region | default "" }}
+  {{ $lang := "en" }}
+
+  <section id="twikoo-comments" class="twikoo-comments mt-30" aria-label="评论区">
+
+    <div id="twikoo-sentinel" aria-hidden="true"></div>
+
+    <div id="tcomment"
+         data-env-id="{{ $envId }}"
+         data-region="{{ $region }}"
+         data-lang="{{ $lang }}"></div>
+
+    <script>
+      (function () {
+        if (window.__twikooLoaded) return;
+
+        var sentinel = document.getElementById('twikoo-sentinel');
+        var container = document.getElementById('tcomment');
+        if (!sentinel || !container) return;
+
+        var loaded = false;
+        var initTwikoo = function () {
+          if (loaded) return;
+          loaded = true;
+
+          // 加载 Twikoo
+          var script = document.createElement('script');
+          script.src = 'https://cdn.jsdelivr.net/npm/twikoo@1.7.15/dist/twikoo.all.min.js';
+          script.async = true;
+          script.crossOrigin = 'anonymous';
+
+          script.onload = function () {
+            try {
+              twikoo.init({
+                envId: container.getAttribute('data-env-id') || '',
+                region: container.getAttribute('data-region') || '',
+                el: '#tcomment',
+                lang: 'en',
+                requiredMetaData: ['nick'],
+              });
+              window.__twikooLoaded = true;
+
+              // highlight.js 代码高亮
+              var hljsCSS = document.createElement('link');
+              hljsCSS.rel = 'stylesheet';
+              hljsCSS.href = 'https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11/styles/github.min.css';
+              document.head.appendChild(hljsCSS);
+              var hljsScript = document.createElement('script');
+              hljsScript.src = 'https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11/highlight.min.js';
+              hljsScript.async = true;
+              document.head.appendChild(hljsScript);
+
+              // --------------------------------- UI 简化 ---------------------------------
+              var classifyAction = function (btn) {
+                var text = '';
+                var paths = btn.querySelectorAll('svg path');
+                for (var i = 0; i < paths.length; i++) {
+                  var d = paths[i].getAttribute('d') || '';
+                  text += d;
+                }
+                // 删除
+                if (text.indexOf('M166.2-16') !== -1 || text.indexOf('M136.7 5.9') !== -1) return 'delete';
+                // 回复
+                if (text.indexOf('M51.9 384.9') !== -1 || text.indexOf('M512 240c0 132.5') !== -1) return 'reply';
+                // 其余隐藏
+                return 'like';
+              };
+
+              var enhance = function () {
+                var root = document.getElementById('twikoo');
+                if (!root) return;
+
+                // 回复区右上角关闭按钮
+                var replyForms = root.querySelectorAll('.tk-comment .tk-submit:not([data-tk-close])');
+                for (var s = 0; s < replyForms.length; s++) {
+                  var submit = replyForms[s];
+                  submit.setAttribute('data-tk-close', '1');
+                  var cancelBtn = submit.querySelector('.tk-cancel');
+                  var closeEl = document.createElement('span');
+                  closeEl.className = 'tk-close-btn';
+                  closeEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/></svg>';
+                  closeEl.addEventListener('click', function () {
+                    var btn = this.parentNode.querySelector('.tk-cancel');
+                    if (btn) btn.click();
+                  });
+                  submit.appendChild(closeEl);
+                  if (cancelBtn) cancelBtn.style.display = 'none';
+                }
+
+                // 昵称输入框限制 20 字符
+                var nickInput = root.querySelector('.tk-meta-input .el-input:first-child .el-input__inner');
+                if (nickInput && !nickInput.hasAttribute('data-tk-maxlen')) {
+                  nickInput.setAttribute('data-tk-maxlen', '1');
+                  nickInput.setAttribute('maxlength', '20');
+                }
+
+                // 修复 Lenis 拦截 wheel 事件导致管理窗口无法滚动
+                var admin = root.querySelector('.tk-admin');
+                if (admin && !admin.hasAttribute('data-lenis-prevent')) {
+                  admin.setAttribute('data-lenis-prevent', '');
+                  admin.setAttribute('data-lenis-prevent-wheel', '');
+                }
+
+                // 设置按钮移到表情按钮右边
+                var icons = root.querySelectorAll('.tk-comments-actions .tk-icon.__comments');
+                if (icons.length >= 2) {
+                  var settingsIcon = icons[1];
+                  var owoIcon = root.querySelector('.tk-row-actions-start .tk-submit-action-icon');
+                  if (owoIcon) {
+                    owoIcon.parentNode.insertBefore(settingsIcon, owoIcon.nextSibling);
+                  }
+                }
+
+                // 分类处理操作按钮
+                var actions = root.querySelectorAll('.tk-action:not([data-tk-processed])');
+                for (var j = 0; j < actions.length; j++) {
+                  var action = actions[j];
+                  action.setAttribute('data-tk-processed', '1');
+                  var links = action.querySelectorAll('.tk-action-link');
+                  for (var k = 0; k < links.length; k++) {
+                    var btn = links[k];
+                    if (btn.getAttribute('data-tk-action')) continue;
+                    var type = classifyAction(btn);
+                    btn.setAttribute('data-tk-action', type);
+                    if (type === 'delete') btn.classList.add('js-delete');
+                    else if (type === 'reply') btn.classList.add('js-reply');
+                    else btn.classList.add('js-hidden-action');
+                  }
+                }
+
+                // 时间文本简写
+                var timeEls = root.querySelectorAll('.tk-time:not([data-tk-time])');
+                for (var ti = 0; ti < timeEls.length; ti++) {
+                  var timeEl = timeEls[ti];
+                  timeEl.setAttribute('data-tk-time', '1');
+                  var txt = (timeEl.textContent || '').trim().replace(/\s+/g, ' ');
+                  if (!txt) continue;
+                  var short = txt
+                    .replace(/^Just now$/i, 'now')
+                    .replace(/^(\d+)\s+second(?:s)?\s+ago$/i, '$1 SEC AGO')
+                    .replace(/^(\d+)\s+minute(?:s)?\s+ago$/i, '$1 MIN AGO')
+                    .replace(/^(\d+)\s+hour(?:s)?\s+ago$/i, '$1 HR AGO')
+                    .replace(/^(\d+)\s+day(?:s)?\s+ago$/i, '$1 DAY AGO')
+                    .replace(/^(\d+)\s+week(?:s)?\s+ago$/i, '$1 WK AGO')
+                    .replace(/^(\d+)\s+month(?:s)?\s+ago$/i, '$1 MO AGO')
+                    .replace(/^(\d+)\s+year(?:s)?\s+ago$/i, '$1 YR AGO');
+                  if (short !== txt) timeEl.textContent = short;
+                }
+
+                // highlight.js 代码块高亮
+                if (typeof hljs !== 'undefined') {
+                  var codes = root.querySelectorAll('.tk-content pre code:not([data-hljs]), .tk-preview-container pre code:not([data-hljs])');
+                  for (var hi = 0; hi < codes.length; hi++) {
+                    codes[hi].setAttribute('data-hljs', '1');
+                    hljs.highlightElement(codes[hi]);
+                  }
+                }
+              };
+
+              // REPLY 点击切换
+              var _toggleReply = function (e) {
+                var t = e.target;
+                if (!t || !t.closest) return;
+                var rootEl = t.closest('#twikoo');
+                if (!rootEl) return;
+                var replyBtn = t.closest('.js-reply');
+                if (!replyBtn) return;
+                var comment = replyBtn.closest('.tk-comment');
+                if (!comment) return;
+                var submit = comment.querySelector('.tk-submit');
+                if (!submit) return;
+                var isVisible = false;
+                if (typeof submit.getClientRects === 'function') {
+                  isVisible = submit.getClientRects().length > 0;
+                } else {
+                  isVisible = submit.offsetParent !== null;
+                }
+                if (isVisible) {
+                  var cancel = submit.querySelector('.tk-cancel');
+                  if (cancel && typeof cancel.click === 'function') cancel.click();
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+              };
+              document.addEventListener('click', _toggleReply, true);
+
+              if (typeof MutationObserver !== 'undefined') {
+                var mo = new MutationObserver(function () {
+                  enhance();
+                });
+                var observeRoot = function () {
+                  var r = document.getElementById('twikoo');
+                  if (r) mo.observe(r, { childList: true, subtree: true });
+                };
+                observeRoot();
+              }
+
+              enhance();
+              setTimeout(enhance, 500);
+              setTimeout(enhance, 1500);
+
+              var notifyResize = function () {
+                if (window.lenis && typeof window.lenis.resize === 'function') {
+                  window.lenis.resize();
+                }
+              };
+              notifyResize();
+              setTimeout(notifyResize, 500);
+              setTimeout(notifyResize, 1500);
+              setTimeout(notifyResize, 3000);
+            } catch (e) {
+              container.innerHTML = '<p class="twikoo-load-error">评论加载失败，请稍后刷新重试。</p>';
+            }
+          };
+
+          script.onerror = function () {
+            container.innerHTML = '<p class="twikoo-load-error">评论加载失败，请稍后刷新重试。</p>';
+          };
+
+          document.head.appendChild(script);
+        };
+
+        if ('IntersectionObserver' in window) {
+          var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                initTwikoo();
+                observer.disconnect();
+              }
+            });
+          }, { rootMargin: '200px 0px', threshold: 0 });
+          observer.observe(sentinel);
+        } else {
+          initTwikoo();
+        }
+      })();
+    </script>
+  </section>
+
+{{ end }}

@@ -1,0 +1,35 @@
+{{ $url := .Get "url" }}
+{{ $width := .Get "width" | default "100%" }}
+{{ $height := .Get "height" | default "166" }}
+{{ $color := .Get "color" | default "f57100" }}
+{{ $autoPlay := .Get "auto_play" | default "false" }}
+{{ $showComments := .Get "show_comments" | default "true" }}
+{{ $showUser := .Get "show_user" | default "true" }}
+{{ $showArtwork := .Get "show_artwork" | default "true" }}
+{{ $visual := .Get "visual" | default "false" }}
+{{ $hideRelated := .Get "hide_related" | default "true" }}
+{{ $showReposts := .Get "show_reposts" | default "false" }}
+{{ $showTeardown := .Get "show_teardown" | default "true" }}
+{{ $class := .Get "class" | default "" }}
+
+{{ $query := querify "url" $url "color" $color "auto_play" $autoPlay
+                     "show_comments" $showComments "show_user" $showUser
+                     "show_artwork" $showArtwork "visual" $visual
+                     "hide_related" $hideRelated "show_reposts" $showReposts
+                     "show_teardown" $showTeardown }}
+{{ $src := printf "https://w.soundcloud.com/player/?%s" $query }}
+
+{{ if eq $visual "true" }}
+<div class="soundcloud-embed visual{{ with $class }} {{ . }}{{ end }}"
+     {{ with $width }}style="width: {{ . }}"{{ end }}>
+  <iframe src="{{ $src }}" title="SoundCloud player"
+          loading="lazy" allow="autoplay"></iframe>
+</div>
+{{ else }}
+<div class="soundcloud-embed{{ with $class }} {{ . }}{{ end }}"
+     {{ with $width }}style="width: {{ . }}"{{ end }}>
+  <iframe src="{{ $src }}" title="SoundCloud player"
+          loading="lazy" allow="autoplay"
+          style="height: {{ $height }}px"></iframe>
+</div>
+{{ end }}

@@ -16,6 +16,11 @@ enableRobotsTXT = true
     "https://music.163.com/#/artist?id=52170515",
   ]
 
+  [params.twikoo]
+    enable = true
+    envId = "https://comment.aspr-works.top"
+    region = ""
+
 [build]
   [build.buildStats]
     enable = true

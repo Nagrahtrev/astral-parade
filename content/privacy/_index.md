@@ -1,14 +1,34 @@
 ---
 title: "Privacy Policy"
 layout: "privacy"
-date: 2026-07-29
+date: 2026-08-05
 ---
 
 ## Information Collection
 
-This website does **not** directly collect, store, or process any personal data from its visitors. No cookies, analytics trackers, fingerprinting scripts, or any form of user-tracking technology are used on this site.
+This website does **not** use cookies, analytics trackers, fingerprinting scripts, or any form of user-tracking technology.
 
-This is a purely static website. No login, registration, comment system, or any interactive feature that requires personal information is provided.
+The site includes a **comment system** (see below). Except for information voluntarily submitted through the comment form, no personal data is collected, stored, or processed by this website.
+
+## Comment System
+
+This site uses **Twikoo** to provide a comment section on blog posts. Comment data is processed and managed via the backend service at `https://comment.aspr-works.top` .
+
+**Information you submit:**
+
+- **Nickname** (required, maximum 20 characters)
+- **Email** (optional -- used only for reply notifications; see below)
+- **Comment content** (maximum 400 characters, supports limited Markdown)
+
+When you submit a comment, your **IP address** is sent to the comment server along with your message. IP region and ISP information are visible in the administration panel but are **not displayed publicly**.
+
+**Gravatar is disabled.** No avatar service is used, and your email is not sent to any third-party avatar provider.
+
+**Akismet anti-spam:** Submitted comments are checked by the **Akismet** spam detection service. Akismet receives the comment content, nickname, email, IP address, User-Agent, and referrer for the sole purpose of filtering spam. Please refer to [Akismet's privacy policy](https://akismet.com/privacy/).
+
+**Email notifications:** If you provide your email address, it may be used to send you a notification each time someone replies to your comment. Your email is used solely to send these notifications and will never be sold or used for marketing purposes.
+
+**Local storage:** The comment system stores your nickname and email address in your browser's [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) so that you do not need to re-enter them for future comments. This data remains on your device and is never sent to any server until you submit a comment. You can clear this data at any time through your browser settings.
 
 ## Server Logs
 
@@ -24,11 +44,12 @@ These logs are used solely to operate and maintain the service, diagnose server 
 
 ## External Resources
 
-This site loads the following external resources:
+This site loads resources from the following external CDN providers. Your browser may make requests to these servers when visiting pages that use the corresponding features:
 
-- **Mermaid.js** - Diagrams are rendered via the Mermaid CDN hosted by jsDelivr. Your browser makes a request to their CDN server when viewing pages that contain diagrams. Please refer to [jsDelivr's privacy policy](https://www.jsdelivr.com/terms/privacy-policy) for more information.
+- **jsDelivr CDN** ([privacy policy](https://www.jsdelivr.com/terms/privacy-policy)) -- hosts **Twikoo** (comment system JavaScript), **highlight.js** (code syntax highlighting), and **Mermaid.js** (diagram rendering)
+- **OwO CDN** (`owo.imaegoo.com`) -- default emoticon CDN bundled with Twikoo
 
-All other resources (fonts, images, CSS, JavaScript) are self-hosted on this site and do not generate external requests.
+All other resources (fonts, images, CSS, and other JavaScript) are self-hosted on this site and do not generate external requests.
 
 ## External Links
 
@@ -44,4 +65,4 @@ If you have any questions or concerns about this privacy policy, please contact:
 
 &nbsp;
 
-*Last updated: July 2026*
+*Last updated: August 5, 2026*

@@ -350,6 +350,7 @@ function onReady(fn) {
     }
 }
 
+
 onReady(() => {
     initTooltips();
     initTabs();

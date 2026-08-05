@@ -1,128 +1,12 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@import "./fonts.css";
 @import "./prose.css";
 @import "./navi.css";
 @import "./filter.css";
-/* @import "./ios-fix.css"; */
+@import "./comments.css";
 
-/* =========================================
-
-   >> 字体系统
-
-   ========================================= */
-
-@font-face {
-  font-family: 'Iosevka-Extended';
-  src: url('/fonts/Iosevka-Extended.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Play';
-  src: url('/fonts/Play-regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Play';
-  src: url('/fonts/Play-700.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Asap';
-  src: url('/fonts/Asap-regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Asap';
-  src: url('/fonts/Asap-600.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Padauk';
-  src: url('/fonts/Padauk-regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Padauk';
-  src: url('/fonts/Padauk-700.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Source Sans 3';
-  src: url('/fonts/Source-Sans-3-regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Source Sans 3';
-  src: url('/fonts/Source-Sans-3-700.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Noto Sans SC';
-  src: url('/fonts/Noto-Sans-SC-subset.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Noto Sans SC';
-  src: url('/fonts/Noto-Sans-SC-700-subset.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Noto Serif SC';
-  src: url('/fonts/Noto-Serif-SC-500-subset.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Noto Serif SC';
-  src: url('/fonts/Noto-Serif-SC-700-subset.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Libre Barcode 128';
-  src: url('/fonts/Libre-Barcode-128-regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 
 /* =========================================
 
@@ -136,7 +20,9 @@
   --my-color-green: #8B9A46;
   --my-color-white: #eeeeee;
   --my-color-gray: #e3e3e3;
-  --my-color-dgray: #313131;
+  --my-color-dgray: #323232;
+
+  --font-cjk: 'Noto Sans SC', 'Noto Sans JP', sans-serif;
 }
 
 @theme {
@@ -147,12 +33,12 @@
   --color-color-gray: var(--my-color-gray);
   --color-color-dgray: var(--my-color-dgray);
 
-  --font-primary: 'Play',sans-serif;
-  --font-secondary: 'Asap', sans-serif;
+  --font-primary: 'Play', var(--font-cjk);
+  --font-secondary: 'Asap', var(--font-cjk);
   --font-mono: 'Iosevka-Extended', monospace;
-  --font-smsans: 'Padauk', sans-serif;
-  --font-bgsans: 'Source Sans 3', sans-serif;
-  --font-ntsans: 'Noto Sans SC', sans-serif;
+  --font-smsans: 'Padauk', var(--font-cjk);
+  --font-bgsans: 'Source Sans 3', var(--font-cjk);
+  --font-ntsans: var(--font-cjk);
   --font-ntserif: 'Noto Serif SC', serif;
   --font-barcode: 'Libre Barcode 128', monospace;
 }
@@ -171,12 +57,12 @@
   }
 
   body {
-    font-family: var(--font-secondary), sans-serif;
+    font-family: var(--font-secondary);
     background-color: var(--my-color-white);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-secondary), "Noto Sans SC", sans-serif;
+    font-family: var(--font-secondary);
   }
 }
 

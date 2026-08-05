@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
             var id = this.getAttribute('href').slice(1);
             var target = document.getElementById(id);
             if (target) {
-                var y = target.getBoundingClientRect().top + window.scrollY - 20;
+                var y = target.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.22;
                 window.customSmoothScroll(y, 500);
             }
         });

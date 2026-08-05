@@ -4,7 +4,10 @@
 {{ $width := .Get "width" | default "" }}
 {{ $height := .Get "height" | default "" }}
 {{ $class := .Get "class" | default "" }}
-<figure{{ with $class }} class="{{ . }}"{{ end }}>
+{{ $center := .Get "center" | default "false" }}
+{{ $figureClass := $class }}
+{{ if eq $center "true" }}{{ $figureClass = printf "%s mx-auto" $class | strings.TrimSpace }}{{ end }}
+<figure{{ with $figureClass }} class="{{ . }}"{{ end }}>
   <img src="{{ $src | relURL }}"
        alt="{{ $alt }}"
        {{ with $width }}width="{{ . }}"{{ end }}

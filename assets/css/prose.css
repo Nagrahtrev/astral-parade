@@ -7,7 +7,7 @@
 /* 全局 */
 .article-content.prose {
   @apply text-[17px]                 /* 基础字号 */
-         text-[#323232];           /* 文字颜色 - text-color-black/80 */
+         text-color-dgray;           /* 文字颜色 - text-color-black/80 */
   @apply prose-p:leading-[1.9]       /* 行高 */
          prose-p:mb-7;               /* 段落间距 */
 }
@@ -28,7 +28,7 @@
          prose-h3:tracking-normal;           /* H3 字距 */
 
   @apply prose-h4:text-[21px]                /* H4 字号 */
-         prose-h4:mt-8 prose-h4:mb-4         /* H4 上下间距 */
+         prose-h4:mt-20 prose-h4:mb-10         /* H4 上下间距 */
          prose-h4:tracking-normal;           /* H4 字距 */
 }
 
@@ -182,11 +182,11 @@
 }
 
 .article-content.prose {
-  /* 图片 */
+  /* 图片容器 */
   @apply prose-img:max-w-full prose-img:h-auto                   /* 防溢出 */
          prose-img:cursor-zoom-in                                /* 可点击提示 */
          prose-img:shadow-[0_10px_12px_-5px_rgba(0,0,0,0.1)]     /* 阴影 */
-         prose-img:my-5 prose-figure:my-15                       /* 上下间距 */
+         prose-img:my-5 prose-figure:table prose-figure:my-15    /* 上下间距 */
 
          /* 图注 */
          prose-figcaption:font-primary prose-figcaption:text-[10px] prose-figcaption:text-center prose-figcaption:text-color-black/30 prose-figcaption:tracking-widest;
@@ -615,7 +615,7 @@
 }
 
 .mermaid-fallback-text {
-  font-family: 'Noto Sans SC', sans-serif;
+  font-family: var(--font-ntsans);
   font-size: 0.8125rem;
   color: rgba(0,0,0,0.45);
   text-align: center;
@@ -714,4 +714,51 @@
     transform: translateX(-50%);
     max-width: min(280px, calc(100vw - 3rem)) !important;
   }
+}
+
+/* -------- SoundCloud 播放器 -------- */
+
+/* 容器 */
+.article-content.prose .soundcloud-embed {
+  margin: 1.25rem 0 !important;
+  max-width: 100% !important;
+}
+
+/* iframe 通用 */
+.article-content.prose .soundcloud-embed iframe {
+  display: block !important;
+  width: 100% !important;
+  border: none !important;
+  box-shadow: 0 10px 12px -5px rgba(15, 14, 14, 0.1) !important;
+}
+
+/* Visual 模式 */
+.article-content.prose .soundcloud-embed.visual {
+  position: relative !important;
+  aspect-ratio: 16 / 9 !important;
+}
+
+.article-content.prose .soundcloud-embed.visual iframe {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* span 下间距修复 */
+.article-content.prose > span {
+  display: block;
+  margin-bottom: calc(var(--spacing) * 7);
+  --tw-leading: 1.9;
+  line-height: 1.9;
+}
+
+/* 列表下间距修复 */
+.article-content.prose :where(ul, ol):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  margin-bottom: calc(var(--spacing) * 7);
+}
+
+/* YouTube 视频容器间距 */
+.article-content.prose .youtube-embed {
+  margin-block: calc(var(--spacing) * 9);
 }
