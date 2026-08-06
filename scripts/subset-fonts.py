@@ -17,11 +17,27 @@ FONTS_TO_SUBSET = [
     ('Noto-Sans-JP-700.woff2', 'Noto-Sans-JP-700-subset.woff2'),
 ]
 
+
+def _extract_tree(comment, chars, seen, CJK_RE):
+    cid = comment.get('id')
+    if not cid or cid in seen:
+        return 0
+    seen.add(cid)
+    raw = (comment.get('commentText') or comment.get('comment') or '')
+    text = re.sub(r'<[^>]+>', '', raw).strip() + ' ' + (comment.get('nick') or '')
+    chars.update(CJK_RE.findall(text))
+    count = 1
+    for reply in (comment.get('replies') or []):
+        count += _extract_tree(reply, chars, seen, CJK_RE)
+    return count
+
 def fetch_twikoo_chars(env_id):
-    # 从 Twikoo 评论区提取 CJK 字符
     chars = set()
     seen = set()
     CJK_RE = re.compile(r'[一-鿿぀-ゟ゠-ヿ　-〿]')
+
+    # GET_RECENT_COMMENTS - 收集所有评论 URL
+    urls = set()
     page = 1
     while True:
         try:
@@ -31,23 +47,36 @@ def fetch_twikoo_chars(env_id):
             with urllib.request.urlopen(req, timeout=15) as resp:
                 data = json.loads(resp.read())
             items = data.get('data') or []
-            new_count = 0
+            new_urls = 0
             for item in items:
-                cid = item.get('id')
-                if cid and cid in seen:
-                    continue
-                if cid:
-                    seen.add(cid)
-                new_count += 1
-                text = (item.get('commentText') or '') + ' ' + (item.get('nick') or '')
-                chars.update(CJK_RE.findall(text))
-            print(f'  第 {page} 页: {new_count} 条新评论（共 {len(items)} 条返回）')
-            if new_count == 0 or len(items) == 0:
+                url = item.get('url')
+                if url and url not in urls:
+                    urls.add(url)
+                    new_urls += 1
+            print(f'  扫描第 {page} 页: +{new_urls} 个新 URL')
+            if new_urls == 0:
                 break
             page += 1
         except Exception as e:
-            print(f'  ✗ 获取评论失败（第 {page} 页）: {e}')
+            print(f'  ✗ 扫描失败: {e}')
             break
+
+    # COMMENT_GET - 获取完整评论树
+    total = 0
+    for url in sorted(urls):
+        try:
+            body = json.dumps({'event': 'COMMENT_GET', 'url': url}).encode()
+            req = urllib.request.Request(env_id, data=body,
+                headers={'Content-Type': 'application/json', 'User-Agent': 'subset-fonts/1.0'})
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                data = json.loads(resp.read())
+            comments = data.get('data') or []
+            for comment in comments:
+                total += _extract_tree(comment, chars, seen, CJK_RE)
+        except Exception as e:
+            print(f'  ✗ COMMENT_GET {url} 失败: {e}')
+
+    print(f'  共 {len(urls)} 个页面，{total} 条评论/回复')
     return chars
 
 def main():

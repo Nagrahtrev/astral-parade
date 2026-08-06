@@ -5634,6 +5634,11 @@
   content: none !important;
 }
 
+.article-content.prose blockquote a {
+  color: inherit !important;
+  border-bottom-color: currentColor !important;
+}
+
 .article-content.prose :where(ul):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   list-style-type: square;
 }

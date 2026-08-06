@@ -88,6 +88,11 @@
   content: none !important;
 }
 
+.article-content.prose blockquote a {
+  color: inherit !important;
+  border-bottom-color: currentColor !important;
+}
+
 /* 列表 */
 .article-content.prose {
   @apply prose-ul:list-[square]
