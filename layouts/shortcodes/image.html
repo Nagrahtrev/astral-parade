@@ -13,6 +13,7 @@
        {{ with $width }}width="{{ . }}"{{ end }}
        {{ with $height }}height="{{ . }}"{{ end }}
        class="max-w-full h-auto"
+       decoding="async"
        loading="lazy">
   {{ with $caption }}
     <figcaption>{{ . }}</figcaption>

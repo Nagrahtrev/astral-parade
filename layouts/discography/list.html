@@ -95,7 +95,8 @@
                 {{/*  封面  */}}
                 <div class="relative w-full aspect-square bg-color-black/4 overflow-hidden">
                   <img src="{{ .Params.image }}" alt="{{ .Title }}"
-                       class="w-full h-full object-cover md:filter md:grayscale md:contrast-125 md:brightness-90 md:group-hover:grayscale-0 md:group-hover:contrast-100 md:group-hover:brightness-100 md:transition-all md:duration-500 md:ease-out">
+                       class="w-full h-full object-cover md:filter md:grayscale md:contrast-125 md:brightness-90 md:group-hover:grayscale-0 md:group-hover:contrast-100 md:group-hover:brightness-100 md:transition-all md:duration-500 md:ease-out"
+                       decoding="async" loading="lazy">
 
                   <div class="absolute inset-0 md:border-[1.5px] border border-color-black/70 pointer-events-none z-10"></div>
 
@@ -144,6 +145,6 @@
 {{ if hugo.IsProduction }}
   {{ $js = $js | minify | fingerprint }}
 {{ end }}
-<script src="{{ $js.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $js.Data.Integrity }}"{{ end }}></script>
+<script src="{{ $js.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $js.Data.Integrity }}"{{ end }} defer></script>
 
 {{ end }}

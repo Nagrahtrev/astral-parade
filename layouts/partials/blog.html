@@ -228,7 +228,7 @@
             {{ if .Params.image }}
             <div class="w-full aspect-4/3 bg-color-black/4 mb-5 relative overflow-hidden border-[0.5px] border-color-black/10">
 
-               <img src="{{ .Params.image | relURL }}" class="w-full h-full object-cover md:filter md:grayscale md:contrast-125 md:brightness-95 md:group-hover:grayscale-0 md:transition-all md:duration-500 md:ease-out">
+               <img src="{{ .Params.image | relURL }}" class="w-full h-full object-cover md:filter md:grayscale md:contrast-125 md:brightness-95 md:group-hover:grayscale-0 md:transition-all md:duration-500 md:ease-out" decoding="async" loading="lazy">
 
             </div>
             {{ end }}

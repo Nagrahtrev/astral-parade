@@ -97,7 +97,7 @@
             {{/*  封面  */}}
             <div class="w-full aspect-square bg-color-black/5 relative mb-5 md:mb-10 shadow-[0_10px_20px_rgba(0,0,0,0.05)] group overflow-hidden">
 
-              <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-full object-cover">
+              <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-full object-cover" decoding="async">
 
               <div class="absolute inset-0 border-[0.5px] border-color-black/10 pointer-events-none z-10"></div>
 
@@ -253,7 +253,7 @@
             <div class="w-40 md:w-50 shrink-0 relative group">
 
               <div class="w-full aspect-square bg-color-black/5 relative shadow-[0_10px_30px_rgba(0,0,0,0.05)]">
-                <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-full object-cover">
+                <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-full object-cover" decoding="async">
 
                 <div class="absolute inset-0 border-[0.5px] border-color-black/10 pointer-events-none z-10"></div>
 

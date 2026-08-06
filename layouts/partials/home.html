@@ -16,9 +16,9 @@
         <div class="w-full max-w-400 mx-auto px-6 md:px-12">
 
           {{/*  标题  */}}
-          <div class="font-primary text-[17px] md:text-[19px] font-bold -tracking-[0.02] text-color-white pointer-events-auto select-none">
+          <h1 class="font-primary text-[17px] md:text-[19px] font-bold -tracking-[0.02] text-color-white pointer-events-auto select-none">
             nova<span class="inline-block relative top-px">+</span>z
-          </div>
+          </h1>
 
           {{/*  副标题行  */}}
           <div class="flex items-center gap-4 md:gap-8 mt-2 md:mt-4 select-none">
@@ -261,7 +261,7 @@
             <div class="md:col-start-7 md:col-span-6 order-1 md:order-2 relative">
 
               <div class="w-full aspect-4/5 md:aspect-5/6 lg:aspect-9/10 xl:aspect-square bg-color-black/4 border-[0.5px] border-color-black/80 overflow-hidden">
-                <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-full object-cover md:filter md:grayscale md:contrast-125 md:brightness-95 md:group-hover:grayscale-0 md:transition-all md:duration-300 md:ease-[cubic-bezier(0.7,0,0.3,1)]">
+                <img src="{{ .Params.image }}" alt="{{ .Title }}" class="w-full h-full object-cover md:filter md:grayscale md:contrast-125 md:brightness-95 md:group-hover:grayscale-0 md:transition-all md:duration-300 md:ease-[cubic-bezier(0.7,0,0.3,1)]" decoding="async" loading="lazy">
               </div>
 
               <div class="md:hidden absolute bottom-0 left-0">
@@ -301,7 +301,7 @@
 
               {{/*  封面  */}}
               <div class="w-full aspect-8/7 md:aspect-5/4 border-[0.5px] border-color-black/80 bg-color-black/4 relative overflow-hidden mb-6 md:mb-8">
-                <img src="{{ .Params.image }}" alt="{{ .Title }}" class="absolute inset-0 w-full h-full object-cover md:filter md:grayscale md:contrast-125 md:brightness-95 md:group-hover:grayscale-0 md:transition-all md:duration-300 md:ease-[cubic-bezier(0.7,0,0.3,1)]">
+                <img src="{{ .Params.image }}" alt="{{ .Title }}" class="absolute inset-0 w-full h-full object-cover md:filter md:grayscale md:contrast-125 md:brightness-95 md:group-hover:grayscale-0 md:transition-all md:duration-300 md:ease-[cubic-bezier(0.7,0,0.3,1)]" decoding="async" loading="lazy">
 
                 {{ if .Params.from_album }}
                 <div class="absolute top-0 right-0 bg-color-black px-3 pt-0 md:pt-px py-[3px] md:py-[5px] z-20">

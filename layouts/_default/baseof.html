@@ -7,6 +7,13 @@
 
   <body class="{{ if .IsHome }}page-home bg-color-black text-color-white{{ end }}{{ if eq .Type "about" }} about-page{{ end }}{{ if not .IsHome }} page-loading{{ end }}">
 
+    {{/*  入场动画提前触发  */}}
+    {{ if not .IsHome }}
+    <script>
+      (function(){var b=document.body;if(b.classList.contains('page-loading')){requestAnimationFrame(function(){requestAnimationFrame(function(){b.classList.add('page-loaded');});});}})();
+    </script>
+    {{ end }}
+
     {{ partial "essentials/header.html" . }}
 
     <main>
@@ -59,7 +66,7 @@
       {{/*  图片容器  */}}
       <div id="lightbox-image-container"
            class="flex items-center justify-center w-full h-full overflow-hidden select-none">
-        <img id="lightbox-image" src="" alt=""
+        <img id="lightbox-image" src="" alt="" decoding="async"
              class="max-w-[90vw] max-h-[85vh] w-auto h-auto object-contain
                     transition-transform duration-200 ease-out pointer-events-none select-none"
              draggable="false">
