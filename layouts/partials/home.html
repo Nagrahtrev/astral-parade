@@ -7,23 +7,28 @@
     {{/*  ------------ Title ------------  */}}
     <div class="w-full relative h-screen flex flex-col bg-color-black overflow-hidden">
 
+      {{/*  Social links  */}}
+      <div class="absolute top-4 right-6 md:top-4 md:right-12 z-10 flex items-center gap-3">
+        {{ partial "social-links.html" . }}
+      </div>
+
       <div class="flex-1 flex items-center">
         <div class="w-full max-w-400 mx-auto px-6 md:px-12">
 
           {{/*  标题  */}}
-          <div class="font-smsans text-[20px] md:text-[24px] font-bold -tracking-[0.02] text-color-white pointer-events-auto select-none">
-            nova+z
+          <div class="font-primary text-[17px] md:text-[19px] font-bold -tracking-[0.02] text-color-white pointer-events-auto select-none">
+            nova<span class="inline-block relative top-px">+</span>z
           </div>
 
           {{/*  副标题行  */}}
           <div class="flex items-center gap-4 md:gap-8 mt-2 md:mt-4 select-none">
-            <span class="font-mono text-[10px] md:text-[12px] tracking-[0.2em] text-color-white/30">
+            <span class="font-primary text-[10px] md:text-[12px] tracking-[0.2em] text-color-white/30">
               sounds &amp; logs
             </span>
-            <span class="font-mono text-[10px] md:text-[12px] text-color-white/20">
+            <span class="font-primary text-[10px] md:text-[16px] text-color-white/20">
               /
             </span>
-            <span class="font-mono text-[10px] md:text-[12px] text-color-white/20 tracking-wider animate-pulse">
+            <span class="font-primary text-[10px] md:text-[12px] text-color-white/20 tracking-[0.15em] animate-pulse">
               scroll down to explore..
             </span>
           </div>

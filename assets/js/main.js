@@ -183,38 +183,34 @@ function initSmartHeader() {
 // ------------ 瀑布流卡片高度计算 ------------
 window.masonryObserver = null;
 
+function applyRowSpan(item) {
+    if (!item) return;
+    const height = item.getBoundingClientRect().height;
+    const rowSpan = Math.max(1, Math.ceil(height));
+
+    if (item.dataset.rowSpan !== String(rowSpan)) {
+        item.dataset.rowSpan = String(rowSpan);
+        item.style.gridRowEnd = `span ${rowSpan}`;
+    }
+}
+
 function initSmartMasonry() {
     const grid = document.getElementById('blog-grid');
     if (!grid) return;
 
     window.masonryObserver = new ResizeObserver(entries => {
-        entries.forEach(entry => {
-            const content = entry.target;
-            const item = content.closest('.blog-item');
-
-            if (item) {
-                const contentHeight = entry.contentRect.height;
-                const rowSpan = Math.ceil(contentHeight + 80);
-                item.style.gridRowEnd = `span ${rowSpan}`;
-            }
-        });
+        entries.forEach(entry => applyRowSpan(entry.target));
     });
 
-    const cards = document.querySelectorAll('.blog-item .card-content');
-    cards.forEach(card => {
-        window.masonryObserver.observe(card);
+    const items = grid.querySelectorAll('.blog-item');
+    items.forEach(item => {
+        window.masonryObserver.observe(item);
+        applyRowSpan(item);
     });
 
     if (document.fonts) {
         document.fonts.ready.then(() => {
-            const updatedCards = document.querySelectorAll('.blog-item .card-content');
-            updatedCards.forEach(card => {
-                const item = card.closest('.blog-item');
-                if (item) {
-                    const contentHeight = card.getBoundingClientRect().height;
-                    item.style.gridRowEnd = `span ${Math.ceil(contentHeight + 80)}`;
-                }
-            });
+            grid.querySelectorAll('.blog-item').forEach(applyRowSpan);
         });
     }
 }
@@ -245,12 +241,11 @@ function initInfiniteScroll() {
                 const newItems = doc.querySelectorAll('#blog-grid .blog-item');
 
                 newItems.forEach(item => {
-                    item.style.gridRowEnd = `span 200`;
+                    item.style.gridRowEnd = `span 500`;
                     grid.appendChild(item);
 
-                    const cardContent = item.querySelector('.card-content');
-                    if (cardContent && window.masonryObserver) {
-                        window.masonryObserver.observe(cardContent);
+                    if (window.masonryObserver) {
+                        window.masonryObserver.observe(item);
                     }
                 });
 
@@ -334,6 +329,28 @@ function initMobileMenu() {
     const backdrop = document.getElementById('mobile-menu-backdrop');
 
     if (!btn || !dropdown || !backdrop) return;
+
+    if (btn.dataset.menuReady === 'true') {
+        let touchStartY = 0;
+
+        function handleTouchStart(e) {
+            touchStartY = e.touches[0].clientY;
+        }
+
+        function handleTouchMove(e) {
+            e.preventDefault();
+            const deltaY = touchStartY - e.touches[0].clientY;
+            if (deltaY > 50) {
+                backdrop.click();
+            }
+        }
+
+        dropdown.addEventListener('touchstart', handleTouchStart, { passive: true });
+        dropdown.addEventListener('touchmove', handleTouchMove, { passive: false });
+        backdrop.addEventListener('touchstart', handleTouchStart, { passive: true });
+        backdrop.addEventListener('touchmove', handleTouchMove, { passive: false });
+        return;
+    }
 
     function openMenu() {
         document.body.classList.add('overflow-hidden');

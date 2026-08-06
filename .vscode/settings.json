@@ -4,4 +4,6 @@
   "files.associations": {
     "*.css": "tailwindcss"
   },
+
+  "tailwindCSS.lint.suggestCanonicalClasses": "ignore",
 }

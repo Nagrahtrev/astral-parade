@@ -2,34 +2,50 @@
 title: "隐私声明"
 layout: "privacy"
 locale: "zh"
-date: 2026-08-05
+date: 2026-08-06
 ---
 
 ## 信息收集
 
-本网站**不**使用 Cookie、分析跟踪器、浏览器指纹脚本或任何形式的用户跟踪技术。
+本网站**不**使用 Cookie、浏览器指纹脚本或广告追踪器。
+
+### Vercel Analytics & Speed Insights
+
+为了监控网站性能和基本流量模式，本网站使用托管平台提供的 **Vercel Analytics** 和 **Vercel Speed Insights**。这些是注重隐私的轻量级分析工具，**不使用** Cookie，**不**收集个人身份信息，也**不**跨站追踪用户。详情请参阅[Vercel 隐私政策](https://vercel.com/legal/privacy-notice)。
 
 本网站包含**评论系统**（详见下文）。除通过评论表单自愿提交的信息外，本网站不会收集、存储或处理任何个人数据。
 
+----
+
 ## 评论系统
 
-本网站使用 **Twikoo** 为博客文章提供评论区。评论数据通过 `https://comment.aspr-works.top` 的后端服务进行处理和管理。
+本网站使用 **Twikoo** 为博客文章提供评论区。评论数据通过[https://comment.aspr-works.top](https://comment.aspr-works.top)的后端服务进行处理和管理。
 
-**您提交的信息：**
+### 您提交的信息
 
 - **昵称**（必填，最长 20 个字符）
-- **邮箱**（选填 -- 仅用于回复通知；见下文）
+- **邮箱**（选填 — 仅用于回复通知；见下文）
 - **评论内容**（最长 400 字符，支持部分 Markdown 格式）
 
-提交评论时，您的 **IP 地址** 会随评论内容一同发送至评论服务器。IP 属地和运营商信息在管理后台可见，但**不会公开显示**。
+提交评论时，您的 **IP 地址**会随评论内容一同发送至评论服务器。IP 属地和运营商信息在管理后台可见，但**不会公开显示**。
+
+### Gravatar 头像
 
 **Gravatar 头像已禁用。** 评论区不使用任何头像服务，您的邮箱不会发送至任何第三方头像提供商。
 
-**Akismet 反垃圾评论：** 提交的评论会由 **Akismet** 垃圾检测服务进行检测。Akismet 会收到评论内容、昵称、邮箱、IP 地址、User-Agent 和来源页面，仅用于过滤垃圾信息。请参阅 [Akismet 的隐私政策](https://akismet.com/privacy/) 。
+### Akismet 反垃圾评论
 
-**邮件通知：** 如果您提供了邮箱地址，当有人回复您的评论时，系统可能会通过您的邮箱向您发送通知。您的邮箱仅用于发送这些通知，绝不会被出售或用于营销目的。
+提交的评论会由 **Akismet** 垃圾检测服务进行检测。Akismet 会收到评论内容、昵称、邮箱、IP 地址、User-Agent 和来源页面，仅用于过滤垃圾信息。请参阅[Akismet 的隐私政策](https://akismet.com/privacy/)。
 
-**本地存储：** 评论系统会将您的昵称和邮箱地址存储在浏览器的 [localStorage](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage) 中，以便您下次评论时无需重新输入。这些数据保留在您的设备上，在您提交评论之前不会发送至任何服务器。您可以随时通过浏览器设置清除这些数据。
+### 邮件通知
+
+如果您提供了邮箱地址，当有人回复您的评论时，系统可能会通过您的邮箱向您发送通知。您的邮箱仅用于发送这些通知，绝不会被出售或用于营销目的。
+
+### 本地存储
+
+评论系统会将您的昵称和邮箱地址存储在浏览器的[localStorage](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage)中，以便您下次评论时无需重新输入。这些数据保留在您的设备上，在您提交评论之前不会发送至任何服务器。您可以随时通过浏览器设置清除这些数据。
+
+----
 
 ## 服务器日志
 
@@ -41,29 +57,41 @@ date: 2026-08-05
 - 请求的日期和时间
 - IP 地址
 
-这些日志仅用于运营和维护服务、诊断服务器问题以及分析汇总的流量模式。Vercel 的数据处理行为受其自身的 [隐私政策](https://vercel.com/legal/privacy-notice) 约束。
+这些日志仅用于运营和维护服务、诊断服务器问题以及分析汇总的流量模式。Vercel 的数据处理行为受其自身的[隐私政策](https://vercel.com/legal/privacy-notice)约束。
+
+----
 
 ## 外部资源
 
-本网站从以下外部 CDN 提供商加载资源。当您访问使用相应功能的页面时，您的浏览器可能会向这些服务器发起请求：
+当您访问使用相应功能的页面时，本网站会从以下外部 CDN 加载资源：
 
-- **jsDelivr CDN**（[隐私政策](https://www.jsdelivr.com/terms/privacy-policy)）-- 托管 **Twikoo**（评论系统 JavaScript）、**highlight.js**（代码语法高亮）和 **Mermaid.js**（图表渲染）
-- **OwO CDN**（`owo.imaegoo.com`）-- Twikoo 内置的默认表情 CDN
+| CDN | 托管内容 | 隐私政策 |
+|:----:|:----:|:----:|
+| **jsDelivr** | Twikoo · highlight.js · Mermaid.js | [jsdelivr.com](https://www.jsdelivr.com/terms/privacy-policy) |
+| **{{< tooltip "owo.imaegoo.com" >}}OwO{{< /tooltip >}}** | 表情包（Twikoo 内置） | - |
 
-所有其他资源（字体、图片、CSS 和其他 JavaScript）均由本站自行托管，不会产生外部请求。
+所有其他资源——字体、图片、CSS 及其他 JavaScript——均由本站自行托管，不会产生外部请求。
+
+----
 
 ## 外部链接
 
 音乐作品页面包含指向第三方平台（Bandcamp、SoundCloud、YouTube、Spotify 等）的流媒体链接。本隐私政策仅适用于本网站。一旦您通过外部链接离开本站，将适用相关第三方的隐私政策。
 
+----
+
 ## 本政策的变更
 
 本隐私政策可能会不定期更新。任何变更都将发布在本页面上。最新的修订日期在本文档底部标出。
 
+----
+
 ## 联系方式
 
-如果您对本隐私政策有任何疑问或顾虑，请联系：[novaxz@aspr-works.top](mailto:novaxz@aspr-works.top)
+如果您对本隐私政策有任何疑问或顾虑，请联系：
 
-&nbsp;
+[novaxz@aspr-works.top](mailto:novaxz@aspr-works.top)
 
-*最后更新时间：2026 年 8 月 5 日*
+----
+
+*最后更新时间：2026 年 8 月 6 日*

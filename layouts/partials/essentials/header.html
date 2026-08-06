@@ -75,7 +75,7 @@
 
   <div class="flex flex-col items-center px-6 pt-5 pb-4">
     <span class="select-none text-color-white font-primary text-[18px] font-bold tracking-wide text-center">
-      nova+z's sounds & logs
+      nova<span class="inline-block relative top-px">+</span>z's sounds & logs
     </span>
   </div>
 
@@ -94,3 +94,49 @@
   <div class="mx-6 border-b-[0.5px] border-color-white/10"></div>
 
 </div>
+
+<script>
+  (function() {
+    var btn = document.getElementById('mobile-menu-btn');
+    var dropdown = document.getElementById('mobile-menu-dropdown');
+    var backdrop = document.getElementById('mobile-menu-backdrop');
+    if (!btn || !dropdown || !backdrop) return;
+
+    btn.dataset.menuReady = 'true';
+
+    function openMenu() {
+      document.body.classList.add('overflow-hidden');
+      btn.classList.add('is-hidden');
+      dropdown.classList.remove('-translate-y-full', 'opacity-0', 'invisible');
+      dropdown.classList.add('translate-y-0', 'opacity-100', 'visible');
+      backdrop.classList.remove('opacity-0', 'invisible');
+      backdrop.classList.add('opacity-100', 'visible');
+    }
+
+    function closeMenu() {
+      dropdown.classList.remove('translate-y-0', 'opacity-100', 'visible');
+      dropdown.classList.add('-translate-y-full', 'opacity-0', 'invisible');
+      backdrop.classList.remove('opacity-100', 'visible');
+      backdrop.classList.add('opacity-0', 'invisible');
+
+      setTimeout(function() {
+        document.body.classList.remove('overflow-hidden');
+        var shouldShow = window.scrollY <= 100;
+        if (shouldShow) {
+          btn.classList.remove('is-hidden');
+        }
+        btn.dataset.hiddenByScroll = shouldShow ? 'false' : 'true';
+      }, 500);
+    }
+
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var isOpen = dropdown.classList.contains('visible');
+      if (isOpen) { closeMenu(); } else { openMenu(); }
+    });
+
+    backdrop.addEventListener('click', function() {
+      closeMenu();
+    });
+  })();
+</script>

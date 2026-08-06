@@ -23,7 +23,7 @@
     {{/*  ============================== RELEASES ==============================  */}}
     {{ if eq .Params.category "Releases" }}
 
-      <div class="w-full border-[0.5px] border-color-black/20 flex flex-col mb-20 bg-color-white shadow-[0_20px_60px_rgba(0,0,0,0.03)]">
+      <div class="w-full border-[0.5px] border-color-black/20 flex flex-col bg-color-white shadow-[0_20px_60px_rgba(0,0,0,0.03)]">
 
         <div class="grid grid-cols-1 lg:grid-cols-12 border-b-[0.5px] border-color-black/20">
 
@@ -242,7 +242,7 @@
     {{/*  ============================== PARTICIPATIONS ==============================  */}}
     {{ else if eq .Params.category "Participations" }}
 
-      <div class="w-full border-[0.5px] border-color-black/20 flex flex-col lg:flex-row bg-color-white shadow-[0_20px_60px_rgba(0,0,0,0.03)] items-stretch md:mb-0 mb-20">
+      <div class="w-full border-[0.5px] border-color-black/20 flex flex-col lg:flex-row bg-color-white shadow-[0_20px_60px_rgba(0,0,0,0.03)] items-stretch">
 
         {{/*  ------------ Title ------------  */}}
         <div class="w-full lg:w-[65%] xl:w-[70%] flex flex-col border-b-[0.5px] lg:border-b-0 lg:border-r-[0.5px] border-color-black/20">
@@ -378,6 +378,17 @@
       </div>
 
     {{ end }}
+
+    {{/*  Back to list  */}}
+    <div class="mt-2.5 mb-20">
+      <button onclick="smartBackDisco(this)" data-category="{{ .Params.category }}" class="group inline-flex items-center gap-2 no-underline text-color-black/30 hover:text-color-black/60 transition-colors duration-200 ease-out cursor-pointer bg-transparent border-none p-0 font-mono text-[10px] tracking-[0.2em] uppercase">
+        <svg class="w-2.5 h-2.5 md:-mt-[3px] -mt-px transition-transform duration-200 ease-out group-hover:-translate-x-px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+          <path d="M7 6l-6 6 6 6"/><path d="M17 6l-6 6 6 6"/>
+        </svg>
+        <span class="tracking-[0.15em]">BACK TO LIST</span>
+      </button>
+    </div>
+    
   </div>
 </section>
 

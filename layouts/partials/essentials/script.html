@@ -98,11 +98,27 @@
       }
 
       var script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
+      script.src = 'https://cdn.jsdelivr.net/npm/mermaid@11.16.1/dist/mermaid.min.js';
+      script.integrity = 'sha384-aBQXj4hK6Jm05i7aQAsUV3bLdSUrHX1BGYfMB0166TtWt/RRaw+h0Eelme9OCOvy';
+      script.crossOrigin = 'anonymous';
 
       script.onload = async function() {
         try {
           mermaid.initialize({ startOnLoad: false, theme: 'default' });
+
+          // 响应式 flowchart（包含 %% responsive 标记）
+          var isMobile = window.matchMedia('(max-width: 767px)').matches;
+          if (isMobile) {
+            mermaidElements.forEach(function(el) {
+              var text = el.textContent || '';
+              if (text.includes('%% responsive')) {
+                el.textContent = text
+                  .replace(/flowchart\s+LR/, 'flowchart TD')
+                  .replace(/graph\s+LR/, 'graph TD');
+              }
+            });
+          }
+
           await mermaid.run({ nodes: mermaidElements });
         } catch (e) {
           fallbackNow(wrapperRefs);

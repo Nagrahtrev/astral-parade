@@ -37,6 +37,7 @@
           // 加载 Twikoo
           var script = document.createElement('script');
           script.src = 'https://cdn.jsdelivr.net/npm/twikoo@1.7.15/dist/twikoo.all.min.js';
+          script.integrity = 'sha384-XsVpk+eCJ/pm5ujR4PkgMBHUuN3VVwoJ4pbburK612ZTRGffVzipZPX0MNMDJn8V';
           script.async = true;
           script.crossOrigin = 'anonymous';
 
@@ -54,11 +55,15 @@
               // highlight.js 代码高亮
               var hljsCSS = document.createElement('link');
               hljsCSS.rel = 'stylesheet';
-              hljsCSS.href = 'https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11/styles/github.min.css';
+              hljsCSS.href = 'https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.11.1/styles/github.min.css';
+              hljsCSS.integrity = 'sha384-eFTL69TLRZTkNfYZOLM+G04821K1qZao/4QLJbet1pP4tcF+fdXq/9CdqAbWRl/L';
+              hljsCSS.crossOrigin = 'anonymous';
               document.head.appendChild(hljsCSS);
               var hljsScript = document.createElement('script');
-              hljsScript.src = 'https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11/highlight.min.js';
+              hljsScript.src = 'https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.11.1/highlight.min.js';
+              hljsScript.integrity = 'sha384-RH2xi4eIQ/gjtbs9fUXM68sLSi99C7ZWBRX1vDrVv6GQXRibxXLbwO2NGZB74MbU';
               hljsScript.async = true;
+              hljsScript.crossOrigin = 'anonymous';
               document.head.appendChild(hljsScript);
 
               // --------------------------------- UI 简化 ---------------------------------

@@ -183,6 +183,13 @@
   border-color: color-mix(in srgb, var(--my-color-black) 20%, transparent) !important;
 }
 
+/* prepend 固定宽度 */
+#twikoo .tk-meta-input .el-input-group__prepend {
+  width: 72px !important;
+  min-width: 72px !important;
+  text-align: center !important;
+}
+
 /* Nickname -> Name 替换 */
 #twikoo .tk-meta-input .el-input:first-child .el-input-group__prepend {
   font-size: 0 !important;
@@ -275,7 +282,7 @@
   background-color: var(--my-color-black) !important;
   border: none !important;
   border-radius: 0 !important;
-  padding: 10px 22px !important;
+  padding: 10px 20px !important;
   cursor: pointer !important;
   line-height: 1 !important;
   transition: background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
@@ -368,7 +375,7 @@
 }
 
 #twikoo .tk-row.actions .tk-preview { order: 2 !important; }
-#twikoo .tk-row.actions .tk-send    { order: 3 !important; }
+#twikoo .tk-row.actions .tk-send    { order: 3 !important; margin-left: 8px !important; }
 
 /* 提交区图标（表情） */
 #twikoo .tk-submit-action-icon {
@@ -1044,4 +1051,7 @@
     max-width: calc(100vw - 2rem) !important;
   }
 
+  #twikoo .tk-row.actions .tk-send {
+    margin-left: 4px !important; 
+  }
 }

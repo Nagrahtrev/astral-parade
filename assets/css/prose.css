@@ -37,6 +37,7 @@
   @apply prose-a:text-color-red              /* 超链接颜色 */
          prose-a:font-normal                 /* 超链接字重 */
          prose-a:no-underline prose-a:border-b-[0.5px] prose-a:border-color-red/40         /* 下划线 */
+         prose-a:mx-1;                       /* 两侧间距 */
 }
 
 /* Button */
@@ -101,7 +102,13 @@
 /* 行内代码 */
 .article-content.prose code::before,
 .article-content.prose code::after {
-  content: none !important;                    /* 禁用原生样式 */
+  content: none !important;                        /* 禁用原生样式 */
+}
+
+/* 行内代码位置修复 */
+.article-content.prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  position: relative !important;
+  top: -1px !important;
 }
 
 .article-content.prose {
@@ -112,9 +119,9 @@
          prose-code:font-normal                /* 字重 */
          prose-code:bg-color-black/4           /* 背景颜色 */
          prose-code:border-[0.5px] prose-code:border-color-black/10 prose-code:rounded-none               /* 边框样式 */
-         prose-code:px-1.5 prose-code:py-0.5;  /* 内边距 */
-
-         @apply prose-code:wrap-break-word;    /* 自动换行 */
+         prose-code:px-1.5 prose-code:py-0.5   /* 内边距 */
+         prose-code:mx-1                       /* 两侧间距 */
+         prose-code:wrap-break-word;           /* 自动换行 */
 }
 
 /* 多行代码块 */
@@ -664,6 +671,7 @@
 .article-content.prose .tooltip-trigger {
   border-bottom: 1px dashed currentColor !important;
   padding-bottom: 1px !important;
+  cursor: help !important;
   transition: background-color 0.2s ease !important;
 }
 
@@ -680,6 +688,7 @@
   font-size: 13px !important;                                          /* 字号 */
   font-weight: normal !important;                                      /* 字重 */
   line-height: 1.7 !important;                                         /* 行高 */
+  text-align: center !important;
   color: color-mix(in srgb, var(--my-color-black) 70%, transparent) !important;
   opacity: 0.85 !important;
 

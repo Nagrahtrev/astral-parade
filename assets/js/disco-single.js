@@ -1,3 +1,15 @@
+// 智能后退
+window.smartBackDisco = function(btn) {
+    if (document.referrer.includes(window.location.host)) {
+        window.history.back();
+    } else {
+        var category = btn.getAttribute('data-category');
+        try { sessionStorage.setItem('discoFilter', category); } catch {}
+        try { sessionStorage.setItem('discoPage', '1'); } catch {}
+        window.location.href = '/discography';
+    }
+};
+
 // TR 单行/双行切换
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.track-from-container').forEach(container => {
