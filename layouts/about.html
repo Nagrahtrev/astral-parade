@@ -1,13 +1,13 @@
 {{ define "main" }}
 
-<section class="relative w-full h-screen md:min-h-250 min-h-200 overflow-hidden flex items-center justify-center mt-0">
+<section class="relative w-full h-screen md:min-h-250 min-h-230 overflow-hidden flex items-center justify-center mt-0">
 
   {{/*  手机端背景  */}}
   <div class="md:hidden absolute inset-0 w-full h-full pointer-events-none z-0 grayscale">
     <img src="/images/gear-2.webp" alt=""
          class="w-full h-full object-cover object-[right_center] opacity-50"
          aria-hidden="true" decoding="async" />
-    <div class="absolute inset-0 w-full h-full bg-color-white/60 backdrop-blur-sm"></div>
+    <div class="absolute inset-0 w-full h-full bg-color-white/80 backdrop-blur-sm"></div>
   </div>
 
   {{/*  背景图  */}}
@@ -85,7 +85,7 @@
       <div class="absolute bottom-2 left-2 w-2 h-2 border-b-[0.5px] border-l-[0.5px] border-color-black/40 z-30"></div>
       <div class="absolute bottom-2 right-2 w-2 h-2 border-b-[0.5px] border-r-[0.5px] border-color-black/40 z-30"></div>
 
-      {{/*  图片渐变  */}}
+      {{/*  图片渐变 
       <div class="relative w-full h-full overflow-hidden z-10 border-[0.5px] border-color-black/10">
 
         <img src="/images/profile-1.webp" alt="Profile"
@@ -94,6 +94,12 @@
         <img src="/images/profile-egg.webp" alt="?"
              class="absolute inset-0 w-full h-full object-cover transition-all delay-1000 duration-500 ease-in-out opacity-0 group-hover:opacity-100 group-hover:scale-105 z-0" decoding="async" loading="lazy">
 
+      </div>
+      */}}
+
+      <div class="relative w-full h-full overflow-hidden z-10 border-[0.5px] border-color-black/10">
+        <img src="/images/profile-egg.webp" alt="?"
+             class="absolute inset-0 w-full h-full object-cover" decoding="async">
       </div>
 
     </div>

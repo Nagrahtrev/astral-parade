@@ -5,7 +5,15 @@ if ('scrollRestoration' in history) {
 
 // 开关
 const ABOUT_INTRO_SCROLL_DESKTOP = true;
-const ABOUT_INTRO_SCROLL_MOBILE  = false;
+const ABOUT_INTRO_SCROLL_MOBILE  = true;
+
+// 偏移量
+// 卡片高度 > 视口高度时，卡片顶部的位置 (px)
+const ABOUT_INTRO_OFFSET_TALL_DESKTOP  = 20;
+const ABOUT_INTRO_OFFSET_TALL_MOBILE   = 20;
+// 卡片高度 < 视口高度时，卡片中心与视口高度的比例
+const ABOUT_INTRO_OFFSET_SHORT_DESKTOP = 0.55;
+const ABOUT_INTRO_OFFSET_SHORT_MOBILE  = 0.6;
 
 document.addEventListener('DOMContentLoaded', () => {
     if (!document.body.classList.contains('about-page')) return;
@@ -27,10 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let scrollTarget;
 
         if (cardHeight > viewportHeight) {
-            scrollTarget = window.scrollY + cardRect.top - 20;
+            const offset = isDesktop ? ABOUT_INTRO_OFFSET_TALL_DESKTOP : ABOUT_INTRO_OFFSET_TALL_MOBILE;
+            scrollTarget = window.scrollY + cardRect.top - offset;
         } else {
+            const ratio = isDesktop ? ABOUT_INTRO_OFFSET_SHORT_DESKTOP : ABOUT_INTRO_OFFSET_SHORT_MOBILE;
             const cardCenter = cardRect.top + cardHeight / 2;
-            scrollTarget = window.scrollY + cardCenter - viewportHeight * 0.55;
+            scrollTarget = window.scrollY + cardCenter - viewportHeight * ratio;
         }
 
         window.scrollTo(0, scrollTarget);

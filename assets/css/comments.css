@@ -1043,7 +1043,8 @@
   }
 
   #twikoo .tk-replies {
-    padding-left: 0.75rem !important;
+    margin-left: 1.1rem !important;
+    padding-left: 0.9rem !important;
   }
 
   #twikoo .OwO-body {
