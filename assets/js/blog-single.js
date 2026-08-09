@@ -33,7 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
 // 智能后退
 window.smartBack = function() {
     if (document.referrer.includes(window.location.host)) {
-        window.history.back();
+        // 如果来自 home 则回到 list
+        var refPath = new URL(document.referrer).pathname;
+        if (refPath === '/' || refPath === '') {
+            window.location.href = '/blog';
+        } else {
+            window.history.back();
+        }
     } else {
         window.location.href = '/blog';
     }

@@ -3,7 +3,13 @@ window.smartBackDisco = function() {
     var path = window.location.pathname;
     var category = path.indexOf('/part/') !== -1 ? 'Participations' : 'Releases';
     if (document.referrer.indexOf(window.location.host) !== -1 && document.referrer !== window.location.href) {
-        window.location.href = document.referrer;
+        // 如果来自 home 则回到 list
+        var refPath = new URL(document.referrer).pathname;
+        if (refPath === '/' || refPath === '') {
+            window.location.href = '/discography?filter=' + category;
+        } else {
+            window.location.href = document.referrer;
+        }
     } else {
         window.location.href = '/discography?filter=' + category;
     }

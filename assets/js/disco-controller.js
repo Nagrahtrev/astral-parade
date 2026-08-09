@@ -15,11 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let currentPage = parseInt(getStorage('discoPage')) || 1;
-    // 先从 URL 参数读取 filter，其次 sessionStorage，最后默认 Releases
     var urlParams = new URL(window.location).searchParams;
     var urlFilter = urlParams.get('filter');
     let currentFilter = urlFilter || getStorage('discoFilter') || 'Releases';
-    // 同步到 sessionStorage
+
     setStorage('discoFilter', currentFilter);
     let currentTotalPages = 0;
 
@@ -273,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 setStorage('discoFilter', currentFilter);
                 setStorage('discoPage', 1);
-                // 同步到 URL，确保浏览器前进后退 / Via等浏览器不丢状态
+
                 var u = new URL(window.location);
                 u.searchParams.set('filter', currentFilter);
                 window.history.replaceState({}, '', u);
