@@ -1,11 +1,12 @@
 // 智能后退
-window.smartBackDisco = function(btn) {
+window.smartBackDisco = function() {
     if (document.referrer.includes(window.location.host)) {
         window.history.back();
     } else {
-        var category = btn.getAttribute('data-category');
-        try { sessionStorage.setItem('discoFilter', category); } catch {}
-        try { sessionStorage.setItem('discoPage', '1'); } catch {}
+        var path = window.location.pathname;
+        var category = path.indexOf('/part/') !== -1 ? 'Participations' : 'Releases';
+        try { sessionStorage.setItem('discoFilter', category); } catch(e) {}
+        try { sessionStorage.setItem('discoPage', '1'); } catch(e) {}
         window.location.href = '/discography';
     }
 };
