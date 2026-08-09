@@ -2,13 +2,13 @@
 window.smartBackDisco = function() {
     if (document.referrer.includes(window.location.host)) {
         window.history.back();
-    } else {
-        var path = window.location.pathname;
-        var category = path.indexOf('/part/') !== -1 ? 'Participations' : 'Releases';
-        try { sessionStorage.setItem('discoFilter', category); } catch(e) {}
-        try { sessionStorage.setItem('discoPage', '1'); } catch(e) {}
-        window.location.href = '/discography';
+        return false;
     }
+    var path = window.location.pathname;
+    var category = path.indexOf('/part/') !== -1 ? 'Participations' : 'Releases';
+    try { sessionStorage.setItem('discoFilter', category); } catch(e) {}
+    try { sessionStorage.setItem('discoPage', '1'); } catch(e) {}
+    return true;
 };
 
 // TR 单行/双行切换

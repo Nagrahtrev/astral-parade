@@ -381,12 +381,12 @@
 
     {{/*  Back to list  */}}
     <div class="mt-2.5 mb-20">
-      <button onclick="smartBackDisco()" class="group inline-flex items-center gap-2 no-underline text-color-black/30 hover:text-color-black/60 transition-colors duration-200 ease-out cursor-pointer bg-transparent border-none p-0 font-mono text-[10px] tracking-[0.2em] uppercase">
+      <a href="{{ (site.GetPage "section" "discography").RelPermalink }}" onclick="return smartBackDisco()" class="group inline-flex items-center gap-2 no-underline text-color-black/30 hover:text-color-black/60 transition-colors duration-200 ease-out cursor-pointer select-none font-mono text-[10px] tracking-[0.2em] uppercase">
         <svg class="w-2.5 h-2.5 md:-mt-[3px] -mt-px transition-transform duration-200 ease-out group-hover:-translate-x-px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
           <path d="M7 6l-6 6 6 6"/><path d="M17 6l-6 6 6 6"/>
         </svg>
         <span class="tracking-[0.15em]">BACK TO LIST</span>
-      </button>
+      </a>
     </div>
     
   </div>
