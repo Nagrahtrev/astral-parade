@@ -15,7 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let currentPage = parseInt(getStorage('discoPage')) || 1;
-    let currentFilter = getStorage('discoFilter') || 'Releases';
+    // 先从 URL 参数读取 filter，再 sessionStorage，最后默认 Releases
+    var urlParams = new URL(window.location).searchParams;
+    var urlFilter = urlParams.get('filter');
+    let currentFilter = urlFilter || getStorage('discoFilter') || 'Releases';
+
+    setStorage('discoFilter', currentFilter);
     let currentTotalPages = 0;
 
     const isDesktop = () => window.matchMedia('(width >= 48rem)').matches;
@@ -268,6 +273,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 setStorage('discoFilter', currentFilter);
                 setStorage('discoPage', 1);
+
+                var u = new URL(window.location);
+                u.searchParams.set('filter', currentFilter);
+                window.history.replaceState({}, '', u);
 
                 renderGrid();
                 const grid = document.getElementById('discography-grid');

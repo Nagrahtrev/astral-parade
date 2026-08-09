@@ -9,7 +9,7 @@ window.smartBackDisco = function(e) {
     var category = path.indexOf('/part/') !== -1 ? 'Participations' : 'Releases';
     try { sessionStorage.setItem('discoFilter', category); } catch(e) {}
     try { sessionStorage.setItem('discoPage', '1'); } catch(e) {}
-    window.location.href = '/discography';
+    window.location.href = '/discography?filter=' + category;
     return false;
 };
 
