@@ -8,7 +8,8 @@ window.smartBackDisco = function() {
     var category = path.indexOf('/part/') !== -1 ? 'Participations' : 'Releases';
     try { sessionStorage.setItem('discoFilter', category); } catch(e) {}
     try { sessionStorage.setItem('discoPage', '1'); } catch(e) {}
-    return true;
+    window.location.href = '/discography';
+    return false;
 };
 
 // TR 单行/双行切换
