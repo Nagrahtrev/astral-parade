@@ -1,5 +1,6 @@
 // 智能后退
-window.smartBackDisco = function() {
+window.smartBackDisco = function(e) {
+    e.stopImmediatePropagation();
     if (document.referrer.includes(window.location.host)) {
         window.history.back();
         return false;
