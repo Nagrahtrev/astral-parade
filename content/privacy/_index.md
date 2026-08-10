@@ -10,27 +10,27 @@ This website does **not** use cookies, fingerprinting scripts, or advertising tr
 
 ### Vercel Analytics & Speed Insights
 
-To monitor site performance and basic traffic patterns, this site uses **Vercel Analytics** and **Vercel Speed Insights** — lightweight, privacy-focused analytics provided by the hosting platform. These do **not** use cookies, do **not** collect personally identifiable information, and do **not** track users across sites. For details, see [Vercel's privacy policy](https://vercel.com/legal/privacy-notice).
+To monitor site performance and basic traffic patterns, this site uses Vercel Analytics and Vercel Speed Insights — lightweight, privacy-focused analytics provided by the hosting platform. These do not use cookies, do not collect personally identifiable information, and do not track users across sites. For details, see [Vercel's privacy policy](https://vercel.com/legal/privacy-notice).
 
-The site includes a **comment system** (see below). Except for information voluntarily submitted through the comment form, no personal data is collected, stored, or processed by this website.
+The site includes a comment system (see below). Except for information voluntarily submitted through the comment form, no personal data is collected, stored, or processed by this website.
 
 ----
 
 ## Comment System
 
-This site uses **Twikoo** to provide a comment section on blog posts. Comment data is processed and managed via the backend service at [https://comment.aspr-works.top](https://comment.aspr-works.top).
+This site uses **Twikoo** to provide a comment section on blog posts. Comment data is processed and managed via the backend service at <https://comment.aspr-works.top>.
 
 ### Information You Submit
 
-- **Nickname** (required, maximum 20 characters)
-- **Email** (optional — used only for reply notifications; see below)
-- **Comment content** (maximum 400 characters, supports limited Markdown)
+- Nickname (required, maximum 20 characters)
+- Email (optional — used only for reply notifications; see below)
+- Comment content (maximum 400 characters, supports limited Markdown)
 
-When you submit a comment, your **IP address** is sent to the comment server along with your message. IP region and ISP information are visible in the administration panel but are **not displayed publicly**.
+When you submit a comment, your IP address is sent to the comment server along with your message. IP region and ISP information are visible in the administration panel but are not displayed publicly.
 
 ### Gravatar
 
-**Gravatar is disabled.** No avatar service is used, and your email is not sent to any third-party avatar provider.
+Gravatar is disabled. No avatar service is used, and your email is not sent to any third-party avatar provider.
 
 ### Akismet Anti-Spam
 
