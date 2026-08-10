@@ -13,3 +13,6 @@ static/fonts/Noto-Sans-JP-700.woff2
 static/fonts/Noto-Sans-JP-regular.woff2
 static/fonts/Noto-Serif-SC-500.woff2
 static/fonts/Noto-Serif-SC-700.woff2
+
+# notion-import
+.env

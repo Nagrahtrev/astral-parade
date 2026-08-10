@@ -6,11 +6,11 @@
   {{- if reflect.IsSlice $name -}}
     "byArtist": [
     {{- range $i, $n := $name }}
-      {"@type": "Person", "name": {{ $n | jsonify }}}{{ if lt (add $i 1) (len $name) }},{{ end }}
+      {"@type": "Person", "name": {{ $n | jsonify | safeJS }}}{{ if lt (add $i 1) (len $name) }},{{ end }}
     {{- end }}
     ]
   {{- else -}}
-    "byArtist": {"@type": "Person", "name": {{ $name | jsonify }}}
+    "byArtist": {"@type": "Person", "name": {{ $name | jsonify | safeJS }}}
   {{- end -}}
 {{- end -}}
 
@@ -20,16 +20,33 @@
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": {{ site.Title | jsonify }},
-  "url": {{ site.Home.Permalink | jsonify }},
-  "description": {{ default site.Params.description "nova+z Official Website — home of the independent project Astral Parade, featuring music and blog posts." | jsonify }},
+  "name": {{ site.Title | jsonify | safeJS }},
+  "alternateName": [
+    {{ "novaz sounds and logs" | jsonify | safeJS }},
+    {{ "novaz sounds & logs" | jsonify | safeJS }},
+    {{ "nova z sounds and logs" | jsonify | safeJS }},
+    {{ "nova z sounds & logs" | jsonify | safeJS }},
+    {{ "nova+z" | jsonify | safeJS }},
+    {{ "nova" | jsonify | safeJS }},
+    {{ "novaz" | jsonify | safeJS }},
+    {{ "nova z" | jsonify | safeJS }},
+    {{ "Zsul Pavon" | jsonify | safeJS }}
+  ],
+  "url": {{ site.Home.Permalink | jsonify | safeJS }},
+  "description": {{ default "nova+z Official Website — home of the independent project Astral Parade, featuring music and blog posts." site.Params.description | jsonify | safeJS }},
   "author": {
     "@type": "Person",
-    "name": {{ "nova+z" | jsonify }},
-    "email": {{ site.Params.email | jsonify }},
-    "url": {{ "about/" | absURL | jsonify }}
+    "name": {{ "nova+z" | jsonify | safeJS }},
+    "alternateName": [
+      {{ "nova" | jsonify | safeJS }},
+      {{ "novaz" | jsonify | safeJS }},
+      {{ "nova z" | jsonify | safeJS }},
+      {{ "Zsul Pavon" | jsonify | safeJS }}
+    ],
+    "email": {{ site.Params.email | jsonify | safeJS }},
+    "url": {{ "about/" | absURL | jsonify | safeJS }}
   },
-  "inLanguage": {{ site.LanguageCode | jsonify }}
+  "inLanguage": {{ site.LanguageCode | jsonify | safeJS }}
 }
 </script>
 
@@ -40,13 +57,20 @@
 {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": {{ "nova+z" | jsonify }},
-  "alternateName": [{{ "Zsul Pavon" | jsonify }}, {{ "novaxz" | jsonify }}, {{ "novaz" | jsonify }}, {{ "nova z" | jsonify }}, {{ "novatz" | jsonify }}],
-  "description": {{ .Description | plainify | jsonify }},
-  "email": {{ site.Params.email | jsonify }},
-  "url": {{ .Permalink | jsonify }}
+  "name": {{ "nova+z" | jsonify | safeJS }},
+  "alternateName": [
+    {{ "Zsul Pavon" | jsonify | safeJS }},
+    {{ "novaxz" | jsonify | safeJS }},
+    {{ "novaz" | jsonify | safeJS }},
+    {{ "nova z" | jsonify | safeJS }},
+    {{ "novatz" | jsonify | safeJS }},
+    {{ "nova" | jsonify | safeJS }}
+  ],
+  "description": {{ .Description | plainify | jsonify | safeJS }},
+  "email": {{ site.Params.email | jsonify | safeJS }},
+  "url": {{ .Permalink | jsonify | safeJS }}
   {{- with site.Params.social }},
-  "sameAs": {{ . | jsonify }}
+  "sameAs": {{ . | jsonify | safeJS }}
   {{- end -}}
 }
 </script>
@@ -59,23 +83,23 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": {{ .Title | jsonify }},
-  "datePublished": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
-  "dateModified": {{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+  "headline": {{ .Title | jsonify | safeJS }},
+  "datePublished": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify | safeJS }},
+  "dateModified": {{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" | jsonify | safeJS }},
   "author": {
     "@type": "Person",
-    "name": {{ "nova+z" | jsonify }}
+    "name": {{ "nova+z" | jsonify | safeJS }}
   }
   {{- if .Params.tag }},
-  "keywords": {{ .Params.tag | jsonify }}
+  "keywords": {{ .Params.tag | jsonify | safeJS }}
   {{- end }}
   {{- if .Description }},
-  "description": {{ .Description | jsonify }}
+  "description": {{ .Description | jsonify | safeJS }}
   {{- else }},
-  "description": {{ default site.Params.description "nova+z Official Website — home of the independent project Astral Parade, featuring music and blog posts." | jsonify }}
+  "description": {{ default "nova+z Official Website — home of the independent project Astral Parade, featuring music and blog posts." site.Params.description | jsonify | safeJS }}
   {{- end }}
   {{- if .Content }},
-  "articleBody": {{ .Content | plainify | jsonify }}
+  "articleBody": {{ .Content | plainify | jsonify | safeJS }}
   {{- end }}
 }
 </script>
@@ -91,11 +115,15 @@
 {
   "@context": "https://schema.org",
   "@type": "MusicAlbum",
-  "name": {{ .Title | jsonify }},
-  "datePublished": {{ .Date.Format "2006-01-02" | jsonify }},
-  "image": {{ .Params.image | absURL | jsonify }}
+  "name": {{ .Title | jsonify | safeJS }},
+  "datePublished": {{ .Date.Format "2006-01-02" | jsonify | safeJS }},
+  "image": {{ .Params.image | absURL | jsonify | safeJS }}
   {{- if .Params.catalog }},
-  "catalogNumber": {{ .Params.catalog | jsonify }}
+  "albumRelease": {
+    "@type": "MusicRelease",
+    "name": {{ .Title | jsonify | safeJS }},
+    "catalogNumber": {{ .Params.catalog | jsonify | safeJS }}
+  }
   {{- end }},
   {{- template "byArtist" $artist }},
   "track": [
@@ -103,7 +131,7 @@
     {
       "@type": "MusicRecording",
       "position": {{ add $i 1 }},
-      "name": {{ $t.title | jsonify }}
+      "name": {{ $t.title | jsonify | safeJS }}
     }{{- if lt (add $i 1) $trackCount }},{{ end }}
     {{- end }}
   ],
@@ -120,13 +148,13 @@
 {
   "@context": "https://schema.org",
   "@type": "MusicRecording",
-  "name": {{ .Title | jsonify }},
-  "datePublished": {{ .Date.Format "2006-01-02" | jsonify }},
-  "image": {{ .Params.image | absURL | jsonify }},
+  "name": {{ .Title | jsonify | safeJS }},
+  "datePublished": {{ .Date.Format "2006-01-02" | jsonify | safeJS }},
+  "image": {{ .Params.image | absURL | jsonify | safeJS }},
   {{- template "byArtist" $artist }},
   "inAlbum": {
     "@type": "MusicAlbum",
-    "name": {{ .Params.from_album | jsonify }}
+    "name": {{ .Params.from_album | jsonify | safeJS }}
   }
 }
 </script>

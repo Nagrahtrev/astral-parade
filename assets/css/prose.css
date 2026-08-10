@@ -104,6 +104,27 @@
          prose-ol:marker:text-color-black/30;      /* 有序列表索引颜色 */
 }
 
+/* 列表缩进 */
+.article-content.prose ul ul,
+.article-content.prose ol ol,
+.article-content.prose ul ol,
+.article-content.prose ol ul {
+  @apply pl-5 my-0;
+}
+
+/* 有序列表多级编号循环 (匹配 Notion) */
+.article-content.prose ol        { list-style-type: decimal; }
+.article-content.prose ol ol     { list-style-type: lower-alpha; }
+.article-content.prose ol ol ol  { list-style-type: lower-roman; }
+.article-content.prose ol ol ol ol      { list-style-type: decimal; }
+.article-content.prose ol ol ol ol ol   { list-style-type: lower-alpha; }
+.article-content.prose ol ol ol ol ol ol { list-style-type: lower-roman; }
+
+/* 复选框缩进 */
+.article-content.prose ul:has(input[type="checkbox"]) ul {
+  @apply pl-5 my-0;
+}
+
 /* 行内代码 */
 .article-content.prose code::before,
 .article-content.prose code::after {

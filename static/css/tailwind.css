@@ -1971,6 +1971,10 @@
     display: inline-flex;
   }
 
+  .table {
+    display: table;
+  }
+
   .aspect-4\/3 {
     aspect-ratio: 4 / 3;
   }
@@ -5846,6 +5850,42 @@
   .article-content.prose :where(ol):not(:where([class~="not-prose"], [class~="not-prose"] *))::-webkit-details-marker {
     color: color-mix(in oklab, var(--color-color-black) 30%, transparent);
   }
+}
+
+.article-content.prose ul ul, .article-content.prose ol ol, .article-content.prose ul ol, .article-content.prose ol ul {
+  padding-left: calc(var(--spacing) * 5);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.article-content.prose ol {
+  list-style-type: decimal;
+}
+
+.article-content.prose ol ol {
+  list-style-type: lower-alpha;
+}
+
+.article-content.prose ol ol ol {
+  list-style-type: lower-roman;
+}
+
+.article-content.prose ol ol ol ol {
+  list-style-type: decimal;
+}
+
+.article-content.prose ol ol ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.article-content.prose ol ol ol ol ol ol {
+  list-style-type: lower-roman;
+}
+
+.article-content.prose ul:has(input[type="checkbox"]) ul {
+  padding-left: calc(var(--spacing) * 5);
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .article-content.prose code:before, .article-content.prose code:after {
