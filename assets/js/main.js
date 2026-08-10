@@ -80,6 +80,54 @@ window.customSmoothScroll = function(targetY, duration = 400) {
         window.__smoothScrollCancel();
     }
 
+    // 触屏设备则使用原生 smoothScroll
+    var _isTouchDevice = ('ontouchstart' in window) ||
+                         (navigator.maxTouchPoints > 0);
+
+    if (_isTouchDevice) {
+        window.__isSmoothScrolling = true;
+
+        var _cleanupTimer = null;
+        var _cleanedUp = false;
+
+        function finish() {
+            if (_cleanedUp) return;
+            _cleanedUp = true;
+            if (_cleanupTimer) clearTimeout(_cleanupTimer);
+            window.__isSmoothScrolling = false;
+            window.__smoothScrollCancel = null;
+            document.removeEventListener('wheel', onInterrupt);
+            document.removeEventListener('touchmove', onInterrupt);
+        }
+
+        function onInterrupt(e) {
+            if (e.type === 'wheel' && Math.abs(e.deltaY) < 8) return;
+            window.scrollTo({ top: window.scrollY, behavior: 'instant' });
+            finish();
+        }
+
+        document.addEventListener('wheel', onInterrupt, { once: true, passive: true });
+        document.addEventListener('touchmove', onInterrupt, { once: true, passive: true });
+
+        window.__smoothScrollCancel = function() {
+            window.scrollTo({ top: window.scrollY, behavior: 'instant' });
+            finish();
+        };
+
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+
+        _cleanupTimer = setTimeout(finish, Math.min(duration + 300, 1500));
+        return;
+    }
+
+    // 桌面端
+    // 暂停 Lenis 避免虚拟滚动与程序化 scrollTo 冲突
+    var _lenis = window.lenis;
+    var _lenisWasStopped = _lenis ? _lenis.isStopped : true;
+    if (_lenis && !_lenisWasStopped) {
+        _lenis.stop();
+    }
+
     const startY = window.scrollY;
     const distance = targetY - startY;
     let startTime = null;
@@ -95,6 +143,10 @@ window.customSmoothScroll = function(targetY, duration = 400) {
         document.removeEventListener('wheel', onInterrupt);
         document.removeEventListener('touchmove', onInterrupt);
         window.__smoothScrollCancel = null;
+        // 恢复 Lenis
+        if (_lenis && !_lenisWasStopped) {
+            _lenis.start();
+        }
     }
 
     function onInterrupt(e) {

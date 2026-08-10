@@ -223,6 +223,8 @@ body.page-loading:not(.page-home) main {
 /* 加载完成 */
 body.page-loaded:not(.page-home) main {
   animation-play-state: running;
+  will-change: auto;
+  backface-visibility: visible;
 }
 
 /* 离开页面 */

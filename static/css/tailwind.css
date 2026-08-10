@@ -2115,24 +2115,8 @@
     max-height: 85vh;
   }
 
-  .min-h-200 {
-    min-height: calc(var(--spacing) * 200);
-  }
-
-  .min-h-210 {
-    min-height: calc(var(--spacing) * 210);
-  }
-
   .min-h-230 {
     min-height: calc(var(--spacing) * 230);
-  }
-
-  .min-h-250 {
-    min-height: calc(var(--spacing) * 250);
-  }
-
-  .min-h-300 {
-    min-height: calc(var(--spacing) * 300);
   }
 
   .min-h-screen {
@@ -2963,26 +2947,6 @@
 
   .bg-color-white {
     background-color: var(--color-color-white);
-  }
-
-  .bg-color-white\/60 {
-    background-color: rgba(238, 238, 238, 0.6);
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .bg-color-white\/60 {
-      background-color: color-mix(in oklab, var(--color-color-white) 60%, transparent);
-    }
-  }
-
-  .bg-color-white\/70 {
-    background-color: rgba(238, 238, 238, 0.7);
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .bg-color-white\/70 {
-      background-color: color-mix(in oklab, var(--color-color-white) 70%, transparent);
-    }
   }
 
   .bg-color-white\/80 {
@@ -4704,11 +4668,6 @@
       border-width: 1.5px;
     }
 
-    .md\:border-t {
-      border-top-style: var(--tw-border-style);
-      border-top-width: 1px;
-    }
-
     .md\:border-t-\[0\.5px\] {
       border-top-style: var(--tw-border-style);
       border-top-width: .5px;
@@ -4731,16 +4690,6 @@
     @supports (color: color-mix(in lab, red, red)) {
       .md\:border-color-black\/80 {
         border-color: color-mix(in oklab, var(--color-color-black) 80%, transparent);
-      }
-    }
-
-    .md\:border-color-black\/90 {
-      border-color: rgba(2, 2, 3, 0.9);
-    }
-
-    @supports (color: color-mix(in lab, red, red)) {
-      .md\:border-color-black\/90 {
-        border-color: color-mix(in oklab, var(--color-color-black) 90%, transparent);
       }
     }
 
@@ -9022,6 +8971,9 @@ body.page-loading:not(.page-home) main {
 }
 
 body.page-loaded:not(.page-home) main {
+  will-change: auto;
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
   animation-play-state: running;
 }
 
