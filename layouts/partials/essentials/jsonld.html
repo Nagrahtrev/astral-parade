@@ -6,11 +6,29 @@
   {{- if reflect.IsSlice $name -}}
     "byArtist": [
     {{- range $i, $n := $name }}
-      {"@type": "Person", "name": {{ $n | jsonify | safeJS }}}{{ if lt (add $i 1) (len $name) }},{{ end }}
+      {
+        "@type": "Person",
+        "name": {{ $n | jsonify | safeJS }},
+        "alternateName": [
+          {{ "nova" | jsonify | safeJS }},
+          {{ "novaz" | jsonify | safeJS }},
+          {{ "nova z" | jsonify | safeJS }},
+          {{ "novaxz" | jsonify | safeJS }}
+        ]
+      }{{- if lt (add $i 1) (len $name) }},{{ end }}
     {{- end }}
     ]
   {{- else -}}
-    "byArtist": {"@type": "Person", "name": {{ $name | jsonify | safeJS }}}
+    "byArtist": {
+      "@type": "Person",
+      "name": {{ $name | jsonify | safeJS }},
+      "alternateName": [
+        {{ "nova" | jsonify | safeJS }},
+        {{ "novaz" | jsonify | safeJS }},
+        {{ "nova z" | jsonify | safeJS }},
+        {{ "novaxz" | jsonify | safeJS }}
+      ]
+    }
   {{- end -}}
 {{- end -}}
 
@@ -30,6 +48,7 @@
     {{ "nova" | jsonify | safeJS }},
     {{ "novaz" | jsonify | safeJS }},
     {{ "nova z" | jsonify | safeJS }},
+    {{ "novaxz" | jsonify | safeJS }},
     {{ "Zsul Pavon" | jsonify | safeJS }}
   ],
   "url": {{ site.Home.Permalink | jsonify | safeJS }},
@@ -41,6 +60,7 @@
       {{ "nova" | jsonify | safeJS }},
       {{ "novaz" | jsonify | safeJS }},
       {{ "nova z" | jsonify | safeJS }},
+      {{ "novaxz" | jsonify | safeJS }},
       {{ "Zsul Pavon" | jsonify | safeJS }}
     ],
     "email": {{ site.Params.email | jsonify | safeJS }},
@@ -88,7 +108,14 @@
   "dateModified": {{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" | jsonify | safeJS }},
   "author": {
     "@type": "Person",
-    "name": {{ "nova+z" | jsonify | safeJS }}
+    "name": {{ "nova+z" | jsonify | safeJS }},
+    "alternateName": [
+      {{ "nova" | jsonify | safeJS }},
+      {{ "novaz" | jsonify | safeJS }},
+      {{ "nova z" | jsonify | safeJS }},
+      {{ "novaxz" | jsonify | safeJS }},
+      {{ "Zsul Pavon" | jsonify | safeJS }}
+    ]
   }
   {{- if .Params.tag }},
   "keywords": {{ .Params.tag | jsonify | safeJS }}
