@@ -153,7 +153,6 @@
     --ease-out: cubic-bezier(0, 0, .2, 1);
     --ease-in-out: cubic-bezier(.4, 0, .2, 1);
     --animate-spin: spin 1s linear infinite;
-    --animate-ping: ping 1s cubic-bezier(0, 0, .2, 1) infinite;
     --animate-pulse: pulse 2s cubic-bezier(.4, 0, .6, 1) infinite;
     --animate-bounce: bounce 1s infinite;
     --blur-sm: 8px;
@@ -3546,16 +3545,6 @@
     color: var(--color-color-black);
   }
 
-  .text-color-black\/5 {
-    color: rgba(2, 2, 3, 0.05);
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .text-color-black\/5 {
-      color: color-mix(in oklab, var(--color-color-black) 5%, transparent);
-    }
-  }
-
   .text-color-black\/15 {
     color: rgba(2, 2, 3, 0.15);
   }
@@ -4911,16 +4900,8 @@
       font-size: 80px;
     }
 
-    .md\:text-\[90px\] {
-      font-size: 90px;
-    }
-
     .md\:text-\[130px\] {
       font-size: 130px;
-    }
-
-    .md\:text-\[150px\] {
-      font-size: 150px;
     }
 
     .md\:tracking-\[0\.2em\] {
@@ -7319,6 +7300,10 @@
   transition: opacity .2s cubic-bezier(.4, 0, .2, 1), transform .15s cubic-bezier(.4, 0, .2, 1);
 }
 
+html:not(.show-participations) .disco-item[data-category="Participations"], html.show-participations .disco-item[data-category="Releases"] {
+  display: none;
+}
+
 .filter-item {
   border: .5px solid rgba(2, 2, 3, 0.2);
   justify-content: space-between;
@@ -9391,13 +9376,6 @@ body.about-page #static-header.header-shown {
 @keyframes spin {
   to {
     transform: rotate(360deg);
-  }
-}
-
-@keyframes ping {
-  75%, 100% {
-    opacity: 0;
-    transform: scale(2);
   }
 }
 

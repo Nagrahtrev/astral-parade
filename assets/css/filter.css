@@ -140,6 +140,10 @@
     transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* 防止 FOUC：在 JS 加载前隐藏非默认分类的封面宫格 */
+html:not(.show-participations) .disco-item[data-category="Participations"] { display: none; }
+html.show-participations .disco-item[data-category="Releases"] { display: none; }
+
 /* =========================================
 
    >> BLOG

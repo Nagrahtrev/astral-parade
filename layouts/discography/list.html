@@ -1,5 +1,20 @@
 {{ define "main" }}
 
+{{/*  防止 FOUC  */}}
+<script>
+  (function() {
+    try {
+      var p = new URLSearchParams(window.location.search);
+      var f = p.get('filter');
+      var s = null;
+      try { s = sessionStorage.getItem('discoFilter'); } catch(e) {}
+      if ((f || s || 'Releases') === 'Participations') {
+        document.documentElement.classList.add('show-participations');
+      }
+    } catch(e) {}
+  })();
+</script>
+
 <section class="min-h-screen flex flex-col relative z-10 bg-color-white">
 
   <div class="w-full flex-1 relative z-10 pt-0 lg:pt-28 pb-0 md:pb-32">
