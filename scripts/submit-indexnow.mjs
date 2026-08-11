@@ -1,7 +1,7 @@
 // submit-indexnow.mjs
 //
 // 用法:
-//   npm run indexnow:submit                     # 自动构建后调用，仅提交新/变更 URL
+//   npm run indexnow:submit                      # 自动构建后调用，仅提交新/变更 URL
 //   npm run indexnow:submit -- --all             # 强制提交 sitemap 中全部 URL
 //   npm run indexnow:submit -- --dry-run         # 只打印将要提交的内容
 //   npm run indexnow:submit -- --include blog    # 只提交匹配正则的 URL
@@ -146,7 +146,7 @@ function selectUrls(allUrls, state) {
     }
   }
 
-  // 没有 lastmod 的 URL（旧文章）：仅在无状态且无 lastmod 可参考时退而求其次
+  // 没有 lastmod 的 URL（旧文章）- 仅在无状态且无 lastmod 可参考时
   // 不自动提交无 lastmod 的旧 URL，避免 spam
   if (withoutLastmod.length > 0 && DEBUG) {
     log(`  [debug] ${withoutLastmod.length} 个 URL 缺少 lastmod，跳过`);
@@ -219,12 +219,12 @@ async function main() {
 
   // 环境守卫
   if (!ENABLED) {
-    log("  ⏭ INDEXNOW_ENABLED=0，跳过");
+    log("  > INDEXNOW_ENABLED=0，跳过");
     return;
   }
 
   if (process.env.VERCEL_ENV && process.env.VERCEL_ENV !== "production") {
-    log(`  ⏭ VERCEL_ENV=${process.env.VERCEL_ENV}，跳过（仅 production 环境提交）`);
+    log(`  > VERCEL_ENV=${process.env.VERCEL_ENV}，跳过（仅 production 环境提交）`);
     return;
   }
 

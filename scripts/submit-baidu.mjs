@@ -6,7 +6,7 @@
 //   npm run baidu:submit -- --dry-run     # 只打印将要提交的内容
 //
 // 环境变量:
-//   BAIDU_TOKEN             百度站长平台 API token（密钥，通过 .env / Vercel 环境变量管理）
+//   BAIDU_TOKEN             百度站长平台 API token
 //   INDEXNOW_HOST           默认为 aspr-works.top
 //   INDEXNOW_WINDOW_DAYS    仅提交最近 N 天内更新的 URL（默认 7）
 //   BAIDU_ENABLED=0         跳过提交
@@ -71,7 +71,7 @@ function saveState(state) {
   writeFileSync(STATE_FILE, JSON.stringify(state, null, 2), "utf-8");
 }
 
-// 确定需要提交的 URL（与 IndexNow 共享逻辑）
+// 确定需要提交的 URL
 function selectUrls(allUrls, state) {
   if (ALL) {
     log(`  --all 模式：提交全部 URL`);
@@ -158,19 +158,19 @@ async function main() {
 
   // 环境守卫
   if (!ENABLED) {
-    log("  ⏭ BAIDU_ENABLED=0，跳过");
+    log("  > BAIDU_ENABLED=0，跳过");
     return;
   }
 
   if (process.env.VERCEL_ENV && process.env.VERCEL_ENV !== "production") {
-    log(`  ⏭ VERCEL_ENV=${process.env.VERCEL_ENV}，跳过（仅 production 环境提交）`);
+    log(`  > VERCEL_ENV=${process.env.VERCEL_ENV}，跳过（仅 production 环境提交）`);
     return;
   }
 
   // 检查 token
   const TOKEN = process.env.BAIDU_TOKEN || "";
   if (!TOKEN) {
-    log("  ⏭ BAIDU_TOKEN 未设置，跳过 Baidu 推送");
+    log("  > BAIDU_TOKEN 未设置，跳过 Baidu 推送");
     log("    提示：在 Baidu 站长平台 ziyuan.baidu.com → 普通收录 → 链接提交 获取 token");
     return;
   }

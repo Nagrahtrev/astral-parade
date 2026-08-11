@@ -21,7 +21,7 @@ enableRobotsTXT = true
     envId = "https://comment.aspr-works.top"
     region = ""
 
-  rssFullContent = false  # 设为 true 则在 RSS 中输出全文内容
+  rssFullContent = false
 
 [services]
   [services.rss]
