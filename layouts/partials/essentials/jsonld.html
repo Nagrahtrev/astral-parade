@@ -106,6 +106,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": {{ .Title | jsonify | safeJS }},
+  "url": {{ .Permalink | jsonify | safeJS }},
   "datePublished": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify | safeJS }},
   "dateModified": {{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" | jsonify | safeJS }},
   "author": {
@@ -121,6 +122,9 @@
   }
   {{- if .Params.tag }},
   "keywords": {{ .Params.tag | jsonify | safeJS }}
+  {{- end }}
+  {{- if .Params.image }},
+  "image": {{ .Params.image | absURL | jsonify | safeJS }}
   {{- end }}
   {{- if .Description }},
   "description": {{ .Description | jsonify | safeJS }}
@@ -145,6 +149,7 @@
   "@context": "https://schema.org",
   "@type": "MusicAlbum",
   "name": {{ .Title | jsonify | safeJS }},
+  "url": {{ .Permalink | jsonify | safeJS }},
   "datePublished": {{ .Date.Format "2006-01-02" | jsonify | safeJS }},
   "image": {{ .Params.image | absURL | jsonify | safeJS }}
   {{- if .Params.catalog }},
@@ -178,6 +183,7 @@
   "@context": "https://schema.org",
   "@type": "MusicRecording",
   "name": {{ .Title | jsonify | safeJS }},
+  "url": {{ .Permalink | jsonify | safeJS }},
   "datePublished": {{ .Date.Format "2006-01-02" | jsonify | safeJS }},
   "image": {{ .Params.image | absURL | jsonify | safeJS }},
   {{- template "byArtist" $artist }},

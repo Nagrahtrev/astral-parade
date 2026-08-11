@@ -22,9 +22,9 @@
 
           {{/*  副标题行  */}}
           <div class="flex items-center gap-4 md:gap-8 mt-2 md:mt-4 select-none">
-            <span class="font-primary text-[10px] md:text-[12px] tracking-[0.2em] text-color-white/30">
+            <h2 class="font-primary text-[10px] md:text-[12px] tracking-[0.2em] text-color-white/30">
               sounds &amp; logs
-            </span>
+            </h2>
             <span class="font-primary text-[10px] md:text-[16px] text-color-white/20">
               /
             </span>
@@ -149,9 +149,9 @@
       <div class="w-full max-w-330 mx-auto px-6 md:px-12 pt-28 md:pt-48 pb-30 md:pb-50 flex flex-col relative">
 
         <div class="flex items-start justify-between mb-16 md:mb-24 select-none">
-          <div class="font-bgsans text-[48px] md:text-[80px] uppercase leading-none text-color-black tracking-tighter">
+          <h2 class="font-bgsans text-[48px] md:text-[80px] uppercase leading-none text-color-black tracking-tighter">
             Recent
-          </div>
+          </h2>
           <div class="bg-color-black px-4 py-1.5 md:px-6 md:py-3 mt-1.5 md:mt-5">
             <span class="font-mono text-[13px] md:text-[16px] text-color-white/90 leading-none">
               01
@@ -172,9 +172,9 @@
               </div>
 
               {{/*  标题  */}}
-              <div class="font-bgsans font-bold text-[40px] md:text-[50px] lg:text-[60px] leading-[0.9] tracking-tighter text-color-black mb-7 text-right md:text-left md:mt-0 -mt-8">
+              <h3 class="font-bgsans font-bold text-[40px] md:text-[50px] lg:text-[60px] leading-[0.9] tracking-tighter text-color-black mb-7 text-right md:text-left md:mt-0 -mt-8">
                 {{ .Title }}
-              </div>
+              </h3>
 
               {{/*  Tracklist  */}}
               <div class="w-full p-6 md:p-8 mb-10 relative bg-color-gray">
@@ -320,10 +320,10 @@
                 </div>
               </div>
 
-              <div class="md:hidden font-bgsans font-bold text-[28px] leading-[0.9] tracking-tighter text-color-black text-left mt-8 flex items-center gap-3">
+              <h3 class="md:hidden font-bgsans font-bold text-[28px] leading-[0.9] tracking-tighter text-color-black text-left mt-8 flex items-center gap-3">
                 <span class="inline-block w-3 h-3 bg-color-red shrink-0"></span>
                 {{ .Title }}
-              </div>
+              </h3>
 
             </a>
             {{ end }}

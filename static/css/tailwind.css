@@ -152,6 +152,8 @@
     --radius-xs: .125rem;
     --ease-out: cubic-bezier(0, 0, .2, 1);
     --ease-in-out: cubic-bezier(.4, 0, .2, 1);
+    --animate-spin: spin 1s linear infinite;
+    --animate-ping: ping 1s cubic-bezier(0, 0, .2, 1) infinite;
     --animate-pulse: pulse 2s cubic-bezier(.4, 0, .6, 1) infinite;
     --animate-bounce: bounce 1s infinite;
     --blur-sm: 8px;
@@ -2421,6 +2423,10 @@
     animation: var(--animate-pulse);
   }
 
+  .animate-spin {
+    animation: var(--animate-spin);
+  }
+
   .cursor-crosshair {
     cursor: crosshair;
   }
@@ -3463,6 +3469,11 @@
     letter-spacing: .2em;
   }
 
+  .tracking-\[0\.03em\] {
+    --tw-tracking: .03em;
+    letter-spacing: .03em;
+  }
+
   .tracking-\[0\.3em\] {
     --tw-tracking: .3em;
     letter-spacing: .3em;
@@ -3535,13 +3546,13 @@
     color: var(--color-color-black);
   }
 
-  .text-color-black\/10 {
-    color: rgba(2, 2, 3, 0.1);
+  .text-color-black\/5 {
+    color: rgba(2, 2, 3, 0.05);
   }
 
   @supports (color: color-mix(in lab, red, red)) {
-    .text-color-black\/10 {
-      color: color-mix(in oklab, var(--color-color-black) 10%, transparent);
+    .text-color-black\/5 {
+      color: color-mix(in oklab, var(--color-color-black) 5%, transparent);
     }
   }
 
@@ -4510,8 +4521,8 @@
       margin-bottom: calc(var(--spacing) * 24);
     }
 
-    .md\:mb-60 {
-      margin-bottom: calc(var(--spacing) * 60);
+    .md\:mb-40 {
+      margin-bottom: calc(var(--spacing) * 40);
     }
 
     .md\:block {
@@ -4904,6 +4915,14 @@
       font-size: 90px;
     }
 
+    .md\:text-\[130px\] {
+      font-size: 130px;
+    }
+
+    .md\:text-\[150px\] {
+      font-size: 150px;
+    }
+
     .md\:tracking-\[0\.2em\] {
       --tw-tracking: .2em;
       letter-spacing: .2em;
@@ -5236,6 +5255,10 @@
       padding-bottom: calc(var(--spacing) * 27);
     }
 
+    .lg\:text-\[9px\] {
+      font-size: 9px;
+    }
+
     .lg\:text-\[12px\] {
       font-size: 12px;
     }
@@ -5381,8 +5404,8 @@
       text-align: left;
     }
 
-    .xl\:text-\[10px\] {
-      font-size: 10px;
+    .xl\:text-\[11px\] {
+      font-size: 11px;
     }
 
     .xl\:text-\[13px\] {
@@ -5411,11 +5434,6 @@
 
     .xl\:text-\[105px\] {
       font-size: 105px;
-    }
-
-    .xl\:tracking-\[0\.03em\] {
-      --tw-tracking: .03em;
-      letter-spacing: .03em;
     }
   }
 
@@ -9373,6 +9391,13 @@ body.about-page #static-header.header-shown {
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes ping {
+  75%, 100% {
+    opacity: 0;
+    transform: scale(2);
   }
 }
 

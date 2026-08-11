@@ -11,13 +11,33 @@
     display: flex !important;
     flex-direction: column !important;
   }
+  body.page-loading > main,
+  body.page-loaded > main,
+  body.page-leaving > main {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 </style>
 <section class="page-404-section flex-1 flex flex-col bg-color-white relative">
 
-  <div class="text-404-wrap flex-1 flex items-center justify-center select-none z-20 md:mb-60 mb-10">
-    <span class="font-bgsans md:text-[90px] uppercase text-[40px] font-black text-color-black/10 tracking-tight">
-      404 not found
-    </span>
+  {{/*  Back to Home  */}}
+  <div class="absolute top-0 left-0 right-0 z-30">
+    <div class="w-full max-w-400 mx-auto px-6 md:px-16 pt-5">
+      <a href="{{ "/" | relURL }}" class="hover-decode group inline-flex items-center gap-2 no-underline text-color-black/30 hover:text-color-black/60 transition-colors duration-200 ease-out cursor-pointer select-none font-mono text-[10px] tracking-[0.2em] uppercase">
+        <svg class="w-2.5 h-2.5 md:-mt-[3px] -mt-px transition-transform duration-200 ease-out group-hover:-translate-x-px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+          <path d="M7 6l-6 6 6 6"/><path d="M17 6l-6 6 6 6"/>
+        </svg>
+        <span class="tracking-[0.15em]">BACK TO HOME</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="text-404-wrap flex-1 flex flex-col items-center justify-center select-none z-20 md:mb-40 mb-10">
+    <h1 class="font-bgsans md:text-[130px] uppercase text-[40px] font-black text-color-black tracking-tight animate-spin">
+      404 NOT FOUND
+    </h1>
   </div>
 
   <div class="img-404-container absolute bottom-0 left-0 right-0 z-10" style="box-shadow: 0 1px 0 0 var(--my-color-gray);">
@@ -25,4 +45,18 @@
   </div>
 
 </section>
+
+{{ $js := resources.Get "js/decode-once.js" }}
+{{ if hugo.IsProduction }}
+  {{ $js = $js | minify | fingerprint }}
+{{ end }}
+<script src="{{ $js.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $js.Data.Integrity }}"{{ end }} defer></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var mail = document.querySelector('a[href^="mailto:"]');
+    if (mail) mail.classList.add('hover-decode');
+  });
+</script>
+
 {{ end }}

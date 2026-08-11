@@ -69,7 +69,46 @@ document.addEventListener('DOMContentLoaded', () => {
         const grid = document.getElementById('discography-grid');
         grid.querySelectorAll('.disco-empty-slot').forEach(el => el.remove());
 
-        if (visibleCount > 0 && isDesktop()) {
+        if (visibleCount === 0) {
+            // 没有任何条目时也显示占位
+            const gridComputedStyle = window.getComputedStyle(grid);
+            const cols = gridComputedStyle.getPropertyValue('grid-template-columns').split(' ').length;
+
+            for (let i = 0; i < cols; i++) {
+                const slot = document.createElement('div');
+                slot.className = 'disco-empty-slot w-full pointer-events-none select-none';
+                slot.style.opacity = '0';
+                slot.style.transform = 'scale(0.95)';
+                slot.style.transition = 'opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1)';
+
+                slot.innerHTML = `
+                    <div class="flex justify-between items-end border-b-[0.5px] border-color-black/20 pb-2 mb-3 md:mb-4 invisible">
+                        <span class="font-mono text-[10px] tracking-widest">0000.00.00</span>
+                    </div>
+
+                    <div class="w-full aspect-square border-[0.5px] border-color-black/20 flex flex-col items-center justify-center text-color-black/20">
+                        <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="0.5" class="mb-2">
+                            <path d="M6 0V12M0 6H12" />
+                        </svg>
+                        <span class="font-mono text-[9px] tracking-[0.2em] uppercase">Empty</span>
+                    </div>
+
+                    <div class="mt-4 md:mt-5 flex flex-col items-start w-full pr-2 invisible">
+                        <h3 class="font-secondary text-[16px] md:text-[18px] lg:text-[20px] font-bold tracking-tight leading-snug">
+                            Slot
+                        </h3>
+                    </div>
+                `;
+
+                grid.appendChild(slot);
+
+                requestAnimationFrame(() => {
+                    void slot.offsetWidth;
+                    slot.style.opacity = '1';
+                    slot.style.transform = 'scale(1)';
+                });
+            }
+        } else if (visibleCount > 0 && isDesktop()) {
             const gridComputedStyle = window.getComputedStyle(grid);
             const cols = gridComputedStyle.getPropertyValue('grid-template-columns').split(' ').length;
             const remainder = visibleCount % cols;

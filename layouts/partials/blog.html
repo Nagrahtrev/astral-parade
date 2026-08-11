@@ -26,14 +26,14 @@
       <div class="hidden md:block mb-10 lg:mb-16">
 
         <h1 class="font-bgsans text-[56px] md:text-[72px] lg:text-[88px] leading-[0.85] font-black uppercase text-color-black mb-6 wrap-break-word select-none">
-            Blog
+            {{ .Title }}
         </h1>
 
         <p class="font-primary text-[13px] md:text-[14px] text-color-black/50 leading-relaxed select-none">
           {{ if eq .Data.Singular "tag" }}
             Articles tagged with "{{ .Title }}".
           {{ else }}
-            A space for production notes, lessons learned, random thoughts, and occasional brain dumps.
+            {{ .Description }}
           {{ end }}
         </p>
 
@@ -173,7 +173,7 @@
     </aside>
 
     {{/*  ------------ 右 ------------  */}}
-    <main id="blog-list-start" class="flex-1 w-full min-w-0 relative" style="scroll-margin-top: 120px;">
+    <div id="blog-list-start" class="flex-1 w-full min-w-0 relative" style="scroll-margin-top: 120px;">
 
       {{/*  瀑布流 Grid  */}}
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-0 items-start" style="grid-auto-rows: 1px;" id="blog-grid">
@@ -228,7 +228,7 @@
             {{ if .Params.image }}
             <div class="w-full aspect-4/3 bg-color-black/4 mb-5 relative overflow-hidden border-[0.5px] border-color-black/10">
 
-               <img src="{{ .Params.image | relURL }}" class="w-full h-full object-cover md:filter md:grayscale md:contrast-125 md:brightness-95 md:group-hover:grayscale-0 md:transition-all md:duration-500 md:ease-out" decoding="async" loading="lazy">
+               <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" class="w-full h-full object-cover md:filter md:grayscale md:contrast-125 md:brightness-95 md:group-hover:grayscale-0 md:transition-all md:duration-500 md:ease-out" decoding="async" loading="lazy">
 
             </div>
             {{ end }}
@@ -302,7 +302,7 @@
           <div class="bracket-cursor font-primary"></div>
         </div>
       {{ end }}
-    </main>
+    </div>
 
   </div>
 </section>
