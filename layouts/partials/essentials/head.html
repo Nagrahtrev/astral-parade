@@ -14,6 +14,11 @@
 
 <link rel="canonical" href="{{ .Permalink }}" />
 
+{{/*  ---- Feed & Sitemap Discovery ----  */}}
+<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ "index.xml" | absURL }}" />
+<link rel="alternate" type="application/rss+xml" title="{{ site.Title }} 博客" href="{{ "blog/index.xml" | absURL }}" />
+<link rel="sitemap" type="application/xml" title="Sitemap" href="{{ "sitemap.xml" | absURL }}" />
+
 {{/*  ---- Favicon ----  */}}
 <link rel="icon" type="image/png" href="/images/favicon/favicon-96x96.png" sizes="96x96" />
 <link rel="icon" type="image/svg+xml" href="/images/favicon/favicon.svg" />
@@ -45,5 +50,18 @@
 
 {{/*  ---- Google Search Console ----  */}}
 <meta name="google-site-verification" content="QXJW1ecDe2rERmUecWgw4e4gTK-vCZ2AxzCaKz7f1X0" />
+
+{{/*  ---- Baidu 站长平台 ----  */}}
+<meta name="baidu-site-verification" content="codeva-oXN1WYCy0x" />
+
+{{/*  ---- Baidu 自动推送 ----  */}}
+{{ if hugo.IsProduction }}
+<script>
+(function(){var bp=document.createElement('script');var curProtocol=window.location.protocol.split(':')[0];
+if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js';}
+else{bp.src='http://push.zhanzhang.baidu.com/push.js';}
+var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(bp,s);})();
+</script>
+{{ end }}
 
 </head>

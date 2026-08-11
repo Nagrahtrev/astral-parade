@@ -1,0 +1,47 @@
+{{- $pages := site.RegularPages -}}
+{{- if eq .Kind "home" -}}
+  {{- $pages = where $pages "Section" "blog" -}}
+{{- end -}}
+{{- $limit := site.Config.Services.RSS.Limit -}}
+{{- if gt $limit 0 -}}
+  {{- $pages = $pages | first $limit -}}
+{{- end -}}
+
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>{{ site.Title }}</title>
+    <link>{{ site.Home.Permalink }}</link>
+    <description>{{ site.Params.description }}</description>
+    <language>{{ site.LanguageCode }}</language>
+    <lastBuildDate>{{ now.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</lastBuildDate>
+    <generator>Hugo</generator>
+    {{ with site.Params.email -}}
+    <managingEditor>{{ . }}</managingEditor>
+    <webMaster>{{ . }}</webMaster>
+    {{ end -}}
+    <atom:link href="{{ "index.xml" | absURL }}" rel="self" type="application/rss+xml" />
+    <copyright>Copyright &copy; {{ now.Format "2006" }} {{ site.Title }}</copyright>
+    {{- range $pages }}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <guid isPermaLink="true">{{ .Permalink }}</guid>
+      <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
+      {{ with site.Params.email -}}
+      <dc:creator>{{ . }}</dc:creator>
+      {{ end -}}
+      {{ with .Lastmod -}}
+      <dc:date>{{ .Format "2006-01-02T15:04:05Z07:00" }}</dc:date>
+      {{ end -}}
+      <description>{{ .Summary | html }}</description>
+      {{- if site.Params.rssFullContent }}
+      <content:encoded><![CDATA[{{ .Content }}]]></content:encoded>
+      {{- end }}
+    </item>
+    {{- end }}
+  </channel>
+</rss>

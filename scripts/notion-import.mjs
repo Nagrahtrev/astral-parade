@@ -163,7 +163,7 @@ function richTextToMd(richText) {
 // ----------------------------------------------------- Front matter -----------------------------------------------------
 
 // 标题按 "NNN - 文章标题" 格式拆分
-function buildFrontMatter(properties) {
+function buildFrontMatter(properties, { includeLastmod = false } = {}) {
   const titleProp = properties.Title || properties.title || properties.Name || properties.name;
   const rawTitle = titleProp?.title?.[0]?.plain_text || "";
 
@@ -198,15 +198,17 @@ function buildFrontMatter(properties) {
   }
 
   const year = date.slice(0, 4);
+  const today = new Date().toISOString().slice(0, 10);
   const lines = [
     "---",
     `title: "${title.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`,
     `date: ${date}`,
+    includeLastmod ? `lastmod: ${today}` : null,
     `category: "${category.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`,
     `year: "${year}"`,
     `tag: [${tags.map(t => `"${t.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`).join(", ")}]`,
     "---", "",
-  ];
+  ].filter(Boolean);
   return { number, title, date, category, year, tags, frontMatter: lines.join("\n") };
 }
 
@@ -689,7 +691,7 @@ async function convertPage(pageId) {
   // 1. 获取页面属性
   console.log("\n-- 获取页面属性 --");
   const page = await withRetry(() => notion.pages.retrieve({ page_id: pageId }), "retrieve");
-  const meta = buildFrontMatter(page.properties);
+  const meta = buildFrontMatter(page.properties, { includeLastmod: FORCE });
   console.log(`   #${meta.number}  "${meta.title}"`);
   console.log(`   ${meta.date}  |  ${meta.category}  |  [${meta.tags.join(", ")}]`);
 
