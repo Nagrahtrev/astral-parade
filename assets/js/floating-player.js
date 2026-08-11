@@ -44,13 +44,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         currentPlayIndex = index;
         const track = tracks[index];
+
+        // 加载时清零进度条和时间
+        pProgBar.style.width = '0%';
+        pTime.textContent = '0:00 / 0:00';
+
         globalAudio.src = track.url;
 
         globalAudio.play().catch(err => {
         console.warn('Failed to load player:', err);
         syncPlayerUI(false);
         });
-        
+
         playerUI.classList.remove('-translate-y-[200%]', 'opacity-0');
         pTitle.textContent = track.title;
         pTitle.style.animation = 'none';
@@ -93,13 +98,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    document.getElementById('player-play-pause').addEventListener('click', () => {
+    const togglePlayPause = () => {
         if (currentPlayIndex < 0) return;
         if (globalAudio.paused) {
             globalAudio.play().catch(e => console.warn('播放失败', e));
         } else {
             globalAudio.pause();
         }
+    };
+
+    document.getElementById('player-play-pause').addEventListener('click', togglePlayPause);
+
+    // 全局空格键控制播放/暂停
+    document.addEventListener('keydown', (e) => {
+        if (e.code !== 'Space') return;
+        // 播放器隐藏时空格保持默认行为
+        if (playerUI.classList.contains('opacity-0')) return;
+        const tag = document.activeElement?.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement?.isContentEditable) return;
+        e.preventDefault();
+        togglePlayPause();
     });
 
     document.getElementById('player-prev').addEventListener('click', () => {
@@ -133,7 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const cur = globalAudio.currentTime;
         const dur = globalAudio.duration;
         pTime.textContent = `${formatTime(cur)} / ${formatTime(dur)}`;
-        if (dur) pProgBar.style.width = `${(cur / dur) * 100}%`;
+
+        if (!isDraggingProg && dur) pProgBar.style.width = `${(cur / dur) * 100}%`;
     });
 
     globalAudio.addEventListener('ended', () => {
@@ -145,11 +164,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    pProgContainer.addEventListener('click', (e) => {
+    // 进度条拖拽
+    let isDraggingProg = false;
+
+    const updateProgress = (e) => {
         if (currentPlayIndex < 0 || !globalAudio.duration) return;
         const rect = pProgContainer.getBoundingClientRect();
-        const percent = (e.clientX - rect.left) / rect.width;
-        globalAudio.currentTime = Math.max(0, Math.min(percent, 1)) * globalAudio.duration;
+        let percent = (e.clientX - rect.left) / rect.width;
+        percent = Math.max(0, Math.min(percent, 1));
+        globalAudio.currentTime = percent * globalAudio.duration;
+        pProgBar.style.width = `${percent * 100}%`;
+    };
+
+    pProgContainer.addEventListener('mousedown', (e) => {
+        isDraggingProg = true;
+        pProgBar.style.transition = 'none';
+        updateProgress(e);
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (isDraggingProg) updateProgress(e);
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (isDraggingProg) {
+            isDraggingProg = false;
+            pProgBar.style.transition = '';
+        }
     });
 
     const pVolIcon = document.getElementById('player-volume-icon');

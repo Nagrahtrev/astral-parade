@@ -4,16 +4,16 @@
     
     {{/*  播放控制  */}}
     <div class="flex items-center gap-3 text-color-black shrink-0">
-      <button id="player-prev" class="hover:text-color-red transition-colors focus:outline-none">
+      <button id="player-prev" class="hover:text-color-red transition-colors focus:outline-none cursor-pointer">
         <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
       </button>
 
-      <button id="player-play-pause" class="hover:text-color-red transition-colors w-6 h-6 flex items-center justify-center focus:outline-none">
-        <svg id="player-icon-play" class="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      <button id="player-play-pause" class="hover:text-color-red transition-colors w-6 h-6 flex items-center justify-center focus:outline-none cursor-pointer">
+        <svg id="player-icon-play" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
         <svg id="player-icon-pause" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
       </button>
 
-      <button id="player-next" class="hover:text-color-red transition-colors focus:outline-none">
+      <button id="player-next" class="hover:text-color-red transition-colors focus:outline-none cursor-pointer">
         <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
       </button>
     </div>
@@ -21,12 +21,12 @@
     {{/*  标题 & 进度条  */}}
     <div class="flex flex-col flex-1 gap-1.5 overflow-hidden">
       <div class="flex justify-between items-center text-[9px] font-mono tracking-widest w-full">     
-        <div id="player-title-wrapper" class="overflow-hidden flex-1 mr-4 relative mask-[linear-gradient(to_right,black_85%,transparent_100%)]">
+        <div id="player-title-wrapper" class="overflow-hidden flex-1 mr-4 relative mask-[linear-gradient(to_right,black_85%,transparent_100%)] select-none">
           <span id="player-title" class="inline-block whitespace-nowrap text-color-black">
             Loading...
           </span>
         </div>
-        <span id="player-time" class="text-color-black/40 shrink-0">
+        <span id="player-time" class="text-color-black/40 shrink-0 select-none">
           0:00 / 0:00
         </span>
       </div>
@@ -39,7 +39,7 @@
 
     {{/*  音量控制  */}}
     <div class="hidden md:flex items-center gap-2 shrink-0 ml-1">
-      <button id="player-volume-icon" class="text-color-black hover:text-color-red transition-colors focus:outline-none flex items-center justify-center">
+      <button id="player-volume-icon" class="text-color-black hover:text-color-red transition-colors focus:outline-none flex items-center justify-center cursor-pointer">
         
         {{/*  通常  */}}
         <svg id="vol-icon-on" class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
@@ -56,7 +56,7 @@
     </div>
     
     {{/*  关闭  */}}
-    <button id="player-close" class="text-color-black/30 hover:text-color-red transition-colors shrink-0 ml-1 focus:outline-none">
+    <button id="player-close" class="text-color-black/30 hover:text-color-red transition-colors shrink-0 ml-1 focus:outline-none cursor-pointer">
       <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
     </button>
 
