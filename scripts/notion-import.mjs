@@ -39,8 +39,9 @@ const CLI_PAGE_ID = pageIdx >= 0 && pageIdx + 1 < process.argv.length
   ? process.argv[pageIdx + 1]
   : "";
 
-// 单次转换中收集的图片下载任务
+// 单次转换中收集的图片/音频下载任务
 const imageTasks = [];
+const audioTasks = [];
 
 // ----------------------------------------------------------- Utilities --------------------------------------------------------
 
@@ -382,6 +383,18 @@ function registerTransformers(n2m) {
     return placeholder;
   });
 
+  // ---- audio -> 收集下载任务 ----
+  n2m.setCustomTransformer("audio", (block) => {
+    const data = block.audio;
+    const url = data?.type === "external" ? data.external?.url : data?.file?.url;
+    if (!url) return "<!-- AUDIO: no URL -->";
+    const caption = data.caption?.map(t => t.plain_text).join("") || "";
+    const idx = audioTasks.length;
+    const placeholder = `__AUDIO_${idx}__`;
+    audioTasks.push({ url, caption, placeholder, blockId: block.id });
+    return placeholder;
+  });
+
   // ---- column_list -> tabs (legacy Notion columns) ----
   n2m.setCustomTransformer("column_list", async (block) => {
     let columns = [];
@@ -628,6 +641,46 @@ async function downloadAndConvertImages(articleNumber) {
   return map;
 }
 
+// 下载音频 -> ffmpeg 转 aac -> 生成 audio shortcode
+async function downloadAndConvertAudio(articleNumber) {
+  if (!audioTasks.length) return new Map();
+  const audioDir = join(PROJECT_ROOT, "static", "audio", "blog", articleNumber);
+  ensureDir(audioDir);
+  const map = new Map();
+
+  for (let i = 0; i < audioTasks.length; i++) {
+    const { url, caption, placeholder, blockId } = audioTasks[i];
+    const idx = String(i + 1).padStart(3, "0");
+    const m4aPath = join(audioDir, `${idx}.m4a`);
+    const tmpPath = join(audioDir, `.tmp-${idx}`);
+
+    console.log(`  [${i + 1}/${audioTasks.length}] ${url.slice(0, 80)}...`);
+    try {
+      const buf = await downloadImage(url, tmpPath, blockId);
+      console.log(`    -> ${(buf.length / 1024).toFixed(0)} KB`);
+
+      const r = spawnSync("ffmpeg", [
+        "-y", "-i", tmpPath,
+        "-ar", "44100", "-c:a", "aac", "-b:a", "128k",
+        m4aPath,
+      ], { stdio: "pipe", timeout: 60000 });
+
+      if (r.status !== 0) {
+        console.warn(`    [警告] ffmpeg 转换失败: ${r.stderr.toString().slice(-200)}`);
+        map.set(placeholder, `<!-- AUDIO FAILED: ${url} -->`);
+      } else {
+        console.log(`    -> ${idx}.m4a`);
+        const title = caption || `Track ${idx}`;
+        map.set(placeholder, `{{< audio src="audio/blog/${articleNumber}/${idx}.m4a" title="${escapeAttr(title)}" >}}`);
+      }
+    } catch (e) {
+      console.error(`    [错误] ${e.message}`);
+      map.set(placeholder, `<!-- AUDIO FAILED: ${url} -->`);
+    } finally { try { unlinkSync(tmpPath); } catch {} }
+  }
+  return map;
+}
+
 // -------------------------------------------------- 后处理 --------------------------------------------------
 
 // 二次检测: 未处理的 YouTube/SoundCloud 裸链接
@@ -645,9 +698,10 @@ function detectEmbeds(mdString) {
 }
 
 // 替换图片占位符 / 清理多余空行 / 裁剪末尾空区块
-function postProcess(mdString, imageMap) {
+function postProcess(mdString, imageMap, audioMap = new Map()) {
   let result = mdString;
   for (const [ph, sc] of imageMap) result = result.replace(ph, sc);
+  for (const [ph, sc] of audioMap) result = result.replace(ph, sc);
   result = detectEmbeds(result);
 
   const lines = result.split("\n");
@@ -687,6 +741,7 @@ let n2m;
 // 转换单个页面 -> 写入 content/blog/<number>.md
 async function convertPage(pageId) {
   imageTasks.length = 0;
+  audioTasks.length = 0;
 
   // 1. 获取页面属性
   console.log("\n-- 获取页面属性 --");
@@ -751,8 +806,23 @@ async function convertPage(pageId) {
     }
   }
 
+  // 6b. 下载音频，转换为 M4A (44.1kHz AAC 128kbps)
+  console.log(`-- 处理音频 (${audioTasks.length} 个) --`);
+  let audioMap = new Map();
+  if (!DRY_RUN) {
+    audioMap = await downloadAndConvertAudio(meta.number);
+  } else {
+    for (let i = 0; i < audioTasks.length; i++) {
+      const idx = String(i + 1).padStart(3, "0");
+      const t = audioTasks[i];
+      const title = t.caption || `Track ${idx}`;
+      audioMap.set(t.placeholder,
+        `{{< audio src="audio/blog/${meta.number}/${idx}.m4a" title="${escapeAttr(title)}" >}}`);
+    }
+  }
+
   // 7. 后处理
-  const finalMd = postProcess(rawMd, imageMap);
+  const finalMd = postProcess(rawMd, imageMap, audioMap);
 
   // 8. 写入文件
   const fullContent = meta.frontMatter + "\n" + finalMd + "\n";
@@ -760,7 +830,7 @@ async function convertPage(pageId) {
 
   if (DRY_RUN) {
     console.log(`[DRY RUN] -> ${outputPath}`);
-    console.log(`   ${fullContent.length} 字符  |  ${imageTasks.length} 张图片`);
+    console.log(`   ${fullContent.length} 字符  |  ${imageTasks.length} 张图片  |  ${audioTasks.length} 个音频`);
     console.log("============================== 预览 ==============================");
     console.log(fullContent);
   } else {
@@ -771,7 +841,7 @@ async function convertPage(pageId) {
     }
     writeFileSync(outputPath, fullContent, "utf-8");
     console.log(`[完成] ${outputPath}`);
-    console.log(`   ${fullContent.length} 字符  |  ${imageTasks.length} 张图片`);
+    console.log(`   ${fullContent.length} 字符  |  ${imageTasks.length} 张图片  |  ${audioTasks.length} 个音频`);
   }
   return meta.number;
 }

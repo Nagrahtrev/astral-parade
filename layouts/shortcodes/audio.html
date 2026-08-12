@@ -1,0 +1,25 @@
+{{ $src := .Get "src" }}
+{{ $title := .Get "title" | default (index (split (path.Base $src) ".") 0) }}
+
+<div class="inline-audio-player" data-src="{{ $src | relURL }}" data-title="{{ $title }}">
+  <div class="inline-audio-player-card">
+
+    <button class="inline-audio-play-btn" aria-label="Play/Pause">
+      <svg class="inline-audio-icon-play" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      <svg class="inline-audio-icon-pause hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+
+    <div class="inline-audio-info">
+      <div class="inline-audio-title-wrapper">
+        <span class="inline-audio-title">{{ $title }}</span>
+      </div>
+      <div class="inline-audio-progress-container">
+        <div class="inline-audio-progress-track"></div>
+        <div class="inline-audio-progress-fill"></div>
+      </div>
+    </div>
+
+    <span class="inline-audio-time">0:00 / 0:00</span>
+
+  </div>
+</div>

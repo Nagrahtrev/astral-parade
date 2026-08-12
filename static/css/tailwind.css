@@ -222,6 +222,14 @@
   border: .5px solid rgba(2, 2, 3, 0.25) !important;
 }
 
+.article-content.prose .inline-audio-player-card {
+  border: .5px solid rgba(2, 2, 3, 0.1) !important;
+}
+
+.article-content.prose .inline-audio-play-btn {
+  border: .5px solid rgba(2, 2, 3, 0.15) !important;
+}
+
 .filter-btn {
   border-bottom: .5px solid rgba(2, 2, 3, 0.2);
 }
@@ -6951,6 +6959,187 @@
 
 .article-content.prose .youtube-embed {
   margin-block: calc(var(--spacing) * 9);
+}
+
+.article-content.prose .inline-audio-player {
+  max-width: 100% !important;
+  margin: 1.5rem 0 !important;
+}
+
+.article-content.prose .inline-audio-player-card {
+  background-color: rgba(2, 2, 3, 0.02) !important;
+  align-items: center !important;
+  gap: .9rem !important;
+  padding: .7rem .9rem !important;
+  display: flex !important;
+}
+
+@supports (color: color-mix(in lab, red, red)) {
+  .article-content.prose .inline-audio-player-card {
+    background-color: color-mix(in srgb, var(--my-color-black) 2%, transparent) !important;
+  }
+}
+
+.article-content.prose .inline-audio-player-card {
+  border: .5px solid rgba(2, 2, 3, 0.1) !important;
+}
+
+@supports (color: color-mix(in lab, red, red)) {
+  .article-content.prose .inline-audio-player-card {
+    border: .5px solid color-mix(in srgb, var(--my-color-black) 10%, transparent) !important;
+  }
+}
+
+.article-content.prose .inline-audio-player-card {
+  border-radius: 0 !important;
+  width: 100% !important;
+}
+
+.article-content.prose .inline-audio-play-btn {
+  border: .5px solid rgba(2, 2, 3, 0.15) !important;
+  background-color: #0000 !important;
+  flex-shrink: 0 !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 34px !important;
+  height: 34px !important;
+  display: flex !important;
+}
+
+@supports (color: color-mix(in lab, red, red)) {
+  .article-content.prose .inline-audio-play-btn {
+    border: .5px solid color-mix(in srgb, var(--my-color-black) 15%, transparent) !important;
+  }
+}
+
+.article-content.prose .inline-audio-play-btn {
+  cursor: pointer !important;
+  color: var(--my-color-black) !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transition: color .4s cubic-bezier(.25, 1, .5, 1), border-color .4s cubic-bezier(.25, 1, .5, 1) !important;
+}
+
+.article-content.prose .inline-audio-play-btn:hover {
+  color: var(--my-color-red) !important;
+  border-color: rgba(84, 18, 18, 0.9) !important;
+}
+
+@supports (color: color-mix(in lab, red, red)) {
+  .article-content.prose .inline-audio-play-btn:hover {
+    border-color: color-mix(in srgb, var(--my-color-red) 90%, transparent) !important;
+  }
+}
+
+.article-content.prose .inline-audio-play-btn:focus-visible {
+  border-width: 1.5px !important;
+  border-color: var(--my-color-black) !important;
+  outline: none !important;
+}
+
+.article-content.prose .inline-audio-play-btn svg {
+  width: 13px !important;
+  height: 13px !important;
+  position: absolute !important;
+}
+
+.article-content.prose .inline-audio-info {
+  transform: translateY(-2.5px);
+  flex-direction: column !important;
+  flex: 1 !important;
+  gap: .4rem !important;
+  min-width: 0 !important;
+  display: flex !important;
+  overflow: hidden !important;
+}
+
+.article-content.prose .inline-audio-title-wrapper {
+  overflow: hidden !important;
+  -webkit-mask-image: linear-gradient(to right, #000 85%, #0000 100%) !important;
+  mask-image: linear-gradient(to right, #000 85%, #0000 100%) !important;
+}
+
+.article-content.prose .inline-audio-title {
+  white-space: nowrap !important;
+  font-family: var(--font-primary) !important;
+  letter-spacing: .04em !important;
+  color: rgba(2, 2, 3, 0.8) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  display: inline-block !important;
+}
+
+@supports (color: color-mix(in lab, red, red)) {
+  .article-content.prose .inline-audio-title {
+    color: color-mix(in srgb, var(--my-color-black) 80%, transparent) !important;
+  }
+}
+
+.article-content.prose .inline-audio-title {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+
+.article-content.prose .inline-audio-progress-container {
+  cursor: pointer !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 8px !important;
+  display: flex !important;
+  position: relative !important;
+}
+
+.article-content.prose .inline-audio-progress-track {
+  background-color: rgba(2, 2, 3, 0.1) !important;
+  width: 100% !important;
+  height: 1.5px !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 0 !important;
+}
+
+@supports (color: color-mix(in lab, red, red)) {
+  .article-content.prose .inline-audio-progress-track {
+    background-color: color-mix(in srgb, var(--my-color-black) 10%, transparent) !important;
+  }
+}
+
+.article-content.prose .inline-audio-progress-track {
+  pointer-events: none !important;
+  transform: translateY(-50%) !important;
+}
+
+.article-content.prose .inline-audio-progress-fill {
+  width: 0%;
+  transition: width 75ms linear;
+  background-color: var(--my-color-red) !important;
+  pointer-events: none !important;
+  height: 1.5px !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 0 !important;
+  transform: translateY(-50%) !important;
+}
+
+.article-content.prose .inline-audio-time {
+  font-family: var(--font-mono) !important;
+  letter-spacing: .1em !important;
+  color: rgba(2, 2, 3, 0.3) !important;
+  font-size: 9px !important;
+}
+
+@supports (color: color-mix(in lab, red, red)) {
+  .article-content.prose .inline-audio-time {
+    color: color-mix(in srgb, var(--my-color-black) 30%, transparent) !important;
+  }
+}
+
+.article-content.prose .inline-audio-time {
+  white-space: nowrap !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  flex-shrink: 0 !important;
 }
 
 #TableOfContents {

@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const globalAudio = new Audio();
     let currentPlayIndex = -1;
+    let fadeRAF = null;
+    let currentVolume = 0.5;
+    let lastVolume = 0.5;
 
     const tracks = Array.from(playBtns).map((btn, idx) => {
         btn.dataset.playIdx = idx;
@@ -38,6 +41,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const clamp = (v) => Math.max(0, Math.min(1, v));
+
+    const fadeIn = (targetVol) => {
+        cancelAnimationFrame(fadeRAF);
+        globalAudio.volume = 0;
+        const start = performance.now();
+        const tick = (now) => {
+            const vol = clamp((now - start) / 100 * targetVol);
+            globalAudio.volume = vol;
+            if (vol < targetVol) fadeRAF = requestAnimationFrame(tick);
+        };
+        fadeRAF = requestAnimationFrame(tick);
+    };
+
+    const fadeOutAndPause = (restoreVol) => {
+        cancelAnimationFrame(fadeRAF);
+        const startVol = globalAudio.volume;
+        const start = performance.now();
+        const tick = (now) => {
+            const vol = clamp(startVol * (1 - (now - start) / 100));
+            globalAudio.volume = vol;
+            if (vol > 0) {
+                fadeRAF = requestAnimationFrame(tick);
+            } else {
+                globalAudio.pause();
+                globalAudio.volume = restoreVol;
+            }
+        };
+        fadeRAF = requestAnimationFrame(tick);
+    };
+
     const loadAndPlay = (index) => {
         if (currentPlayIndex >= 0 && currentPlayIndex !== index) {
         tracks[currentPlayIndex].btn.classList.remove('is-playing');
@@ -51,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         globalAudio.src = track.url;
 
+        fadeIn(currentVolume);
         globalAudio.play().catch(err => {
         console.warn('Failed to load player:', err);
         syncPlayerUI(false);
@@ -59,11 +94,11 @@ document.addEventListener('DOMContentLoaded', () => {
         playerUI.classList.remove('-translate-y-[200%]', 'opacity-0');
         pTitle.textContent = track.title;
         pTitle.style.animation = 'none';
-        
+
         requestAnimationFrame(() => {
             const pTitleWrapper = document.getElementById('player-title-wrapper');
             const overspill = pTitle.scrollWidth - pTitleWrapper.clientWidth;
-            
+
             if (overspill > 0) {
                 let styleEl = document.getElementById('dynamic-marquee');
                 if (!styleEl) {
@@ -71,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 styleEl.id = 'dynamic-marquee';
                 document.head.appendChild(styleEl);
                 }
-                
+
                 styleEl.innerHTML = `
                 @keyframes customBounce {
                     0%, 15% { transform: translateX(0); }
@@ -79,11 +114,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     85%, 100% { transform: translateX(0); }
                 }
                 `;
-                
+
                 const duration = Math.max(7, overspill * 0.06);
                 pTitle.style.animation = `customBounce ${duration}s ease-in-out infinite`;
             }
-        });  
+        });
     };
 
     playBtns.forEach(btn => {
@@ -91,7 +126,12 @@ document.addEventListener('DOMContentLoaded', () => {
             e.stopPropagation();
             const idx = parseInt(btn.dataset.playIdx);
             if (currentPlayIndex === idx) {
-                globalAudio.paused ? globalAudio.play() : globalAudio.pause();
+                if (globalAudio.paused) {
+                    fadeIn(currentVolume);
+                    globalAudio.play().catch(e => console.warn('播放失败', e));
+                } else {
+                    fadeOutAndPause(currentVolume);
+                }
             } else {
                 loadAndPlay(idx);
             }
@@ -101,9 +141,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const togglePlayPause = () => {
         if (currentPlayIndex < 0) return;
         if (globalAudio.paused) {
+            fadeIn(currentVolume);
             globalAudio.play().catch(e => console.warn('播放失败', e));
         } else {
-            globalAudio.pause();
+            fadeOutAndPause(currentVolume);
         }
     };
 
@@ -131,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('player-close').addEventListener('click', () => {
-        globalAudio.pause();
+        fadeOutAndPause(currentVolume);
         playerUI.classList.add('-translate-y-[200%]', 'opacity-0');
         if (currentPlayIndex >= 0) tracks[currentPlayIndex].btn.classList.remove('is-playing');
         currentPlayIndex = -1;
@@ -156,6 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     globalAudio.addEventListener('ended', () => {
+        fadeRAF && cancelAnimationFrame(fadeRAF);
         if (currentPlayIndex < tracks.length - 1) {
         loadAndPlay(currentPlayIndex + 1);
         } else {
@@ -164,13 +206,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 进度条拖拽
+    // 进度条拖拽（鼠标 + 触屏）
     let isDraggingProg = false;
+    const getClientX = (e) => e.touches ? e.touches[0].clientX : e.clientX;
 
     const updateProgress = (e) => {
         if (currentPlayIndex < 0 || !globalAudio.duration) return;
         const rect = pProgContainer.getBoundingClientRect();
-        let percent = (e.clientX - rect.left) / rect.width;
+        let percent = (getClientX(e) - rect.left) / rect.width;
         percent = Math.max(0, Math.min(percent, 1));
         globalAudio.currentTime = percent * globalAudio.duration;
         pProgBar.style.width = `${percent * 100}%`;
@@ -182,11 +225,29 @@ document.addEventListener('DOMContentLoaded', () => {
         updateProgress(e);
     });
 
+    pProgContainer.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        isDraggingProg = true;
+        pProgBar.style.transition = 'none';
+        updateProgress(e);
+    }, { passive: false });
+
     window.addEventListener('mousemove', (e) => {
         if (isDraggingProg) updateProgress(e);
     });
 
+    window.addEventListener('touchmove', (e) => {
+        if (isDraggingProg) updateProgress(e);
+    }, { passive: true });
+
     window.addEventListener('mouseup', () => {
+        if (isDraggingProg) {
+            isDraggingProg = false;
+            pProgBar.style.transition = '';
+        }
+    });
+
+    window.addEventListener('touchend', () => {
         if (isDraggingProg) {
             isDraggingProg = false;
             pProgBar.style.transition = '';
@@ -200,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const iconVolOff = document.getElementById('vol-icon-off');
 
     if (pVolIcon && pVolContainer && pVolProg && iconVolOn && iconVolOff) {
-        
+
         const syncVolumeUI = (vol) => {
             if (vol === 0) {
                 iconVolOn.classList.add('hidden');
@@ -214,24 +275,26 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         let savedVol = localStorage.getItem('playerVolume');
-        let currentVolume = savedVol !== null ? parseFloat(savedVol) : 0.5;
-        let lastVolume = currentVolume > 0 ? currentVolume : 0.5; 
-        
+        currentVolume = savedVol !== null ? parseFloat(savedVol) : 0.5;
+        lastVolume = currentVolume > 0 ? currentVolume : 0.5;
+
         globalAudio.volume = currentVolume;
         pVolProg.style.width = `${currentVolume * 100}%`;
-        syncVolumeUI(currentVolume); 
+        syncVolumeUI(currentVolume);
 
         pVolIcon.addEventListener('click', () => {
             if (globalAudio.volume > 0) {
                 lastVolume = globalAudio.volume;
                 globalAudio.volume = 0;
                 pVolProg.style.width = '0%';
+                currentVolume = 0;
             } else {
                 globalAudio.volume = lastVolume;
                 pVolProg.style.width = `${lastVolume * 100}%`;
+                currentVolume = lastVolume;
             }
             syncVolumeUI(globalAudio.volume);
-            localStorage.setItem('playerVolume', globalAudio.volume);
+            localStorage.setItem('playerVolume', currentVolume);
         });
 
         let isDraggingVol = false;
@@ -239,13 +302,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const updateVolume = (e) => {
             const rect = pVolContainer.getBoundingClientRect();
             let percent = (e.clientX - rect.left) / rect.width;
-            percent = Math.max(0, Math.min(percent, 1)); 
-            
+            percent = Math.max(0, Math.min(percent, 1));
+
             globalAudio.volume = percent;
             pVolProg.style.width = `${percent * 100}%`;
-            
+            currentVolume = percent;
+
             if (percent > 0) lastVolume = percent;
-            
+
             syncVolumeUI(percent);
             localStorage.setItem('playerVolume', percent);
         };
