@@ -9,7 +9,7 @@
   @apply text-[17px]                 /* 基础字号 */
          text-color-dgray;           /* 文字颜色 - text-color-black/80 */
   @apply prose-p:leading-[1.9]       /* 行高 */
-         prose-p:mb-7;               /* 段落间距 */
+         prose-p:my-7;               /* 段落间距 */
 }
 
 /* 标题 */
@@ -560,7 +560,7 @@
 
 /* 容器 */
 .article-content.prose pre.mermaid {
-  padding: 2rem !important;
+  padding: 1rem !important;
   display: flex !important;
   justify-content: center !important;
   overflow-x: auto !important;
@@ -587,7 +587,7 @@
 .article-content.prose .mermaid .nodeLabel,
 .article-content.prose .mermaid .node .label text {
   font-family: var(--font-primary) !important;             /* 字体 */
-  font-size: 14px !important;                              /* 字号 */
+  font-size: 15px !important;                              /* 字号 */
   font-weight: 500 !important;                             /* 字重 */
   letter-spacing: 0.06em !important;                       /* 字距 */
   color: color-mix(in srgb, var(--my-color-black) 70%, transparent) !important;               /* 字色 */
