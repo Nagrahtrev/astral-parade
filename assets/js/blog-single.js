@@ -43,6 +43,7 @@ window.smartBack = function() {
     } else {
         window.location.href = '/blog';
     }
+    return false;
 };
 
 // Navigator 移动端折叠控制

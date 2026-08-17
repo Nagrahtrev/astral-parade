@@ -5694,6 +5694,8 @@
   letter-spacing: .09em !important;
   border: none !important;
   border-radius: 0 !important;
+  margin-top: .4rem !important;
+  margin-bottom: .4rem !important;
   padding: 16px 24px !important;
   font-size: 14px !important;
   font-weight: 500 !important;
@@ -5915,6 +5917,8 @@
   border-width: .5px;
   border-color: rgba(2, 2, 3, 0.1);
   border-radius: 0;
+  max-width: 100%;
+  display: inline-block;
 }
 
 @supports (color: color-mix(in lab, red, red)) {
@@ -5937,12 +5941,14 @@
   padding-inline: calc(var(--spacing) * 1.5);
   padding-block: calc(var(--spacing) * .5);
   font-family: var(--font-mono);
-  --tw-font-weight: var(--font-weight-normal);
+  --tw-leading: var(--leading-snug);
   font-size: 14px;
+  line-height: var(--leading-snug);
+  --tw-font-weight: var(--font-weight-normal);
   font-weight: var(--font-weight-normal);
   --tw-tracking: var(--tracking-wider);
   letter-spacing: var(--tracking-wider);
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
   color: rgba(84, 18, 18, 0.8);
 }
 

@@ -601,7 +601,22 @@ async function downloadImage(url, filePath, blockId) {
   return buffer;
 }
 
-// 下载图片 -> ffmpeg 转 webp -> 生成 image shortcode
+// 获取图片宽高
+function getImageDimensions(filePath) {
+  try {
+    const r = spawnSync("ffprobe", [
+      "-v", "error", "-select_streams", "v:0",
+      "-show_entries", "stream=width,height", "-of", "csv=p=0",
+      filePath,
+    ], { stdio: "pipe", timeout: 15000 });
+    if (r.status !== 0) return null;
+    const [w, h] = r.stdout.toString().trim().split(",");
+    if (!w || !h) return null;
+    return { width: w.trim(), height: h.trim() };
+  } catch { return null; }
+}
+
+// 下载图片 -> ffmpeg 转 webp -> 识别宽高 -> 生成 image shortcode
 async function downloadAndConvertImages(articleNumber) {
   if (!imageTasks.length) return new Map();
   const imgDir = join(PROJECT_ROOT, "static", "images", "blog", articleNumber);
@@ -624,15 +639,21 @@ async function downloadAndConvertImages(articleNumber) {
         "-compression_level", "6", webpPath,
       ], { stdio: "pipe", timeout: 30000 });
 
-      if (r.status !== 0) {
-        console.warn(`    [警告] ffmpeg 转换失败，保留原始格式`);
+      const finalFile = r.status === 0 ? webpPath : (() => {
+        // ffmpeg 失败 → 保留原始格式
         const ext = url.match(/\.(png|jpg|jpeg|gif)(\?|$)/i)?.[1] || "png";
         writeFileSync(join(imgDir, `${idx}.${ext}`), buf);
-        map.set(placeholder, `{{< image src="images/blog/${articleNumber}/${idx}.${ext}" caption="${escapeAttr(caption)}" alt="${escapeAttr(alt)}" width="" height="" center="true" >}}`);
-      } else {
-        console.log(`    -> ${idx}.webp`);
-        map.set(placeholder, `{{< image src="images/blog/${articleNumber}/${idx}.webp" caption="${escapeAttr(caption)}" alt="${escapeAttr(alt)}" width="" height="" center="true" >}}`);
-      }
+        return join(imgDir, `${idx}.${ext}`);
+      })();
+
+      // 识别宽高
+      const dims = getImageDimensions(finalFile);
+      const width = dims?.width ?? "";
+      const height = dims?.height ?? "";
+      if (dims) console.log(`    -> ${width}x${height}`);
+
+      const relName = `${idx}.${finalFile.endsWith(".webp") ? "webp" : finalFile.split(".").pop()}`;
+      map.set(placeholder, `{{< image src="images/blog/${articleNumber}/${relName}" caption="${escapeAttr(caption)}" alt="${escapeAttr(alt)}" width="${width}" height="${height}" center="true" >}}`);
     } catch (e) {
       console.error(`    [错误] ${e.message}`);
       map.set(placeholder, `<!-- IMAGE FAILED: ${url} -->`);

@@ -50,6 +50,7 @@
   border: none !important;
 
   padding: 16px 24px !important;
+  margin-block: 0.4rem !important;
 
   font-size: 14px !important;
   font-weight: 500 !important;
@@ -147,7 +148,10 @@
          prose-code:border-[0.5px] prose-code:border-color-black/10 prose-code:rounded-none               /* 边框样式 */
          prose-code:px-1.5 prose-code:py-0.5   /* 内边距 */
          prose-code:mx-1                       /* 两侧间距 */
-         prose-code:wrap-break-word;           /* 自动换行 */
+         prose-code:leading-snug
+         prose-code:inline-block
+         prose-code:max-w-full
+         prose-code:wrap-anywhere;
 }
 
 /* 多行代码块 */
