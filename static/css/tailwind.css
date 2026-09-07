@@ -4409,10 +4409,6 @@
       display: block;
     }
 
-    .sm\:flex {
-      display: flex;
-    }
-
     .sm\:text-\[13px\] {
       font-size: 13px;
     }
@@ -5965,6 +5961,16 @@
 @supports (color: color-mix(in lab, red, red)) {
   .article-content.prose .highlight pre, .article-content.prose pre {
     background-color: color-mix(in srgb, var(--my-color-black) 4%, transparent) !important;
+  }
+}
+
+.article-content.prose .highlight pre, .article-content.prose pre {
+  color: rgba(2, 2, 3, 0.7) !important;
+}
+
+@supports (color: color-mix(in lab, red, red)) {
+  .article-content.prose .highlight pre, .article-content.prose pre {
+    color: color-mix(in srgb, var(--my-color-black) 70%, transparent) !important;
   }
 }
 
