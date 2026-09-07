@@ -158,7 +158,7 @@
 .article-content.prose .highlight pre,
 .article-content.prose pre {
   background-color: color-mix(in srgb, var(--my-color-black) 4%, transparent) !important;      /* 背景颜色 */
-  color: color-mix(in srgb, var(--my-color-black) 70%, transparent) !important;                 /* 文字颜色 */
+  color: color-mix(in srgb, var(--my-color-black) 70%, transparent) !important;                /* 文字颜色 */
   border: 0.5px solid color-mix(in srgb, var(--my-color-black) 10%, transparent) !important;   /* 边框 */
   border-radius: 0 !important;                              /* 边框圆角 */
   padding: 1.5rem !important;                               /* 内间距 */
