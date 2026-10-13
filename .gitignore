@@ -6,7 +6,7 @@ public/
 hugo_stats.json
 Thumbs.db
 
-_test/
+.test/
 static/fonts/Noto-Sans-SC-700.woff2
 static/fonts/Noto-Sans-SC-regular.woff2
 static/fonts/Noto-Sans-JP-700.woff2

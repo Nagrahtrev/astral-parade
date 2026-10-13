@@ -6,4 +6,8 @@
   },
 
   "tailwindCSS.lint.suggestCanonicalClasses": "ignore",
+
+  "[html]": {
+    "editor.formatOnSave": false
+  },
 }

@@ -1,21 +1,19 @@
-{{ $src := .Get "src" }}
-{{ $alt := .Get "alt" | default "" }}
-{{ $caption := .Get "caption" }}
-{{ $width := .Get "width" | default "" }}
-{{ $height := .Get "height" | default "" }}
-{{ $class := .Get "class" | default "" }}
-{{ $center := .Get "center" | default "false" }}
-{{ $figureClass := $class }}
-{{ if eq $center "true" }}{{ $figureClass = printf "%s mx-auto" $class | strings.TrimSpace }}{{ end }}
+{{- $src := .Get "src" -}}
+{{- $alt := .Get "alt" | default "" -}}
+{{- $caption := .Get "caption" -}}
+{{- $width := .Get "width" | default "" -}}
+{{- $height := .Get "height" | default "" -}}
+{{- $class := .Get "class" | default "" -}}
+{{- $center := .Get "center" | default "false" -}}
+{{- $figureClass := $class -}}
+{{- if eq $center "true" }}{{ $figureClass = printf "%s mx-auto" $class | strings.TrimSpace }}{{ end -}}
 <figure{{ with $figureClass }} class="{{ . }}"{{ end }}>
   <img src="{{ $src | relURL }}"
-       alt="{{ $alt }}"
-       {{ with $width }}width="{{ . }}"{{ end }}
-       {{ with $height }}height="{{ . }}"{{ end }}
+       alt="{{ $alt }}"{{ with $width }}
+       width="{{ . }}"{{ end }}{{ with $height }}
+       height="{{ . }}"{{ end }}
        class="max-w-full h-auto"
        decoding="async"
-       loading="lazy">
-  {{ with $caption }}
-    <figcaption>{{ . }}</figcaption>
-  {{ end }}
+       loading="lazy">{{ with $caption }}
+  <figcaption>{{ . }}</figcaption>{{ end }}
 </figure>
