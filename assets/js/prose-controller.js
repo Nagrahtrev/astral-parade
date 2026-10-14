@@ -12,8 +12,8 @@ function initTooltips() {
         const tooltipRects = tooltip.getClientRects();
         if (!triggerRects.length || !tooltipRects.length) return;
 
-        const triggerRect = triggerRects[0]; 
-        const tooltipRect = tooltipRects[0]; 
+        const triggerRect = triggerRects[0];
+        const tooltipRect = tooltipRects[0];
 
         const boxWidth = box.getBoundingClientRect().width || box.offsetWidth;
         const vw = document.documentElement.clientWidth || window.innerWidth;
@@ -212,7 +212,7 @@ function initImageLightbox() {
     }
 
     document.querySelectorAll('.article-content.prose img').forEach(img => {
-        if (img.closest('a')) return;
+        if (img.closest('a') || img.closest('.youtube-embed')) return;
         img.addEventListener('click', (e) => {
             e.stopPropagation();
             open(img.src, img.alt);

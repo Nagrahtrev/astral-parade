@@ -17,7 +17,7 @@ function initPageTransitions() {
 
     // 拦截内部链接跳转
     document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             if (link.closest('.filter-item')) return;
 
             if (
@@ -75,14 +75,14 @@ function initPageTransitions() {
 // ------------ 平滑滚动控制 ------------
 
 // 允许打断
-window.customSmoothScroll = function(targetY, duration = 400) {
+window.customSmoothScroll = function (targetY, duration = 400) {
     if (typeof window.__smoothScrollCancel === 'function') {
         window.__smoothScrollCancel();
     }
 
     // 触屏设备则使用原生 smoothScroll
     var _isTouchDevice = ('ontouchstart' in window) ||
-                         (navigator.maxTouchPoints > 0);
+        (navigator.maxTouchPoints > 0);
 
     if (_isTouchDevice) {
         window.__isSmoothScrolling = true;
@@ -109,7 +109,7 @@ window.customSmoothScroll = function(targetY, duration = 400) {
         document.addEventListener('wheel', onInterrupt, { once: true, passive: true });
         document.addEventListener('touchmove', onInterrupt, { once: true, passive: true });
 
-        window.__smoothScrollCancel = function() {
+        window.__smoothScrollCancel = function () {
             window.scrollTo({ top: window.scrollY, behavior: 'instant' });
             finish();
         };
@@ -163,7 +163,7 @@ window.customSmoothScroll = function(targetY, duration = 400) {
     document.addEventListener('wheel', onInterrupt, { passive: true });
     document.addEventListener('touchmove', onInterrupt, { passive: true });
 
-    window.__smoothScrollCancel = function() {
+    window.__smoothScrollCancel = function () {
         if (cancelled) return;
         cancelled = true;
         window.__isSmoothScrolling = false;
@@ -541,6 +541,34 @@ function initMobileMenuHint() {
     window.addEventListener('scroll', hideHint, { once: true });
 }
 
+// ------------ YouTube Facade（点击加载） ------------
+function initYoutubeFacade() {
+    const facades = document.querySelectorAll('[data-yt-facade]');
+    facades.forEach(facade => {
+        const btn = facade.querySelector('.youtube-facade-btn');
+        if (!btn || btn.dataset.ytReady === 'true') return;
+        btn.dataset.ytReady = 'true';
+
+        btn.addEventListener('click', () => {
+            const id = facade.getAttribute('data-yt-id');
+            const title = facade.getAttribute('data-yt-title') || 'YouTube video';
+            if (!id) return;
+
+            const iframe = document.createElement('iframe');
+            iframe.src = 'https://www.youtube-nocookie.com/embed/' + id +
+                '?autoplay=1&controls=1&end=0&loop=0&mute=0&start=0';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen';
+            iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+            iframe.title = title;
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.setAttribute('loading', 'eager');
+
+            facade.innerHTML = '';
+            facade.appendChild(iframe);
+        });
+    });
+}
+
 // ------------ 执行入口 ------------
 document.addEventListener('DOMContentLoaded', () => {
     initPageTransitions();
@@ -552,4 +580,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initInfiniteScroll();
     initBlogPaginationCursor();
     initBackToTop();
+    initYoutubeFacade();
 });

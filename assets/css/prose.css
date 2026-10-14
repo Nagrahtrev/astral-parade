@@ -809,6 +809,65 @@
   margin-block: calc(var(--spacing) * 9);
 }
 
+/* YouTube Facade */
+.article-content.prose .youtube-embed[data-yt-facade] {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background-color: #000;
+  overflow: hidden;
+}
+
+.article-content.prose .youtube-embed[data-yt-facade] .youtube-facade-btn {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: block;
+}
+
+.article-content.prose .youtube-embed[data-yt-facade] .youtube-facade-thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  cursor: pointer;
+}
+
+.article-content.prose .youtube-embed[data-yt-facade] .youtube-facade-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
+}
+
+.article-content.prose .youtube-embed[data-yt-facade] .youtube-facade-play svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.4));
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.article-content.prose .youtube-embed[data-yt-facade] .youtube-facade-btn:hover .youtube-facade-play svg {
+  transform: scale(1.04);
+}
+
+.article-content.prose .youtube-embed[data-yt-facade] iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 /* -------- 内嵌音频播放器 -------- */
 
 /* 容器 */

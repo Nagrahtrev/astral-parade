@@ -3921,6 +3921,11 @@
       translate: var(--tw-translate-x) var(--tw-translate-y);
     }
 
+    .group-hover\:translate-x-1\.5:is(:where(.group):hover *) {
+      --tw-translate-x: calc(var(--spacing) * 1.5);
+      translate: var(--tw-translate-x) var(--tw-translate-y);
+    }
+
     .group-hover\:translate-x-2:is(:where(.group):hover *) {
       --tw-translate-x: calc(var(--spacing) * 2);
       translate: var(--tw-translate-x) var(--tw-translate-y);
@@ -4746,14 +4751,6 @@
       font-size: 21px;
     }
 
-    .md\:text-\[22px\] {
-      font-size: 22px;
-    }
-
-    .md\:text-\[23px\] {
-      font-size: 23px;
-    }
-
     .md\:text-\[24px\] {
       font-size: 24px;
     }
@@ -5146,10 +5143,6 @@
       font-size: 24px;
     }
 
-    .lg\:text-\[26px\] {
-      font-size: 26px;
-    }
-
     .lg\:text-\[30px\] {
       font-size: 30px;
     }
@@ -5293,10 +5286,6 @@
 
     .xl\:text-\[26px\] {
       font-size: 26px;
-    }
-
-    .xl\:text-\[29px\] {
-      font-size: 29px;
     }
 
     .xl\:text-\[42px\] {
@@ -6743,6 +6732,70 @@
 
 .article-content.prose .youtube-embed {
   margin-block: calc(var(--spacing) * 9);
+}
+
+.article-content.prose .youtube-embed[data-yt-facade] {
+  aspect-ratio: 16 / 9;
+  background-color: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+.article-content.prose .youtube-embed[data-yt-facade] .youtube-facade-btn {
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.article-content.prose .youtube-embed[data-yt-facade] .youtube-facade-thumb {
+  object-fit: cover;
+  object-position: center;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.article-content.prose .youtube-embed[data-yt-facade] .youtube-facade-play {
+  pointer-events: none;
+  width: 64px;
+  height: 64px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.article-content.prose .youtube-embed[data-yt-facade] .youtube-facade-play svg {
+  filter: drop-shadow(0 1px 4px #0006);
+  width: 100%;
+  height: 100%;
+  transition: transform .2s cubic-bezier(.25, 1, .5, 1);
+  display: block;
+}
+
+.article-content.prose .youtube-embed[data-yt-facade] .youtube-facade-btn:hover .youtube-facade-play svg {
+  transform: scale(1.04);
+}
+
+.article-content.prose .youtube-embed[data-yt-facade] iframe {
+  border: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .article-content.prose .inline-audio-player {
