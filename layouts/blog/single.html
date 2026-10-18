@@ -5,6 +5,12 @@
 {{ $enWords := $plain | replaceRE "[一-龥ぁ-んァ-ン가-힣]" " " | countwords }}
 {{ $totalWords := add $cjkChars $enWords }}
 
+{{ $readingUnits := add $cjkChars (mul 2 $enWords) }}
+{{ $readingMinutes := div (add $readingUnits 599) 600 }}
+{{ if lt $readingMinutes 1 }}
+  {{ $readingMinutes = 1 }}
+{{ end }}
+
 <section class="min-h-screen bg-color-white relative z-10 pt-12 md:pt-28 pb-32 flex flex-col">
 
   <div class="w-full max-w-350 mx-auto px-4 md:px-8 lg:px-12 flex flex-col">
@@ -77,15 +83,15 @@
 
              </div>
 
-             {{/*  实时阅读计时器  */}}
+             {{/*  预计阅读时长  */}}
              <div class="p-6 md:p-8 flex flex-col justify-center bg-color-black/1 select-none">
 
                 <span class="font-mono text-[9px] tracking-[0.2em] text-color-black/40 uppercase mb-2">
                   Reading Time
                 </span>
 
-                <span id="reading-timer" class="font-mono text-[11px] font-bold text-color-black tracking-widest">
-                  00:00
+                <span class="font-mono text-[11px] font-bold text-color-black tracking-widest">
+                  {{ $readingMinutes }} MIN
                 </span>
 
              </div>

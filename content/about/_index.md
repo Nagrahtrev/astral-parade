@@ -26,11 +26,11 @@ nova+z 这个名字可能很难被搜索到，因为很多搜索引擎或网络�
 
 <br>
 
-我偶尔会通过 Zsul Pavon 的名义来发布 Easy Listening 方向的音乐。  
+我偶尔会通过 Zsul Pavon 的名义专来发布“不像 nova+z 会写的”音乐。  
 
-当初只是觉得，这和我偏好和追求的声音相差甚远，有必要开一个新名义。不过谁知道呢，人是会变的，说不定哪天 nova+z 就被 Zsul Pavon 夺舍了。
+Zsul Pavon 的作品和我现在追求的声音相差甚远，不过谁知道呢，人是会变的，说不定哪天 nova+z 就被 Zsul Pavon 夺舍了。
 
-Zsul Pavon 的取名过程也非常简单，把 nova+z 倒过来拼就是了。
+取名过程也非常简单，把 nova+z 倒过来拼就是了。
 
 ## 关于 Astral Parade
 

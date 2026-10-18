@@ -1,24 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 阅读时间计时器
-    const timerElement = document.getElementById('reading-timer');
-    if (timerElement) {
-        let totalSeconds = 0;
-        setInterval(() => {
-            totalSeconds++;
-            const minutes = Math.floor(totalSeconds / 60);
-            const seconds = totalSeconds % 60;
-
-            const displayMinutes = String(minutes).padStart(2, '0');
-            const displaySeconds = String(seconds).padStart(2, '0');
-
-            timerElement.innerText = `${displayMinutes}:${displaySeconds}`;
-        }, 1000);
-    }
-
     // TOC 平滑滚动
     var tocLinks = document.querySelectorAll('nav.radar-toc-nav a[href^="#"]');
-    tocLinks.forEach(function(link) {
-        link.addEventListener('click', function(e) {
+    tocLinks.forEach(function (link) {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
             var id = this.getAttribute('href').slice(1);
             var target = document.getElementById(id);
@@ -31,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // 智能后退
-window.smartBack = function() {
+window.smartBack = function () {
     if (document.referrer.includes(window.location.host)) {
         // 如果来自 home 则回到 list
         var refPath = new URL(document.referrer).pathname;
@@ -47,7 +31,7 @@ window.smartBack = function() {
 };
 
 // Navigator 移动端折叠控制
-window.toggleMobileToc = function() {
+window.toggleMobileToc = function () {
     if (window.matchMedia('(width >= 64rem)').matches) return;
 
     const wrapper = document.getElementById('toc-wrapper');
@@ -70,7 +54,7 @@ window.toggleMobileToc = function() {
     }
 };
 
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     if (window.matchMedia('(width >= 64rem)').matches) return;
     const wrapper = document.getElementById('toc-wrapper');
     if (wrapper && wrapper.classList.contains('is-open')) {
