@@ -1,4 +1,6 @@
-{{ $paginator := .Paginate .Pages 12 }}
+{{ $pages := sort .Pages "RelPermalink" "desc" }}
+{{ $pages = sort $pages "Date" "desc" }}
+{{ $paginator := .Paginate $pages 12 }}
 
 {{ $allCategories := slice }}
 {{ $allYears := slice }}

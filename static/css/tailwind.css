@@ -4039,8 +4039,8 @@
       translate: var(--tw-translate-x) var(--tw-translate-y);
     }
 
-    .group-hover\:translate-x-1\.5:is(:where(.group):hover *) {
-      --tw-translate-x: calc(var(--spacing) * 1.5);
+    .group-hover\:translate-x-1:is(:where(.group):hover *) {
+      --tw-translate-x: var(--spacing);
       translate: var(--tw-translate-x) var(--tw-translate-y);
     }
 
