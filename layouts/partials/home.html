@@ -340,7 +340,9 @@
               </div>
             </div>
 
-            {{ range first 1 (where $page.Site.RegularPages "Section" "blog") }}
+            {{ $homeBlogPages := sort (where $page.Site.RegularPages "Section" "blog") "RelPermalink" "desc" }}
+            {{ $homeBlogPages = sort $homeBlogPages "Date" "desc" }}
+            {{ range first 1 $homeBlogPages }}
 
             <a href="{{ .RelPermalink }}" class="group block w-full bg-color-black text-color-white p-9 md:p-8 lg:p-9 xl:p-11 relative lg:shadow-[12px_12px_0px_0px_rgb(84,18,18)] shadow-[8px_8px_0px_0px_rgb(84,18,18)] hover:-translate-y-1 transition-transform duration-300 ease-out">
 
